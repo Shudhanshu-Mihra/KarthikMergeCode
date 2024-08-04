@@ -7,7 +7,7 @@ import { ROUTES } from './routes';
 // const CUSTOMER_ACCOUNTS = 'Customer Accounts';
 // const PAYMENT_METHODS = 'Payment Methods';
 
-// export const MASTER_TABS = [SUPPLIERS, SUPPLIER_ACCOUNTS, CATEGORIES, CUSTOMERS, CUSTOMER_ACCOUNTS, PAYMENT_METHODS];
+// export const MASTER_TABS = [SUPPLIERS, SUPPLIER_ACCOUNTS, CATEGORIES, CUSTOMERS, CUSTOMER_ACCOUNTS,];
 
 export const ADMIN_LINKS = [
   { title: 'DASHBOARD', route: ROUTES.home, iconName: 'dashboardIcon' },
@@ -16,7 +16,8 @@ export const ADMIN_LINKS = [
   // { title: 'EXPENSE REPORT', route: ROUTES.expenseReport, iconName: 'expReportIcon'},
   // { title: 'MANAGE', route: ROUTES.manage, tabs: MASTER_TABS, iconName: 'manageIcon' },
   { title: 'INVITES', route: ROUTES.invites, iconName: 'invitesIcon' },
-  { title: 'SETTINGS', route: ROUTES.settings, iconName: 'settingsIcon', isLast: true },
+  {title:'USERS',route: ROUTES.usersList, iconName: 'invitesIcon'},
+  // { title: 'USERS', route: ROUTES.settings, iconName: 'settingsIcon', isLast: true },
   // { title: 'HELP & SUPPORT', route: ROUTES.support, isLast: true },
 ];
 

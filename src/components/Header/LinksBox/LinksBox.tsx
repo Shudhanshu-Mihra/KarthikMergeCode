@@ -17,7 +17,8 @@ export const LinksBox: FC<ILinksBox> = (props) => {
 		<Styled.Links>
 			<Styled.LinkWrapper>
 				{ADMIN_LINKS.map((link) => (
-					<CustomLink key={link.title} to={link.route}  icontype={link.iconName} isLast={link.isLast} is_sales={link.title === "SALES"} isDisabled={getIsDisabledLink(link.route, active_account)}>
+					//isLast={link.isLast}
+					<CustomLink key={link.title} to={link.route}  icontype={link.iconName}  is_sales={link.title === "SALES"} isDisabled={getIsDisabledLink(link.route, active_account)}>
 						{link.title}
 					</CustomLink>
 				))}

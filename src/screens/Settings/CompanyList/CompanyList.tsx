@@ -1,14 +1,14 @@
 import { FC, useEffect } from 'react';
 
-// import { InsertCompanyModalWindow } from 'components/InsertCompanyModalWindow';
-// import { DeleteModalWindow } from 'components/DeleteModalWindow';
-// import { SettingsItemPageContent } from 'components/SettingsItemPageContent';
+import { InsertCompanyModalWindow } from 'components/InsertCompanyModalWindow';
+import { DeleteModalWindow } from 'components/DeleteModalWindow';
+import { SettingsItemPageContent } from 'components/SettingsItemPageContent';
 import { LoaderComponent } from 'components/Loader';
 
 import { CompanyListStyles as Styled } from './CompanyList.style';
 import { useCompanyListState } from './CompanyList.state';
 
-interface  IBindSocialAccountFormProps{
+interface ICompanyList extends IBindSocialAccountFormProps{
 
 }
 export const CompanyList: FC = () => {
@@ -85,7 +85,7 @@ export const CompanyList: FC = () => {
 
   return (
     <Styled.Section>
-      {/* <InsertCompanyModalWindow
+      <InsertCompanyModalWindow
         onDeleteCompanyLogo={onDeleteCompanyLogo}
         isCompanyLogoLoading={isCompanyLogoLoading}
         headerText={isEdit ? 'Edit Company' : 'Insert Company'}
@@ -117,8 +117,8 @@ export const CompanyList: FC = () => {
         isDeleteModalWindowOpen={isDeleteModalWindowOpen}
         deleteItemName={`‘${selectedCompany?.name}’`}
         categoryName="company"
-      /> */}
-      {/* {isFetchingData ? (
+      />
+      {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
@@ -150,7 +150,7 @@ export const CompanyList: FC = () => {
           isGuard
           companies={companies}
         />
-      )} */}
+      )}
     </Styled.Section>
   );
 };

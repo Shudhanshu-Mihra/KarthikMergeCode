@@ -24,11 +24,11 @@ import {
   dashboardReducer,
   DASHBOARD_INITIAL_STATE,
 } from 'screens/Dashboard/reducer/dashboard.reducer';
-// import { IMASTER_INITIAL_STATE } from 'screens/Master/types/master.types';
-// import {
-//   MasterReducer,
-//   MASTER_INITIAL_STATE,
-// } from 'screens/Master/reducer/master.reducer';
+import { IMASTER_INITIAL_STATE } from 'screens/Master/types/master.types';
+import {
+  MasterReducer,
+  MASTER_INITIAL_STATE,
+} from 'screens/Master/reducer/master.reducer';
 // import { IRECEIPT_DETAILS_INITIAL_STATE } from 'screens/ReceiptDetails/types/receiptDetails.types';
 // import {
 //   ReceiptDetailsReducer,
@@ -39,11 +39,11 @@ import {
   SETTINGS_INITIAL_STATE,
 } from 'screens/Settings/reducer/settings.reducer';
 import { ISETTINGS_INITIAL_STATE } from 'screens/Settings/types/settings.types';
-// import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
-// import {
-//   InvitesReducer,
-//   INVITES_INITIAL_STATE,
-// } from 'screens/Invites/reducer/invites.reducer';
+import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
+import {
+  InvitesReducer,
+  INVITES_INITIAL_STATE,
+} from 'screens/Invites/reducer/invites.reducer';
 // import {
 //   salesInvoicesReducer,
 //   SALES_INVOICES_INITIAL_STATE,
@@ -77,10 +77,10 @@ export interface IState {
   // filesUpload: IFILES_UPLOAD_PREVIEW_INITIAL_STATE;
   inbox: IINBOX_INITIAL_STATE;
   dashboard: IDASHBOARD_INITIAL_STATE;
-  // // master: IMASTER_INITIAL_STATE;
+  master: IMASTER_INITIAL_STATE;
   // receiptDetails: IRECEIPT_DETAILS_INITIAL_STATE;
   settings: ISETTINGS_INITIAL_STATE;
-  // invites: IINVITES_INITIAL_STATE;
+  invites: IINVITES_INITIAL_STATE;
   // invoices: IINVOICE_INITIAL_STATE;
   // reports: IREPORT_INITIAL_STATE;
 }
@@ -91,10 +91,10 @@ const combineReducer = combineReducers<IState>({
   // filesUpload: filesUploadReducer,
   inbox: inboxReducer,
   dashboard: dashboardReducer,
-  // master: MasterReducer,
+  master: MasterReducer,
   // receiptDetails: ReceiptDetailsReducer,
   settings: SettingsReducer,
-  // invites: InvitesReducer,
+  invites: InvitesReducer,
   // invoices: salesInvoicesReducer,
   // reports: expenseReportReducer,
 });

@@ -17,17 +17,17 @@ import { ForgotPassword } from 'screens/ForgotPassword';
 // import { Inbox } from 'screens/Inbox';
 // import { Invites } from 'screens/Invites';
 import { Login } from 'screens/Login/Login';
-// import { Master } from 'screens/Master';
+import { Master } from 'screens/Master';
 // import { NotFound } from 'screens/NotFound';
 // import { Preference } from 'screens/Preference';
 // import { ReceiptDetails } from 'screens/ReceiptDetails';
 import { ResetPassword } from 'screens/ResetPassword';
 // import { SalesInvoices } from 'screens/SalesInvoices';
 // import { SalesInvoicesDetails } from 'screens/SalesInvoicesDetails';
-// import { Settings } from 'screens/Settings';
-// import { CompanyList } from 'screens/Settings/CompanyList';
-// import { MyAccount } from 'screens/Settings/MyAccount';
-// import { UsersList } from 'screens/Settings/UsersList';
+import { Settings } from 'screens/Settings';
+import { CompanyList } from 'screens/Settings/CompanyList';
+import { MyAccount } from 'screens/Settings/MyAccount';
+import { UsersList } from 'screens/Settings/UsersList';
 import { SignUp } from 'screens/SignUp/SignUp';
 import { SignUpNewMember } from 'screens/SignUpNewMember';
 // import { Support } from 'screens/Support';
@@ -116,20 +116,20 @@ export const AppRouter: FC = () => {
             <Route
               path={ROUTES.filesUploadPreviewsales}
               element={<FilesUploadPreview />}
-            />
+            />*/}
             <Route path={ROUTES.settings} element={<Settings />}>
-              <Route index element={<MyAccount />} />
-              <Route path={ROUTES.usersList} element={<UsersList />} />
-              <Route path={ROUTES.companiesList} element={<CompanyList />} />
-              <Route
+            {/* <Route index element={<MyAccount />} /> */}
+            <Route path={ROUTES.usersList} element={<UsersList />} />
+            {/* <Route path={ROUTES.companiesList} element={<CompanyList />} /> */}
+              {/* <Route
                 path={ROUTES.termsOfService}
                 element={<TermsOfService />}
               />
-              <Route path={ROUTES.privacyPolicy} element={<PrivacyPolicy />} />
+              <Route path={ROUTES.privacyPolicy} element={<PrivacyPolicy />} /> */}
             </Route>
-            <Route path={ROUTES.support} element={<Support />} />
-            <Route path={ROUTES.notFound} element={<NotFound />} />
-            <Route path={ROUTES.manage} element={<Master />} />*/}
+            {/* <Route path={ROUTES.support} element={<Support />} />
+            <Route path={ROUTES.notFound} element={<NotFound />} /> */}
+            <Route path={ROUTES.manage} element={<Master />} /> 
           </Route>
         </Route>
         {/* <Route path={ROUTES.callback} element={<RedirectOAuthPage />} />

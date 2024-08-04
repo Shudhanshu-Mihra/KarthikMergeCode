@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 
 import { LoaderComponent } from 'components/Loader';
-// import { SuccessPopup } from 'components/SuccessPopup';
-// import { LinkSocAccModalWindow } from 'components/LinkSocAccModalWindow';
+import { SuccessPopup } from 'components/SuccessPopup';
+import { LinkSocAccModalWindow } from 'components/LinkSocAccModalWindow';
 
 import { useMyAccountState } from './MyAccount.state';
 import { MyAccountStyles as Styled } from './MyAccount.style';
@@ -45,7 +45,7 @@ export const MyAccount: FC = () => {
 
   return (
     <Styled.LayoutWrapper>
-      {/* <LinkSocAccModalWindow
+      <LinkSocAccModalWindow
         isLoading={isCreatingAcc}
         isModalWindowOpen={isLinkSocAccWindowOpen}
         onCloseModalWindowHandler={setLinkSocAccWindowToggle}
@@ -74,7 +74,7 @@ export const MyAccount: FC = () => {
             ? 'The password has been successfully changed'
             : 'User profile has been successfully changed'
         }
-      /> */}
+      />
       {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />

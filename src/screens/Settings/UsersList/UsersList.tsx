@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
 
-// import { SettingsItemPageContent } from "components/SettingsItemPageContent";
+import { SettingsItemPageContent } from "components/SettingsItemPageContent";
 import { LoaderComponent } from "components/Loader";
-// import { SuccessPopup } from "components/SuccessPopup";
+import { SuccessPopup } from "components/SuccessPopup";
 
 import { UserListStyles as Styled } from "./UserList.styles";
 import { useUserListState } from "./UserList.state";
@@ -109,14 +109,14 @@ export const UsersList: FC = () => {
         isInvitation={isInvitation}
         isUserList
         categoryName="user"
-        // isPAllChecked={isPAllChecked}
-        // permissionState = {permissionState}
+        isPAllChecked={isPAllChecked}
+        permissionState = {permissionState}
         // setPermission={setPermission}
-        // setPAllChecked={setPAllChecked}
+        setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role?.value || null}
       />
-      {/* <SuccessPopup
+      <SuccessPopup
         positionTop="0"
         isShowPopup={isResentSuccessPopup || isSentSuccessPopup}
         closePopupFc={
@@ -127,8 +127,8 @@ export const UsersList: FC = () => {
             ? "Invitation resent successfully"
             : "Invitation sent successfully"
         }
-      /> */}
-      {/* {isFetchingData ? (
+      />
+      {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
@@ -162,7 +162,7 @@ export const UsersList: FC = () => {
           onChangePage={onChangePage}
           isGuard
         />
-      )} */}
+      )}
     </Styled.Section>
   );
 };
