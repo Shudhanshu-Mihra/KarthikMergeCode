@@ -16,6 +16,7 @@ import {
 } from '../SignUp/reducer/signup.reducer';
 
 import { ROUTES } from 'constants/routes';
+import { sign } from 'crypto';
 
 interface IuseLoginStateState {
   isShowPassword: boolean;
@@ -31,7 +32,7 @@ export const useLoginState = () => {
   const navigate = useNavigate();
 
   const onSignUpClickHandler = () => {
-    navigate(ROUTES.sign_up);
+    navigate(ROUTES.login);
   };
 
   const onTogglePasswordVisibility = () => {
@@ -42,17 +43,20 @@ export const useLoginState = () => {
   };
 
   const onSignInButtonClickHandler = async (
-    loginValues: ILogin,
-    actions: FormikHelpers<{ email: string; password: string }>
+    loginValues: { email: string; password: string; role: string; },
+    actions: FormikHelpers<{ email: string; password: string; role: string; }>
   ) => {
     try {
       const { data } = await login(loginValues);
-      dispatch(setCurrencies(data.currencies));
+      // dispatch(setCurrencies(data.currencies));
       dispatch(setUser(data));
-      data.company && dispatch(setCompany(data.company));
+      console.log('signInHit',data);
+      // data.company && dispatch(setUserInfo({ company: data.company }));
+      // dispatch(setCurrencies(data.currencies));
+      // data.company && dispatch(setCompany(data.company));
       navigate(
-        !data.user.active_account || !data.user.accounts.length
-          ? ROUTES.preference
+        !data.user.id || !data.user.active === true
+          ? ROUTES.login
           : ROUTES.home
       );
     } catch (error: any) {
@@ -70,12 +74,13 @@ export const useLoginState = () => {
     initialValues: {
       email: '',
       password: '',
+      role: 'admin', 
     },
     onSubmit: (values, actions) => onSignInButtonClickHandler(values, actions),
-
     validationSchema: Yup.object().shape({
       email: emailValidation,
       password: passwordValidation,
+      role: Yup.string().required('admin'), 
     }),
   });
 

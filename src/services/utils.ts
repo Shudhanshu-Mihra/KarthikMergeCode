@@ -2,7 +2,7 @@ import { add, format } from 'date-fns';
 import decode from 'jwt-decode';
 import imageCompression from 'browser-image-compression';
 
-import { ICurrency } from 'screens/SignUp/types/signup.types';
+// import { ICurrency } from 'screens/SignUp/types/signup.types';
 import { IInvites } from 'screens/Invites/types/invites.types';
 import { getCompanyLogo } from 'screens/Settings/settings.api';
 
@@ -202,12 +202,12 @@ export const getCorrectCustomId = (text: string) => {
     .join('');
 };
 
-export const getFormatedCurrencies = (currencies: ICurrency[]) =>
-  currencies?.map((currency) => ({
-    label: `${currency.value} (${currency.description})`,
-    value: currency.value,
-    id: currency.id,
-  }));
+// export const getFormatedCurrencies = (currencies: ICurrency[]) =>
+//   currencies?.map((currency) => ({
+//     label: `${currency.value} (${currency.description})`,
+//     value: currency.value,
+//     id: currency.id,
+//   }));
 
 export const getReceiptDetailsCurrentSelectItem = (
   itemsArray: IOption[],

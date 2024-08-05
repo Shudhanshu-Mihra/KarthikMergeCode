@@ -8,13 +8,14 @@ import { useSettingsState } from './Settings.state';
 
 export const Settings: FC = () => {
   const {
-    fullName,
-    activeAccount,
+    // fullName,
+    name,
+    // activeAccount,
     onUploadProfilePhotoHandler,
     isUploadingPhoto,
     isHover,
     userProfilePhoto,
-    active_account,
+    active,
     profile_image,
     onGetProfilePhoto,
     onMouseEnterHandler,

@@ -1,4 +1,4 @@
-import { TableSettingsMember } from '../../Table/TableSettings';
+import { TableSettingsMember } from '../../Table/TableInvites';
 import { TableSettingsCompany } from '../../Table/TableSettings/TableSettingsCompany';
 
 interface ITableProps {

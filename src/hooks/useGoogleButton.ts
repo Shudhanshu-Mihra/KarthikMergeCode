@@ -34,6 +34,7 @@ export const useGoogleButton = () => {
 
       const { data } = await loginWithGoogle(payload);
       dispatch(setUser(data));
+      console.log('sininGoogle hit',data);
       data.company && dispatch(setUserInfo({ company: data.company }));
       dispatch(setCurrencies(data.currencies));
       dispatch(
@@ -50,7 +51,7 @@ export const useGoogleButton = () => {
       setIsGoogleLoading(false);
       navigate(
         !data.user.active_account || !data.user.accounts.length
-          ? ROUTES.preference
+          ? ROUTES.login
           : ROUTES.home
       );
     } catch (err) {

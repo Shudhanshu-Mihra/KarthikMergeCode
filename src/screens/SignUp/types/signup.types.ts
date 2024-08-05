@@ -60,3 +60,25 @@ export interface ISwitchAccount {
   user: Omit<IUser, 'socialAuth'>;
   company: Omit<ICompany, 'currency'>;
 }
+
+
+export interface ISIGN_UP_SUPPORT_USER_INITIAL_STATE {
+  user: ISupport_User;
+  token: string;
+  refreshToken: string;
+  // socialAccount: ISocialAccounts;
+  // userInfo: IUserInfo;
+  currencies: ICurrency[];
+  // isSkipOnboarding: boolean;
+}
+
+export interface ISupport_User {
+  // socialAuth?: null;
+  id: string;
+  active: boolean;
+  email: string;
+  profile_image: string;
+  name:string;
+  role:string;
+  password:string;
+}

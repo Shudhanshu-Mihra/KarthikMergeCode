@@ -26,7 +26,7 @@ export const UsersList: FC = () => {
     onEnterGoToClick,
     onChangeItemsPerPage,
     onGoToClick,
-    userRole,
+    // userRole,
     onClickDeleteUserButton,
     selectedUserName,
     itemsPerPage,
@@ -47,7 +47,7 @@ export const UsersList: FC = () => {
     isSentSuccessPopup,
     isResentSuccessPopup,
     
-    active_account,
+    active,
     setIsSentSuccessPopup,
     setIsResendSuccessPopup,
     onChangePage,
@@ -69,19 +69,19 @@ export const UsersList: FC = () => {
 
   useEffect(() => {
     !searchValue && onGetAllCompanyMembersHandler();
-  }, [searchValue, active_account]);
+  }, [searchValue, active]);
 
   useEffect(() => {
     debouncedValue &&
       onGetAllCompanyMembersHandler({
         search: debouncedValue,
       });
-  }, [debouncedValue, active_account]);
+  }, [debouncedValue, active]);
 
   useEffect(() => {
     if (!count) return;
     onChangePagesAmount(Number(itemsPerPage.value), count);
-  }, [count, itemsPerPage, active_account]);
+  }, [count, itemsPerPage, active]);
 
   return (
     <Styled.Section>
@@ -133,35 +133,36 @@ export const UsersList: FC = () => {
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
       ) : (
-        <SettingsItemPageContent
-          onResendInvitationHandler={onResendInvitationHandler}
-          isFetchingData={isFetchingData}
-          isContentLoading={isContentLoading}
-          isFocus={isFocus}
-          searchedUsers={searchedUsers}
-          onFocusSearchHandler={onFocusSearchHandler}
-          onBlurHandler={onBlurHandler}
-          members={members}
-          isMemeberList
-          userRole={userRole}
-          onDeleteIconClickHandler={onDeleteIconClickHandler}
-          onEditIconClickHandler={onEditIconClickHandler}
-          pages={pages}
-          currentPage={currentPage}
-          onChangePaginationInputValue={onChangePaginationInputValue}
-          onForwardClick={onForwardClick}
-          onBackwardClick={onBackwardClick}
-          onEnterGoToClick={onEnterGoToClick}
-          onChangeItemsPerPage={onChangeItemsPerPage}
-          itemsPerPage={itemsPerPage}
-          inputPaginationValue={inputPaginationValue}
-          onGoToClick={onGoToClick}
-          onChangeSearchValueHandler={onChangeSearchValueHandler}
-          searchValue={searchValue}
-          onAddClickButtonHandler={onModalWindowToggleHandler}
-          onChangePage={onChangePage}
-          isGuard
-        />
+        // <SettingsItemPageContent
+        //   onResendInvitationHandler={onResendInvitationHandler}
+        //   isFetchingData={isFetchingData}
+        //   isContentLoading={isContentLoading}
+        //   isFocus={isFocus}
+        //   searchedUsers={searchedUsers}
+        //   onFocusSearchHandler={onFocusSearchHandler}
+        //   onBlurHandler={onBlurHandler}
+        //   members={members}
+        //   isMemeberList
+        //   userRole={userRole}
+        //   onDeleteIconClickHandler={onDeleteIconClickHandler}
+        //   onEditIconClickHandler={onEditIconClickHandler}
+        //   pages={pages}
+        //   currentPage={currentPage}
+        //   onChangePaginationInputValue={onChangePaginationInputValue}
+        //   onForwardClick={onForwardClick}
+        //   onBackwardClick={onBackwardClick}
+        //   onEnterGoToClick={onEnterGoToClick}
+        //   onChangeItemsPerPage={onChangeItemsPerPage}
+        //   itemsPerPage={itemsPerPage}
+        //   inputPaginationValue={inputPaginationValue}
+        //   onGoToClick={onGoToClick}
+        //   onChangeSearchValueHandler={onChangeSearchValueHandler}
+        //   searchValue={searchValue}
+        //   onAddClickButtonHandler={onModalWindowToggleHandler}
+        //   onChangePage={onChangePage}
+        //   isGuard
+        // />
+        <></>
       )}
     </Styled.Section>
   );

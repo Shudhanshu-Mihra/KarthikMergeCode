@@ -9,7 +9,7 @@ import { setUserAvatar } from '../SignUp/reducer/signup.reducer';
 
 export const useSettingsState = () => {
   const {
-    user: { fullName, active_account, accounts, profile_image, id },
+    user: { name, active, profile_image, id },
     token,
   } = useSelector((state: IState) => state.user);
 
@@ -62,17 +62,18 @@ export const useSettingsState = () => {
     }
   };
 
-  const activeAccount = accounts?.find(
-    (account) => account.id === active_account
-  );
+  // const activeAccount = accounts?.find(
+  //   (account) => account.id === active_account
+  // );
 
   return {
-    fullName,
-    activeAccount,
+    // fullName,
+    name,
+    // activeAccount,
     isUploadingPhoto,
     isHover,
     userProfilePhoto,
-    active_account,
+    active,
     profile_image,
     onGetProfilePhoto,
     onMouseEnterHandler,

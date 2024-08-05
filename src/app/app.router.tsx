@@ -8,8 +8,8 @@ import { Layout } from 'components/Layout/Layout';
 
 // import { PrivacyPolicy } from 'components/PrivacyPolicy';
 // import { TermsOfService } from 'components/TermsOfService';
-import { BindSocialAccount } from 'screens/BindSocialAccount';
-import { CapiumLogin } from 'screens/CapiumLogin/CapiumLogin';
+// import { BindSocialAccount } from 'screens/BindSocialAccount';
+// import { CapiumLogin } from 'screens/CapiumLogin/CapiumLogin';
 import { Dashboard } from 'screens/Dashboard';
 // import { FilesUploadPreview } from 'screens/FilesUploadPreview';
 // import { FilesUpload } from 'screens/FilesUpload';
@@ -17,7 +17,7 @@ import { ForgotPassword } from 'screens/ForgotPassword';
 // import { Inbox } from 'screens/Inbox';
 // import { Invites } from 'screens/Invites';
 import { Login } from 'screens/Login/Login';
-import { Master } from 'screens/Master';
+// import { Master } from 'screens/Master';
 // import { NotFound } from 'screens/NotFound';
 // import { Preference } from 'screens/Preference';
 // import { ReceiptDetails } from 'screens/ReceiptDetails';
@@ -25,13 +25,13 @@ import { ResetPassword } from 'screens/ResetPassword';
 // import { SalesInvoices } from 'screens/SalesInvoices';
 // import { SalesInvoicesDetails } from 'screens/SalesInvoicesDetails';
 import { Settings } from 'screens/Settings';
-import { CompanyList } from 'screens/Settings/CompanyList';
+// import { CompanyList } from 'screens/Settings/CompanyList';
 import { MyAccount } from 'screens/Settings/MyAccount';
 import { UsersList } from 'screens/Settings/UsersList';
-import { SignUp } from 'screens/SignUp/SignUp';
-import { SignUpNewMember } from 'screens/SignUpNewMember';
+// import { SignUp } from 'screens/SignUp/SignUp';
+// import { SignUpNewMember } from 'screens/SignUpNewMember';
 // import { Support } from 'screens/Support';
-import { WorkSpacePicker } from 'screens/WorkSpacePicker';
+// import { WorkSpacePicker } from 'screens/WorkSpacePicker';
 
 import { PrivateRouter } from './privateRouter';
 
@@ -129,22 +129,22 @@ export const AppRouter: FC = () => {
             </Route>
             {/* <Route path={ROUTES.support} element={<Support />} />
             <Route path={ROUTES.notFound} element={<NotFound />} /> */}
-            <Route path={ROUTES.manage} element={<Master />} /> 
+            {/* <Route path={ROUTES.manage} element={<Master />} />  */}
           </Route>
         </Route>
         {/* <Route path={ROUTES.callback} element={<RedirectOAuthPage />} />
         <Route path={ROUTES.preference} element={<Preference />} /> */}
         <Route path={ROUTES.login} element={<Login />} />
-        <Route path={ROUTES.sign_up} element={<SignUp />} />
+        {/* <Route path={ROUTES.sign_up} element={<SignUp />} /> */}
         <Route path={ROUTES.forgotPassword} element={<ForgotPassword />} />
         <Route path={ROUTES.resetPassword} element={<ResetPassword />} />
-        <Route path={ROUTES.capiumLogin} element={<CapiumLogin />} />
-        <Route path={ROUTES.signUpNewMember} element={<SignUpNewMember />} />
-        <Route path={ROUTES.chooseCompany} element={<WorkSpacePicker />} />
-        <Route
+        {/* <Route path={ROUTES.capiumLogin} element={<CapiumLogin />} /> */}
+        {/* <Route path={ROUTES.signUpNewMember} element={<SignUpNewMember />} /> */}
+        {/* <Route path={ROUTES.chooseCompany} element={<WorkSpacePicker />} /> */}
+        {/* <Route
           path={ROUTES.bindSocialAccount}
           element={<BindSocialAccount />}
-        />
+        /> */}
       </Routes>
     </BrowserRouter>
   );

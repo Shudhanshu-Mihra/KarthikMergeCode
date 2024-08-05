@@ -51,13 +51,14 @@ export const useDashboardState = () => {
   const {
     dashboard: { metric, receipts, companies },
     user: {
-      userInfo: { company },
+      // userInfo: { company },
       user,
       token,
     },
     settings: { companySwitcher },
   } = useSelector((state: IState) => state);
 
+  const date_format = 'MMM-dd-yyyy';
   const [state, setState] = useState<IuseDashboardState>(DASHBOARD_INITIAL_STATE);
   const timeFilterOptions = getTimeFilterOptions();
 
@@ -88,41 +89,41 @@ export const useDashboardState = () => {
       route: 'inbox/files-upload-preview',
     });
 
-  const getReceiptsStatisticHandler = async (
-    timeFrames?: { date_start: string; date_end: string },
-    isTimeFilter?: boolean
-  ) => {
-    try {
-      if (isTimeFilter) {
-        setIsContentLoading(true);
-      } else {
-        setIsLoading(true);
-      }
+  // const getReceiptsStatisticHandler = async (
+  //   timeFrames?: { date_start: string; date_end: string },
+  //   isTimeFilter?: boolean
+  // ) => {
+  //   try {
+  //     if (isTimeFilter) {
+  //       setIsContentLoading(true);
+  //     } else {
+  //       setIsLoading(true);
+  //     }
 
-      const payload = {
-        date_start: timeFrames?.date_start || '',
-        date_end: timeFrames?.date_end || '',
-        active_account: user?.active_account || '',
-      };
-      const { data } = await getReceiptStatistic(payload);
-      const companiesWithLogo = await getCompanyLogo(data.companies, token);
-      dispatch(setStatistic({ ...data, companies: companiesWithLogo }));
-      if (!user.accounts?.length && !user.active_account && !company.name) {
-        const { account, company } = data.companies[0];
-        setUserInfo({ active_account: account.id, account, company });
-      }
+  //     const payload = {
+  //       date_start: timeFrames?.date_start || '',
+  //       date_end: timeFrames?.date_end || '',
+  //       active_account: user?.active || false,
+  //     };
+  //     const { data } = await getReceiptStatistic(payload);
+  //     const companiesWithLogo = await getCompanyLogo(data.companies, token);
+  //     dispatch(setStatistic({ ...data, companies: companiesWithLogo }));
+  //     if (!user.accounts?.length && !user.active_account && !company.name) {
+  //       const { account, company } = data.companies[0];
+  //       setUserInfo({ active_account: account.id, account, company });
+  //     }
 
-      if (isTimeFilter) {
-        setIsContentLoading(false);
-      } else {
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setIsContentLoading(false);
-      setIsLoading(false);
-      console.log(error);
-    }
-  };
+  //     if (isTimeFilter) {
+  //       setIsContentLoading(false);
+  //     } else {
+  //       setIsLoading(false);
+  //     }
+  //   } catch (error) {
+  //     setIsContentLoading(false);
+  //     setIsLoading(false);
+  //     console.log(error);
+  //   }
+  // };
   const lastReceipts = receipts?.data.slice(0, 5);
 
   const dateHashMapping: Record<
@@ -141,7 +142,7 @@ export const useDashboardState = () => {
   ) => {
     if (timeFilterValue.value === newValue.value) return;
     setTimeFilterValue(newValue);
-    getReceiptsStatisticHandler(dateHashMapping[newValue.value], true);
+    // getReceiptsStatisticHandler(dateHashMapping[newValue.value], true);
   };
 
   const setUserInfo = async (userData: IUserInfoData) => {
@@ -176,7 +177,7 @@ export const useDashboardState = () => {
         {
           ...prevState,
           dateRangeValue: isEqual ? null : date,
-          formattedDate: isEqual ? '' : `${format(date[0], company.date_format)} - ${format(date[1], company.date_format)}`,
+          formattedDate: isEqual ? '' : `${format(date[0], date_format)} - ${format(date[1], date_format)}`,
         }));
       setIsDatePickerOpen();
       const dateStart = setAndFormatDateToISO(date[0].toISOString());
@@ -192,7 +193,7 @@ export const useDashboardState = () => {
       setState((prevState) => ({
         ...prevState,
         dateValue: isEqual ? null : date,
-        formattedDate: isEqual ? '' : format(date, company.date_format),
+        formattedDate: isEqual ? '' : format(date, date_format),
       }));
       setIsDatePickerOpen();
       const dateStart = setAndFormatDateToISO(date.toISOString());
@@ -259,7 +260,7 @@ export const useDashboardState = () => {
     timeFilterValue,
     navigateToInvites,
     onSelectFilesHandler,
-    getReceiptsStatisticHandler,
+    // getReceiptsStatisticHandler,
     onChangeCategoryFieldHandler,
     isLoading,
     isContentLoading,
@@ -268,7 +269,7 @@ export const useDashboardState = () => {
     timeFilterOptions,
     lastReceipts,
     receipts,
-    company,
+    // company,
     user,
     datePickerRef,
     isDatePickerOpen,
