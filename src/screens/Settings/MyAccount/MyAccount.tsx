@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-
+import {theme} from '../../../styles/theme';
 import { LoaderComponent } from 'components/Loader';
 import { SuccessPopup } from 'components/SuccessPopup';
 import { LinkSocAccModalWindow } from 'components/LinkSocAccModalWindow';
@@ -8,6 +8,10 @@ import { useMyAccountState } from './MyAccount.state';
 import { MyAccountStyles as Styled } from './MyAccount.style';
 import { Buttons } from './Buttons';
 import { AccountFields } from './AccountFields';
+import { FormButtonPanel } from 'components/FormButtonPanel';
+import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
+import { PasswordChangeModelWindow } from './PasswordChangeModelWindow/PasswordChangeModelWindow';
+
 
 export const MyAccount: FC = () => {
   const {
@@ -18,13 +22,13 @@ export const MyAccount: FC = () => {
     formik,
     isLoading,
     resetPasswordFormik,
-    isDisabledButton,
+    // isDisabledButton,
     isShowSuccesPopup,
     isShowNewPassword,
     isShowConfirmPassword,
-    linkSocAccFormik,
+    // linkSocAccFormik,
     countryValue,
-    isLinkSocialAccButton,
+    // isLinkSocialAccButton,
     isLinkSocAccWindowOpen,
     isCreatingAcc,
     setLinkSocAccWindowToggle,
@@ -35,8 +39,11 @@ export const MyAccount: FC = () => {
     onCancelbuttonClickHandler,
     getProfileHandler,
     setIsResetPassword,
-    onSettingsClickButtonHandler,
+    // resetPasswordHandler,
     onSubmitHandler,
+    // onHandler,
+    isForgetPasswordModalOpen,
+    setForgetPasswordModalOpen,
   } = useMyAccountState();
 
   useEffect(() => {
@@ -45,7 +52,7 @@ export const MyAccount: FC = () => {
 
   return (
     <Styled.LayoutWrapper>
-      <LinkSocAccModalWindow
+      {/* <LinkSocAccModalWindow
         isLoading={isCreatingAcc}
         isModalWindowOpen={isLinkSocAccWindowOpen}
         onCloseModalWindowHandler={setLinkSocAccWindowToggle}
@@ -62,8 +69,8 @@ export const MyAccount: FC = () => {
         errors={linkSocAccFormik.errors}
         touched={linkSocAccFormik.touched}
         countryValue={countryValue}
-      />
-      <SuccessPopup
+      /> */}
+      {/* <SuccessPopup
         positionTop="0"
         isShowPopup={isShowSuccesPopup}
         closePopupFc={setIsShowSuccesPopup}
@@ -74,7 +81,7 @@ export const MyAccount: FC = () => {
             ? 'The password has been successfully changed'
             : 'User profile has been successfully changed'
         }
-      />
+      /> */}
       {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -91,7 +98,13 @@ export const MyAccount: FC = () => {
               resetPasswordFormikMeta={resetPasswordFormik.getFieldMeta}
               accountsFields={accountsFields}
             />
-            <Buttons
+            <PasswordChangeModelWindow
+                isOpen={isForgetPasswordModalOpen}
+                onRequestClose={()=>{setForgetPasswordModalOpen(false)}}
+                isLoading={false}
+                onFormHandleSubmit={()=>{console.log("onFormHandleSubmit")}}
+      />
+            {/* <Buttons
               settingsButtonText={
                 isLinkSocialAccButton
                   ? 'Link Social Account'
@@ -110,10 +123,20 @@ export const MyAccount: FC = () => {
               isDisabledButton={isDisabledButton}
               isLoading={isLoading}
               isCancelButton={isResetPassword}
-            />
+            /> */}
+            <FormButtonPanel>
+              
+              <ReUseActionButton displayText='Reset Password' buttonType='text-link' onClick={()=>{setForgetPasswordModalOpen(true)}} displayIconType='resetIcon' fontSize='18px' customColor={`${theme.colors.red}`} />
+
+              <ReUseActionButton displayText='Cancel' buttonType='actionButton' 
+              onClick={()=>{setForgetPasswordModalOpen(false)}}widthType='roundedBig' margin='0 0 0 auto' themedButton='roundedWhite'/>
+
+              <ReUseActionButton displayText='update' buttonType='actionButton' 
+              widthType='rounded'  themedButton='roundedRed'/>
+            </FormButtonPanel>
           </Styled.Form>
         </Styled.ContentWrapper>
-      )}
+      )} 
     </Styled.LayoutWrapper>
   );
 };

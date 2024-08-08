@@ -39,11 +39,11 @@ import {
   SETTINGS_INITIAL_STATE,
 } from 'screens/Settings/reducer/settings.reducer';
 import { ISETTINGS_INITIAL_STATE } from 'screens/Settings/types/settings.types';
-import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
-import {
-  InvitesReducer,
-  INVITES_INITIAL_STATE,
-} from 'screens/Invites/reducer/invites.reducer';
+// import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
+// import {
+//   InvitesReducer,
+//   INVITES_INITIAL_STATE,
+// } from 'screens/Invites/reducer/invites.reducer';
 // import {
 //   salesInvoicesReducer,
 //   SALES_INVOICES_INITIAL_STATE,
@@ -80,7 +80,7 @@ export interface IState {
   // master: IMASTER_INITIAL_STATE;
   // receiptDetails: IRECEIPT_DETAILS_INITIAL_STATE;
   settings: ISETTINGS_INITIAL_STATE;
-  invites: IINVITES_INITIAL_STATE;
+  // invites: IINVITES_INITIAL_STATE;
   // invoices: IINVOICE_INITIAL_STATE;
   // reports: IREPORT_INITIAL_STATE;
 }
@@ -94,7 +94,7 @@ const combineReducer = combineReducers<IState>({
   // master: MasterReducer,
   // receiptDetails: ReceiptDetailsReducer,
   settings: SettingsReducer,
-  invites: InvitesReducer,
+  // invites: InvitesReducer,
   // invoices: salesInvoicesReducer,
   // reports: expenseReportReducer,
 });

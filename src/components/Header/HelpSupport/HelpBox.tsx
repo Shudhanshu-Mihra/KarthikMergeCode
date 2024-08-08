@@ -6,7 +6,7 @@ import { Avatar } from "../../Avatar/Avatar";
 
 import { ExtraLinkStyles } from "./HelpBox.style";
 import { Icon } from "components/Icons/Icons";
-import { HELP_LINK } from "constants/header-links";
+// import { HELP_LINK } from "constants/header-links";
 
 interface IAvatarBoxProps extends IAvatarSubmenuLinks {
 	onMouseEnterHandler: () => void;
@@ -26,11 +26,11 @@ export const HelpBox = () => {
 	// } = props;
 	return (
 		<>
-			{HELP_LINK.map((link: any, index) => (
+			{/* {HELP_LINK.map((link: any, index:number) => (
 				<ExtraLinkStyles.Link to={link.route} key={index}>
 					<Icon type={link.iconName} width={24} height={24} />
 				</ExtraLinkStyles.Link>
-			))}
+			))} */}
 		</>
 	);
 };

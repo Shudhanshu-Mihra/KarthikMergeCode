@@ -1,9 +1,8 @@
 import { add, format } from 'date-fns';
 import decode from 'jwt-decode';
 import imageCompression from 'browser-image-compression';
-
-// import { ICurrency } from 'screens/SignUp/types/signup.types';
-import { IInvites } from 'screens/Invites/types/invites.types';
+import { ICurrency } from 'screens/SignUp/types/signup.types';
+// import { IInvites } from 'screens/Invites/types/invites.types';
 import { getCompanyLogo } from 'screens/Settings/settings.api';
 
 import { ROUTES } from 'constants/routes';
@@ -61,11 +60,11 @@ export const dateDiffInDays = (a: Date, b: Date) => {
 
 export const getIsDisabledLink = (
   linkRoute: string,
-  active_account?: string | null
+  active_user?: boolean | null
 ) => {
-  return !active_account &&
+  return !active_user &&
     linkRoute !== ROUTES.invites &&
-    !active_account &&
+    !active_user &&
     linkRoute !== ROUTES.settings
     ? true
     : false;
@@ -202,12 +201,12 @@ export const getCorrectCustomId = (text: string) => {
     .join('');
 };
 
-// export const getFormatedCurrencies = (currencies: ICurrency[]) =>
-//   currencies?.map((currency) => ({
-//     label: `${currency.value} (${currency.description})`,
-//     value: currency.value,
-//     id: currency.id,
-//   }));
+export const getFormatedCurrencies = (currencies: ICurrency[]) =>
+  currencies?.map((currency) => ({
+    label: `${currency.value} (${currency.description})`,
+    value: currency.value,
+    id: currency.id,
+  }));
 
 export const getReceiptDetailsCurrentSelectItem = (
   itemsArray: IOption[],
@@ -231,10 +230,10 @@ export const getSelectedUser = (members: IMember[], memberId: string) => {
   return members.find((member: { id: string }) => member.id === memberId);
 };
 
-export const getSelectedItems = (items: IInvites[], itemId: string) => {
-  if (!items.length) return;
-  return items?.find((el: { id: string }) => el.id === itemId);
-};
+// export const getSelectedItems = (items: IInvites[], itemId: string) => {
+//   if (!items.length) return;
+//   return items?.find((el: { id: string }) => el.id === itemId);
+// };
 
 export const onCreateFormDataHandler = (
   data: IFormdataProps,

@@ -39,6 +39,7 @@ import { ROUTES } from 'constants/routes';
 import { useSelector } from 'react-redux';
 import { getUserExist } from '../screens/Dashboard/dashboard.api';
 import { IState } from '../services/redux/reducer';
+import RIdata from 'screens/RIDATA/RIdata';
 // import { ExpenseReport } from 'screens/ExpenseReport';
 // import { ExpenseDetails } from 'screens/ExpenseDetails';
 
@@ -108,15 +109,15 @@ export const AppRouter: FC = () => {
             <Route
               path={ROUTES.invoiceUploadFile}
               element={<FilesUpload />}
-            />
-            <Route
-              path={ROUTES.filesUploadPreview}
-              element={<FilesUploadPreview />}
-            />
-            <Route
-              path={ROUTES.filesUploadPreviewsales}
-              element={<FilesUploadPreview />}
             />*/}
+            <Route
+              path={ROUTES.pendingriData}
+              element={<RIdata />}
+            />
+            <Route
+              path={ROUTES.profile}
+              element={<MyAccount />}
+            />
             <Route path={ROUTES.settings} element={<Settings />}>
             {/* <Route index element={<MyAccount />} /> */}
             <Route path={ROUTES.usersList} element={<UsersList />} />

@@ -1,5 +1,5 @@
-import { TableSettingsMember } from '../../Table/TableInvites';
-import { TableSettingsCompany } from '../../Table/TableSettings/TableSettingsCompany';
+// import { TableSettingsMember } from '../../Table/TableInvites/';
+// import { TableSettingsCompany } from '../../Table/TableInvites';
 
 interface ITableProps {
   isMemeberList?: boolean;
@@ -28,8 +28,8 @@ export const Table = (props: ITableProps) => {
   } = props;
   return (
     <>
-      {isMemeberList ? (
-        <TableSettingsMember
+  
+        {/* <TableSettingsMember
           onResendInvitationHandler={onResendInvitationHandler}
           searchValue={searchValue}
           searchedUsers={searchedUsers}
@@ -38,16 +38,7 @@ export const Table = (props: ITableProps) => {
           onDeleteIconClickHandler={onDeleteIconClickHandler}
           onEditIconClickHandler={onEditIconClickHandler}
         />
-      ) : (
-        <TableSettingsCompany
-          searchedCompanies={searchedCompanies}
-          searchValue={searchValue}
-          companies={companies}
-          userRole={userRole}
-          onDeleteIconClickHandler={onDeleteIconClickHandler}
-          onEditIconClickHandler={onEditIconClickHandler}
-        />
-      )}
+       */}
     </>
   );
 };

@@ -1,11 +1,14 @@
 import { FC } from 'react';
 
-import { HeaderPanelMaster } from '../HeaderPanelMaster';
+// import { HeaderPanelMaster } from '../HeaderPanelMaster';
 import { LoaderComponent } from '../Loader';
 import { PaginationPanel } from '../PaginationPanel';
 import { SettingsItemPageContentStyle as Styled } from './SettingsItemPageContent.style';
 import { Table } from './Table';
 import { ISettingsItemPageContentProps } from './types/settingsItemPageContent.types';
+import { ReUseActionPlaceholder } from 'ReUseComponents/reUseActionPlaceHolder/ReUseActionPlaceHolder';
+import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
+import { ReUseSearch } from 'ReUseComponents/reUseSearch/ReUseSearch';
 
 export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
   props
@@ -36,10 +39,11 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
     userRole,
     members,
     isMemeberList,
-    isContentLoading,
+    // isContentLoading,
     isFetchingData,
     companies,
   } = props;
+  const isContentLoading = false;
 
   const isPaginationPanel = isMemeberList
     ? (searchValue && searchedUsers?.length) ||
@@ -49,7 +53,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
 
   return (
     <Styled.ContentWrapper>
-      <HeaderPanelMaster
+      {/* <HeaderPanelMaster
         onBlurHandler={onBlurHandler}
         onFocusSearchHandler={onFocusSearchHandler}
         onChangeSearchValueHandler={onChangeSearchValueHandler}
@@ -58,7 +62,15 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
         isGuard={isGuard}
         userRole={userRole?.role as TRoles}
         buttonText={isMemeberList ? 'Create User' : 'Create Company'}
-      />
+      /> */}
+
+      <ReUseActionPlaceholder>
+
+      <ReUseSearch searchValue={searchValue} onChangeSearchValueHandler={onChangeSearchValueHandler} onBlurHandler={onBlurHandler} onFocusSearchHandler={onFocusSearchHandler} />
+      </ReUseActionPlaceholder>
+      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
+     
+
       {isContentLoading ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -77,7 +89,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
             onEditIconClickHandler={onEditIconClickHandler}
             companies={companies}
           />
-          {isPaginationPanel ? (
+          {/* {isPaginationPanel ? (
             <Styled.paginationPosition>
             <PaginationPanel
               pages={pages}
@@ -93,7 +105,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
               onGoToClick={onGoToClick}
             />
             </Styled.paginationPosition>
-          ) : null}
+          ) : null} */}
         </div>
       ) : null}
     </Styled.ContentWrapper>

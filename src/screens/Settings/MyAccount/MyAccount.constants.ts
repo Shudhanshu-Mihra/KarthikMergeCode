@@ -11,43 +11,43 @@ export const resetPasswordFormikInitialValues = {
 
 export const getInputFields = (props: IGetInputFieldsProps) => {
   const {
-    countries,
+    // countries,
     dateFormats,
-    formatedCurrencies,
+    // formatedCurrencies,
     funcArray,
     state,
     isDisabledSelect,
-    isDisabledCountry,
+    // isDisabledCountry,
   } = props;
   return [
     {
       type: 'input',
       label: 'Full Name',
-      name: 'fullName',
+      name: 'name',
     },
     {
       type: 'input',
       label: 'Email',
       name: 'email',
     },
-    {
-      type: 'select',
-      name: 'country',
-      label: 'Country',
-      isDisabled: isDisabledCountry,
-      value: state.country,
-      options: countries,
-      onChangeSelect: funcArray[2],
-    },
-    {
-      type: 'select',
-      name: 'currency',
-      label: 'Currency',
-      isDisabled: isDisabledSelect,
-      value: state.currency,
-      options: formatedCurrencies,
-      onChangeSelect: funcArray[0],
-    },
+    // {
+    //   type: 'select',
+    //   name: 'country',
+    //   label: 'Country',
+    //   isDisabled: isDisabledCountry,
+    //   value: state.country,
+    //   // options: countries,
+    //   onChangeSelect: funcArray[2],
+    // },
+    // {
+    //   type: 'select',
+    //   name: 'currency',
+    //   label: 'Currency',
+    //   isDisabled: isDisabledSelect,
+    //   value: state.currency,
+    //   options: formatedCurrencies,
+    //   // onChangeSelect: funcArray[0],
+    // },
     {
       type: 'select',
       name: 'dateFormat',
@@ -55,7 +55,7 @@ export const getInputFields = (props: IGetInputFieldsProps) => {
       isDisabled: isDisabledSelect,
       value: state.dateFormat,
       options: dateFormats,
-      onChangeSelect: funcArray[1],
+      // onChangeSelect: funcArray[1],
     },
   ];
 };

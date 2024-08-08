@@ -9,10 +9,10 @@ export interface IGetInputFieldsProps {
   state: {
     currency: SingleValue<IOption> | any;
     dateFormat: SingleValue<IOption> | any;
-    country: SingleValue<IOption> | any;
+    // country: SingleValue<IOption> | any;
   };
   formatedCurrencies: { label: string; value: string; id: string }[];
-  countries: IOption[];
+  // countries: IOption[];
   dateFormats: IOption[];
 }
 

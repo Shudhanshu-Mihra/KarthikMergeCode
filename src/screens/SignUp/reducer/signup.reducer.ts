@@ -16,6 +16,8 @@ export const SIGN_UP_USER_INITIAL_STATE: ISIGN_UP_SUPPORT_USER_INITIAL_STATE = {
     password: '',
     // country: '',
     id: '',
+    currencies:[],
+    date_format:'',
     // accounts: null,
     // active_account: null,
     // socialAuth: null,
@@ -52,14 +54,14 @@ export const SIGN_UP_USER_INITIAL_STATE: ISIGN_UP_SUPPORT_USER_INITIAL_STATE = {
   //     ]
   //   },
   // },
-  currencies: [
-    {
-      country: '',
-      description: '',
-      id: '',
-      value: '',
-    },
-  ],
+  // currencies: [
+  //   {
+  //     country: '',
+  //     description: '',
+  //     id: '',
+  //     value: '',
+  //   },
+  // ],
   // isSkipOnboarding: false,
 };
 
@@ -134,7 +136,7 @@ export const SignUpUserSlice = createSlice({
       state: ISIGN_UP_SUPPORT_USER_INITIAL_STATE,
       action: PayloadAction<ICurrency[]>
     ) => {
-      state.currencies = action.payload;
+      state.user.currencies = action.payload;
     },
     updateUserProfile: (
       state: ISIGN_UP_SUPPORT_USER_INITIAL_STATE,

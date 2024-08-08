@@ -8,7 +8,9 @@ import { ModalWindowHeader } from '../ModalWindowHeader';
 import { InsertUserModalWindowStyles as Styled } from './InsertUserModalWindow.style';
 import { UserModalWindowStyles } from './InsertUserModalWindow.style';
 import { ModalInputs } from './ModalInputs/ModalInputs';
-import { TInputFields } from './types/insertUser.types';
+// import { TInputFields } from './types/insertUser.types';
+import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
+
 import { useState } from 'react';
 import { PermissionModule } from '../Permission/permission';
 import { Icon } from '../Icons/Icons';
@@ -122,30 +124,30 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
                   CustomSelectLabel={input.label}
                   key={input.name}
                   inputName={input.name}
-                  isMulti={input.isMulti}
+                  // isMulti={input.isMulti}
                   inputType={input.type}
                   formikMeta={formikMeta}
                   formikProps={formikProps}
                   onEnterCreateItemClick={onEnterCreateItemClick}
                   options={input.options}
-                  onChangeSelectHandler={input.onChangeSelect}
+                  // onChangeSelectHandler={input.onChangeSelect}
                 />
               ))}
             </Styled.InputsWrapper>
             {/* permission div start */}
-            {/* <Styled.CheckboxItemWrapper>
+            <Styled.CheckboxItemWrapper>
           {permissionState.map((permission:any) => (
           <CheckboxItem
             // isChecked={isAllChecked}
             isChecked={permission.isChecked}
             // onChange={onCheckedAllItemsHandler}
-            onChange={() => handleCheckboxChange(permission)}
+            // onChange={() => handleCheckboxChange(permission)}
             // onChange={() => {console.log(permission);}}
             labelText={permission.p_name}
             name="allChecked"
           />
         ))}
-        </Styled.CheckboxItemWrapper> */}
+        </Styled.CheckboxItemWrapper>
             {/* permission div end */}
             <Styled.Hyperlink onClick={openSecondModal}>
               Edit Permission <Styled.HyperLinkInnerText>for this user .</Styled.HyperLinkInnerText>

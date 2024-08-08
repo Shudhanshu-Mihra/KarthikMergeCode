@@ -22,9 +22,9 @@ export const Settings: FC = () => {
     onMouseLeaveHandler,
   } = useSettingsState();
 
-  useEffect(() => {
-    onGetProfilePhoto(profile_image);
-  }, []);
+  // useEffect(() => {
+  //   onGetProfilePhoto(profile_image);
+  // }, []);
   return (
     <SettingsStyles.Wrapper>
       {/* <Sidebar
@@ -33,11 +33,12 @@ export const Settings: FC = () => {
         onMouseLeaveHandler={onMouseLeaveHandler}
         isUploadingPhoto={isUploadingPhoto}
         avatatSrc={userProfilePhoto}
-        userFullName={fullName}
-        userRole={activeAccount?.role as TRoles}
-        isActiveAccount={!!active_account}
+        userFullName={name}
+        userRole={active?.role as TRoles}
+        isActiveAccount={!!active}
         onUploadProfilePhotoHandler={onUploadProfilePhotoHandler}
       /> */}
+      
       <Outlet />
     </SettingsStyles.Wrapper>
   );

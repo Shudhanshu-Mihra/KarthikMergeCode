@@ -35,6 +35,7 @@ export interface ICurrency {
   description: string;
   id: string;
   value: string;
+  symbol?:string;
 }
 
 export interface IUserInfo {
@@ -66,9 +67,9 @@ export interface ISIGN_UP_SUPPORT_USER_INITIAL_STATE {
   user: ISupport_User;
   token: string;
   refreshToken: string;
+
   // socialAccount: ISocialAccounts;
   // userInfo: IUserInfo;
-  currencies: ICurrency[];
   // isSkipOnboarding: boolean;
 }
 
@@ -81,4 +82,7 @@ export interface ISupport_User {
   name:string;
   role:string;
   password:string;
+  currencies: ICurrency[];
+  date_format : string;
+
 }

@@ -15,11 +15,11 @@ interface IChangePassword {
 }
 
 export const getProfile = (
-  active ?: boolean,
+  active: boolean,
   user_id:string,
 ) => {
-  const URL = `profile/get`;
-  return apiServices.fetchData(URL, { active, user_id });
+  const URL = `admin/my-profile`;
+  return apiServices.fetchData(URL);
 };
 
 export const resetPassword = (payload: IChangePassword) => {

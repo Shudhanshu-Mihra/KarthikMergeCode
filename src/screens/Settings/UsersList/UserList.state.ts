@@ -297,6 +297,7 @@ export const useUserListState = () => {
       await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
       onDeleteItem(count, isLastElementOnPage);
       onChangeStateFieldHandler('isLoading', false);
+      onChangeStateFieldHandler('isFetchingData', false);
       onDeleteModalWindowToggle();
     } catch (error) {
       onChangeStateFieldHandler('isLoading', false);
