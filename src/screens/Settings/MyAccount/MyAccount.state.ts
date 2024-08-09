@@ -21,7 +21,8 @@ import {
   getProfile,
   linkSocialAccount,
   resetPassword,
-  updateProfile,
+  // updateProfile,
+
 } from './myAccount.api';
 
 import {
@@ -42,6 +43,7 @@ interface IuseMyAccountState {
 export const useMyAccountState = () => {
   const {
     user: {
+      token,
       // userInfo: {
       //   company: { currency, date_format },
       // },
@@ -192,10 +194,8 @@ export const useMyAccountState = () => {
     try {
       setIsLoading(true);
       const payload = {
-        old_password: resetPasswordValues.currentPassword
-          ? resetPasswordValues.currentPassword
-          : undefined,
-        new_password: resetPasswordValues.confirmPassword,
+        token:"test",
+        newPassword: resetPasswordValues.confirmPassword,
       };
       const { data } = await resetPassword(payload);
       if (data.message === 'The password has been updated') {
@@ -354,6 +354,16 @@ export const useMyAccountState = () => {
   // const isLinkSocialAccButton =
   //   !socialAccount.isLinkedSocAcc && socialAccount.google.id;
 
+  const UpdatingPassword =()=>{
+    // console.log("UpdatingPassword is calling");
+    console.log(token);
+    const payload = {
+      token:token,
+      newPassword:"password1",
+    }
+    resetPassword(payload)
+  }
+
   return {
     // ...state,
     isFetchingData,
@@ -361,6 +371,7 @@ export const useMyAccountState = () => {
     isCreatingAcc,
     countryValue,
     isLinkSocAccWindowOpen,
+    UpdatingPassword,
     // linkSocAccFormik,
     setLinkSocAccWindowToggle,
     isShowNewPassword,
@@ -383,6 +394,7 @@ export const useMyAccountState = () => {
     isResetPassword,
     accountsFields,
     resetPasswordFields,
+
     user,
     // isDisableUpdateUserProfileButton,
     isForgetPasswordModalOpen,

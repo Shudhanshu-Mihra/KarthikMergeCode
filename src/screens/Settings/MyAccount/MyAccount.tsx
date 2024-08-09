@@ -44,6 +44,7 @@ export const MyAccount: FC = () => {
     // onHandler,
     isForgetPasswordModalOpen,
     setForgetPasswordModalOpen,
+    UpdatingPassword
   } = useMyAccountState();
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export const MyAccount: FC = () => {
                 isOpen={isForgetPasswordModalOpen}
                 onRequestClose={()=>{setForgetPasswordModalOpen(false)}}
                 isLoading={false}
-                onFormHandleSubmit={()=>{console.log("onFormHandleSubmit")}}
+                onFormHandleSubmit={UpdatingPassword}
       />
             {/* <Buttons
               settingsButtonText={
@@ -131,7 +132,7 @@ export const MyAccount: FC = () => {
               <ReUseActionButton displayText='Cancel' buttonType='actionButton' 
               onClick={()=>{setForgetPasswordModalOpen(false)}}widthType='roundedBig' margin='0 0 0 auto' themedButton='roundedWhite'/>
 
-              <ReUseActionButton displayText='update' buttonType='actionButton' 
+              <ReUseActionButton displayText='update' buttonType='actionButton'
               widthType='rounded'  themedButton='roundedRed'/>
             </FormButtonPanel>
           </Styled.Form>

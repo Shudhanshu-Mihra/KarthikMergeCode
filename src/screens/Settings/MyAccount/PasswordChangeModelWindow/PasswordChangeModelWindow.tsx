@@ -76,7 +76,7 @@ export const PasswordChangeModelWindow: FC<ForgetPasswordModalProps> = ( { isOpe
       <ModalButtonsBox
           isLoading={isLoading}
           onCancelClickHandler={onRequestClose}
-          onSaveButtonCLickHandler={onFormHandleSubmit}
+          onSaveButtonCLickHandler={onFormHandleSubmit }
           isSaveButton
           // isDisableButton={!isValid}
         />
