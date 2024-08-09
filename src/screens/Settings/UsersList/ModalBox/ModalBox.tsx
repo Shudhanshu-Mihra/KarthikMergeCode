@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
 
-// import { DeleteModalWindow } from 'components/DeleteModalWindow';
-// import { InsertUserModalWindow } from 'components/InsertUserModalWindow';
-// import {PermissionProps} from '../../../../components/InsertUserModalWindow/InsertUserModalWindow.type';
+import { DeleteModalWindow } from 'components/DeleteModalWindow';
+import { InsertUserModalWindow } from 'components/InsertUserModalWindow';
+import {PermissionProps} from '../../../../components/InsertUserModalWindow/InsertUserModalWindow.type';
 import { TInputFields } from '../../MyAccount/types/MyAccount.types';
 
-interface IUserListModalBoxProps extends Omit<
+interface IUserListModalBoxProps
+  extends PermissionProps, Omit<
     IModalWindowsBox,
     'onSaveButtonCLickHandler' | 'onChangePaginationInputValueHandler' | 'inputValue'
   > {
@@ -43,11 +44,11 @@ export const ModalBox: FC<IUserListModalBoxProps> = (props) => {
     isInvitation,
     categoryName,
     // isAllChecked,
-    // onCheckedAllItemsHandler,
+    onCheckedAllItemsHandler,
 
-    // isPAllChecked,
-    // permissionState,
-    // setPAllChecked,
+    isPAllChecked,
+    permissionState,
+    setPAllChecked,
 
     PermissionsForAPIHandler,
     role,
@@ -55,7 +56,7 @@ export const ModalBox: FC<IUserListModalBoxProps> = (props) => {
 
   return (
     <>
-      {/* <InsertUserModalWindow
+      <InsertUserModalWindow
         modalFields={modalFields}
         text="Name"
         isLoading={isLoading}
@@ -78,15 +79,15 @@ export const ModalBox: FC<IUserListModalBoxProps> = (props) => {
         setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role}
-      /> */}
-      {/* <DeleteModalWindow
+      />
+      <DeleteModalWindow
         isLoading={isLoading}
         onCloseDeleteModalWindowHandler={onCloseDeleteModalWindowHandler}
         onDeleteButtonClickHandler={onDeleteButtonClickHandler}
         isDeleteModalWindowOpen={isDeleteModalWindowOpen}
         deleteItemName={`‘${deleteItemName}’`}
         categoryName={categoryName}
-      /> */}
+      />
     </>
   );
 };

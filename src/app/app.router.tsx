@@ -8,8 +8,8 @@ import { Layout } from 'components/Layout/Layout';
 
 // import { PrivacyPolicy } from 'components/PrivacyPolicy';
 // import { TermsOfService } from 'components/TermsOfService';
-import { BindSocialAccount } from 'screens/BindSocialAccount';
-import { CapiumLogin } from 'screens/CapiumLogin/CapiumLogin';
+// import { BindSocialAccount } from 'screens/BindSocialAccount';
+// import { CapiumLogin } from 'screens/CapiumLogin/CapiumLogin';
 import { Dashboard } from 'screens/Dashboard';
 // import { FilesUploadPreview } from 'screens/FilesUploadPreview';
 // import { FilesUpload } from 'screens/FilesUpload';
@@ -24,14 +24,14 @@ import { Login } from 'screens/Login/Login';
 import { ResetPassword } from 'screens/ResetPassword';
 // import { SalesInvoices } from 'screens/SalesInvoices';
 // import { SalesInvoicesDetails } from 'screens/SalesInvoicesDetails';
-// import { Settings } from 'screens/Settings';
+import { Settings } from 'screens/Settings';
 // import { CompanyList } from 'screens/Settings/CompanyList';
-// import { MyAccount } from 'screens/Settings/MyAccount';
-// import { UsersList } from 'screens/Settings/UsersList';
-import { SignUp } from 'screens/SignUp/SignUp';
-import { SignUpNewMember } from 'screens/SignUpNewMember';
+import { MyAccount } from 'screens/Settings/MyAccount';
+import { UsersList } from 'screens/Settings/UsersList';
+// import { SignUp } from 'screens/SignUp/SignUp';
+// import { SignUpNewMember } from 'screens/SignUpNewMember';
 // import { Support } from 'screens/Support';
-import { WorkSpacePicker } from 'screens/WorkSpacePicker';
+// import { WorkSpacePicker } from 'screens/WorkSpacePicker';
 
 import { PrivateRouter } from './privateRouter';
 
@@ -39,6 +39,7 @@ import { ROUTES } from 'constants/routes';
 import { useSelector } from 'react-redux';
 import { getUserExist } from '../screens/Dashboard/dashboard.api';
 import { IState } from '../services/redux/reducer';
+import RIdata from 'screens/RIDATA/RIdata';
 // import { ExpenseReport } from 'screens/ExpenseReport';
 // import { ExpenseDetails } from 'screens/ExpenseDetails';
 
@@ -108,43 +109,43 @@ export const AppRouter: FC = () => {
             <Route
               path={ROUTES.invoiceUploadFile}
               element={<FilesUpload />}
+            />*/}
+            <Route
+              path={ROUTES.pendingriData}
+              element={<RIdata />}
             />
             <Route
-              path={ROUTES.filesUploadPreview}
-              element={<FilesUploadPreview />}
-            />
-            <Route
-              path={ROUTES.filesUploadPreviewsales}
-              element={<FilesUploadPreview />}
+              path={ROUTES.profile}
+              element={<MyAccount />}
             />
             <Route path={ROUTES.settings} element={<Settings />}>
-              <Route index element={<MyAccount />} />
-              <Route path={ROUTES.usersList} element={<UsersList />} />
-              <Route path={ROUTES.companiesList} element={<CompanyList />} />
-              <Route
+            {/* <Route index element={<MyAccount />} /> */}
+            <Route path={ROUTES.usersList} element={<UsersList />} />
+            {/* <Route path={ROUTES.companiesList} element={<CompanyList />} /> */}
+              {/* <Route
                 path={ROUTES.termsOfService}
                 element={<TermsOfService />}
               />
-              <Route path={ROUTES.privacyPolicy} element={<PrivacyPolicy />} />
+              <Route path={ROUTES.privacyPolicy} element={<PrivacyPolicy />} /> */}
             </Route>
-            <Route path={ROUTES.support} element={<Support />} />
-            <Route path={ROUTES.notFound} element={<NotFound />} />
-            <Route path={ROUTES.manage} element={<Master />} />*/}
+            {/* <Route path={ROUTES.support} element={<Support />} />
+            <Route path={ROUTES.notFound} element={<NotFound />} /> */}
+            {/* <Route path={ROUTES.manage} element={<Master />} />  */}
           </Route>
         </Route>
         {/* <Route path={ROUTES.callback} element={<RedirectOAuthPage />} />
         <Route path={ROUTES.preference} element={<Preference />} /> */}
         <Route path={ROUTES.login} element={<Login />} />
-        <Route path={ROUTES.sign_up} element={<SignUp />} />
+        {/* <Route path={ROUTES.sign_up} element={<SignUp />} /> */}
         <Route path={ROUTES.forgotPassword} element={<ForgotPassword />} />
         <Route path={ROUTES.resetPassword} element={<ResetPassword />} />
-        <Route path={ROUTES.capiumLogin} element={<CapiumLogin />} />
-        <Route path={ROUTES.signUpNewMember} element={<SignUpNewMember />} />
-        <Route path={ROUTES.chooseCompany} element={<WorkSpacePicker />} />
-        <Route
+        {/* <Route path={ROUTES.capiumLogin} element={<CapiumLogin />} /> */}
+        {/* <Route path={ROUTES.signUpNewMember} element={<SignUpNewMember />} /> */}
+        {/* <Route path={ROUTES.chooseCompany} element={<WorkSpacePicker />} /> */}
+        {/* <Route
           path={ROUTES.bindSocialAccount}
           element={<BindSocialAccount />}
-        />
+        /> */}
       </Routes>
     </BrowserRouter>
   );

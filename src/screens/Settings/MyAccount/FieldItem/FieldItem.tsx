@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC ,useState } from 'react';
 import { ActionMeta } from 'react-select';
 import { FieldInputProps, FieldMetaProps } from 'formik';
 
@@ -7,6 +7,7 @@ import { Input } from 'components/Input';
 import { InputPassword } from 'components/InputPassword';
 
 import { FieldItemStyles as Styled } from './FieldItem.style';
+import { useToggle } from 'hooks/useToggle';
 
 interface IFieldItemProps {
   showPassword?: boolean;
@@ -39,6 +40,9 @@ export const FieldItem: FC<IFieldItemProps> = (props) => {
     formikProps,
     onChangeSelectHandler,
   } = props;
+
+  const [isTrue, setTrue] = useToggle();
+
 
   const { value, onChange, onBlur, name } = formikProps(inputName);
   const { touched, error } = formikMeta(inputName);
@@ -77,10 +81,14 @@ export const FieldItem: FC<IFieldItemProps> = (props) => {
           <Styled.Label>{labelText}</Styled.Label>
           <InputPassword
             inputName={name}
-            showPassword={showPassword || false}
+            showPassword={isTrue}
+            // showPassword={showPassword || false}
             password={value}
             onChangePassword={onChange}
-            onClick={onClickShowPassword}
+            onClick={()=>{
+              setTrue();
+            }}
+            // onClick={onClickShowPassword}
             errorText={error}
             onBlur={onBlur}
             touched={touched}

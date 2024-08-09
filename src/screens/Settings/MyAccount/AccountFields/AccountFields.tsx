@@ -50,7 +50,7 @@ export const AccountFields: FC<IAccountFieldsProps> = (props) => {
               <FieldItem
                 selectValue={item?.value}
                 key={item.label}
-                onChangeSelectHandler={item.onChangeSelect}
+                // onChangeSelectHandler={item.onChangeSelect}
                 isDisabled={item.isDisabled}
                 inputName={item.name}
                 inputType={item.type}
@@ -66,7 +66,7 @@ export const AccountFields: FC<IAccountFieldsProps> = (props) => {
               <FieldItem
                 selectValue={item?.value}
                 key={item.label}
-                onChangeSelectHandler={item.onChangeSelect}
+                // onChangeSelectHandler={item.onChangeSelect}
                 inputName={item.name}
                 inputType={item.type}
                 labelText={item.label}

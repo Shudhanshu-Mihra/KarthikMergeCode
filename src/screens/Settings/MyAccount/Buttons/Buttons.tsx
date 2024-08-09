@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Button } from 'components/Button';
-// import { ModalButtonsBox } from 'components/ModalButtonsBox';
+import { ModalButtonsBox } from 'components/ModalButtonsBox';
 
 import { ButtonsStyles as Styled } from './Buttons.style';
 
@@ -32,7 +32,7 @@ export const Buttons: FC<IButtons> = (props) => {
       >
         {settingsButtonText}
       </Button>
-      {/* <ModalButtonsBox
+      <ModalButtonsBox
         buttonPosition="flex-end"
         onCancelClickHandler={onCancelbuttonClickHandler}
         isNoPadding
@@ -41,7 +41,7 @@ export const Buttons: FC<IButtons> = (props) => {
         isLoading={isLoading}
         isDisableButton={isDisabledButton}
         type="submit"
-      /> */}
+      />
     </Styled.ButtonsWrapper>
   );
 };

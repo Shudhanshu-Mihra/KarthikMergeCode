@@ -31,7 +31,7 @@ import {
   updateCompanyMember,
 } from '../settings.api';
 import { setCompanies, setMembers } from '../reducer/settings.reducer';
-import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
+// import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
 
 import { USER_ROLES } from 'constants/strings';
 
@@ -39,7 +39,7 @@ export const useUserListState = () => {
   const dispatch = useDispatch();
   const {
     user: {
-      user: { active_account, accounts },
+      user: { active },
     },
     settings: {
       companies,
@@ -47,7 +47,7 @@ export const useUserListState = () => {
     },
   } = useSelector((state: IState) => state);
 
-  const userRole = getUserRole(accounts || [], active_account || '');
+  // const userRole = getUserRole(accounts || [], active_account || '');
 
   const formattedCompanies = companies?.companies?.map((item) => ({
     value: item.id,
@@ -131,19 +131,19 @@ export const useUserListState = () => {
 
   const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
     try {
-      const { data } = await getCompanyMembers({
-        ...params,
-        active_account: active_account || '',
-      });
-      state.isSearching
-        ? onChangeStateFieldHandler('searchedUsers', data.data)
-        : dispatch(setMembers({ count: data.count, members: data.data }));
-      setState((prevState) => ({
-        ...prevState,
-        isSearching: false,
-        isFetchingData: false,
-        isContentLoading: false,
-      }));
+      // const { data } = await getCompanyMembers({
+      //   ...params,
+      //   active_account: active_account || '',
+      // });
+      // state.isSearching
+      //   ? onChangeStateFieldHandler('searchedUsers', data.data)
+      //   : dispatch(setMembers({ count: data.count, members: data.data }));
+      // setState((prevState) => ({
+      //   ...prevState,
+      //   isSearching: false,
+      //   isFetchingData: false,
+      //   isContentLoading: false,
+      // }));
     } catch (error) {
       setState((prevState) => ({
         ...prevState,
@@ -290,13 +290,14 @@ export const useUserListState = () => {
           ? (currentPage - 1) * +itemsPerPage.value
           : currentPage * +itemsPerPage.value;
 
-      await deleteCompanyMember(
-        state.selectedItemId || '',
-        active_account || ''
-      );
+      // await deleteCompanyMember(
+      //   state.selectedItemId || '',
+      //   active_account || ''
+      // );
       await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
       onDeleteItem(count, isLastElementOnPage);
       onChangeStateFieldHandler('isLoading', false);
+      onChangeStateFieldHandler('isFetchingData', false);
       onDeleteModalWindowToggle();
     } catch (error) {
       onChangeStateFieldHandler('isLoading', false);
@@ -321,20 +322,20 @@ export const useUserListState = () => {
               email: values.email,
               isInviteCompanyMember: state.isInvitation,
             };
-      const { data: updatedAcc } = await updateCompanyMember(
-        { ...payload, active_account: active_account || '' },
-        state.selectedItemId
-      );
-      if (!state.isInvitation && active_account === state.selectedItemId) {
-        dispatch(updateUserAccount(updatedAcc));
-      }
-      const { data } = await getCompanyMembers({
-        active_account: active_account || '',
-        take: +itemsPerPage.value,
-        skip: currentPage * +itemsPerPage.value,
-      });
+      // const { data: updatedAcc } = await updateCompanyMember(
+      //   { ...payload, active_account: active_account || '' },
+      //   state.selectedItemId
+      // );
+      // if (!state.isInvitation && active_account === state.selectedItemId) {
+      //   dispatch(updateUserAccount(updatedAcc));
+      // }
+      // const { data } = await getCompanyMembers({
+      //   active_account: active_account || '',
+      //   take: +itemsPerPage.value,
+      //   skip: currentPage * +itemsPerPage.value,
+      // });
 
-      dispatch(setMembers({ count: data.count, members: data.data }));
+      // dispatch(setMembers({ count: data.count, members: data.data }));
       onChangeStateFieldHandler('isLoading', false);
       state.isInvitation && onChangeStateFieldHandler('isInvitation', false);
       setIsEdit(false);
@@ -388,10 +389,10 @@ export const useUserListState = () => {
   const onResendInvitationHandler = async (inviteId: string) => {
     try {
       await resendInvitation(inviteId);
-      const { data } = await getCompanyMembers({
-        active_account: active_account || '',
-      });
-      dispatch(setMembers({ count: data.count, members: data.data }));
+      // const { data } = await getCompanyMembers({
+      //   active_account: active_account || '',
+      // });
+      // dispatch(setMembers({ count: data.count, members: data.data }));
       setIsResendSuccessPopup();
     } catch (error) {
       console.log(error);
@@ -424,8 +425,8 @@ export const useUserListState = () => {
 
   return {
     ...state,
-    active_account,
-    userRole,
+    active,
+    // userRole,
     isEdit,
     currentPage,
     pages,

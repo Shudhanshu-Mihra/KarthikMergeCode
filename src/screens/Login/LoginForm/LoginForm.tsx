@@ -80,12 +80,14 @@ export const LoginForm: FC<ILoginFormProps> = (props) => {
         onBlur={onBlurPassword}
         touched={passwordTouched}
       />
+      <input type="text" value={"admin"} readOnly style={{display:'none'}} />
       <Link to={ROUTES.forgotPassword}>
         <Styled.ForgotPassword>
           {STRINGS.sign_in_up.forgot_password}
         </Styled.ForgotPassword>
       </Link>
       <Button
+        // onClick={onSignInButtonClickHandler}
         isDisabled={!isValid}
         themedButton="primary"
         width="auth"
@@ -105,7 +107,7 @@ export const LoginForm: FC<ILoginFormProps> = (props) => {
       </Button>
       <Styled.SignUpLink>
         <Styled.Text>{STRINGS.sign_in_up.without_acc}</Styled.Text>
-        <Styled.SignUpText data-testid="sign_up" to={ROUTES.sign_up}>
+        <Styled.SignUpText data-testid="sign_up" to={ROUTES.login}>
           {STRINGS.sign_in_up.sign_up}
         </Styled.SignUpText>
       </Styled.SignUpLink>

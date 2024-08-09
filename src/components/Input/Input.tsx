@@ -59,41 +59,42 @@ export const Input: React.FC<InputProps> = (props) => {
   return (
     <Styled.InputWrapper data-testid="input-component" isNoMargin={isNoMargin}>
       {isHiddenLabel ? null : <Styled.Label>{text}{textCode}</Styled.Label>}
-      {/* {isTextArea ? ( */}
+      {isTextArea ? (
         <Styled.TextArea
           inputHeight={inputHeight}
           onChange={onChangeValue}
           value={value}
           name={inputName}
         />
-      {/* // ) : (
-      //   <>
-      //     {isInputDate ? (
-      //       <CustomDatePicker
-      //         isInputDate={isInputDate}
-      //         selectedDate={selectedDate}
-      //         formattedDate=""
-      //       />
-      //     ) : (
-      //       <Styled.Input
-      //         data-testid="input-field"
-      //         inputTheme={inputTheme}
-      //         type={inputType || 'text'}
-      //         isError={!!errorText && touched}
-      //         onBlur={onBlur}
-      //         onFocus={onFocus}
-      //         name={inputName}
-      //         value={value}
-      //         onChange={onChangeValue}
-      //         onKeyDown={onKeyDown}
-      //         placeholder={placeHolder}
-      //         disabled={isDisabled}
-      //         isDisabled={isDisabled}
-      //         isRemoveBoxShadow={isRemoveBoxShadow}
-      //         isRemoveBorder={isRemoveBorder}
-      //       />
-      //     )}
-      //   </> */}
+      ) : (
+        <>
+          {/* {isInputDate ? (
+            <CustomDatePicker
+              isInputDate={isInputDate}
+              selectedDate={selectedDate}
+              formattedDate=""
+            />
+          ) : ( */}
+            <Styled.Input
+              data-testid="input-field"
+              inputTheme={inputTheme}
+              type={inputType || 'text'}
+              isError={!!errorText && touched}
+              onBlur={onBlur}
+              onFocus={onFocus}
+              name={inputName}
+              value={value}
+              onChange={onChangeValue}
+              onKeyDown={onKeyDown}
+              placeholder={placeHolder}
+              disabled={isDisabled}
+              isDisabled={isDisabled}
+              isRemoveBoxShadow={isRemoveBoxShadow}
+              isRemoveBorder={isRemoveBorder}
+            />
+          {/* )} */}
+        </>
+      )}
       {touched && !!errorText && <ErrorText errorText={errorText} />}
     </Styled.InputWrapper>
   );

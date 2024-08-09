@@ -1,17 +1,15 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 import { setTokens } from 'screens/SignUp/reducer/signup.reducer';
+import { persisterStore, store } from 'services/redux/store';
 
 import { TypeStore } from './redux/store';
 import { isTokenExpired } from './utils';
-
 import { CONFIG } from 'constants/config';
-import { persisterStore, store } from 'services/redux/store';
-
-let Istore: TypeStore;
 
 export const injectStore = (_store: TypeStore) => {
-  Istore = _store;
+  let store: TypeStore;
+  store = _store;
 };
 
 let isRefreshing = false;
@@ -121,37 +119,50 @@ export const setInterseptors = () => {
 
 const token = store.getState().user.token;
 export const apiServices = {
-  postData: (requestUrl: string, payload: any) => {
-    return instance.post(`${requestUrl}`, payload, {
+  postData: async (requestUrl: string, payload: any) => {
+    const token = store.getState().user.token;
+    console.warn('()()post-post', token);
+    return await instance.post(`${requestUrl}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
-  // fetchData: async (requestUrl: string, params?: {}) => {
-  //   return instance.get(`${requestUrl}`, { params , headers: { Authorization: `Bearer ${token}` } });
-  // },
-  fetchData: (requestUrl: string, params?: {}, config?: AxiosRequestConfig) => {
-    return instance.get(requestUrl, { params, ...config });
+  fetchData: async (requestUrl: string, params?: {}) => {
+    const token = store.getState().user.token;
+    console.warn('()()fetch-get', token);
+    return instance.get(`${requestUrl}`, { params , headers: { Authorization: `Bearer ${token}` } });
   },
+  // fetchData: (requestUrl: string, params?: {}, config?: AxiosRequestConfig) => {
+  //   return instance.get(requestUrl, { params, ...config });
+  // },
   changeData: async (requestUrl: string, payload: any) => {
+    const token = store.getState().user.token;
+    console.warn('()()change-put', token);
     return instance.put(`${requestUrl}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
   deleteData: async (requestUrl: string, params?: {}) => {
+    const token = store.getState().user.token;
+    console.warn('()()delete-delete', token);
     return instance.delete(`${requestUrl}`, { params, headers: { Authorization: `Bearer ${token}` } });
   },
   updateData: async (requestUrl: string, payload: any) => {
+    const token = store.getState().user.token;
+    console.warn('()()update-patch', token);
     return instance.patch(`${requestUrl}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
   capiumFetchData: async (payload: ICapiumAuthPayload) => {
+    const token = store.getState().user.token;
+    console.warn('()()capium-post', token);
     const data = axios.post(capiumBaseURL, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
   },
   getGoogleUserInfo: async (token: string) => {
+    console.warn('()()google-get', token);
     const data = await axios.get(googleUserInfoURL, {
       headers: { Authorization: `Bearer ${token}` },
     });

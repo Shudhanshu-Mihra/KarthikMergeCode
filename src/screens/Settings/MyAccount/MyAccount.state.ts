@@ -25,66 +25,84 @@ import {
 } from './myAccount.api';
 
 import {
-  setGoogleSocialAccount,
+  // setGoogleSocialAccount,
   updateUser,
   updateUserProfile,
 } from '../../SignUp/reducer/signup.reducer';
 
 import { DATE_FORMATS } from 'constants/strings';
-import { countries } from 'constants/countries-array';
+// import { countries } from 'constants/countries-array';
 
 interface IuseMyAccountState {
   currency: SingleValue<IOption> | any;
   dateFormat: SingleValue<IOption> | any;
-  country: SingleValue<IOption> | any;
+  // country: SingleValue<IOption> | any;
 }
 
 export const useMyAccountState = () => {
   const {
     user: {
-      currencies,
-      userInfo: {
-        company: { currency, date_format },
-      },
+      // userInfo: {
+      //   company: { currency, date_format },
+      // },
       user,
-      isSkipOnboarding,
-      socialAccount,
+      // user:{
+      // currencies,
+      // name,
+      // email,
+      // }
+      // isSkipOnboarding,
+      // socialAccount,
     },
   } = useSelector((state: IState) => state);
   const dispatch = useDispatch();
-
-  const formatedCurrencies = getFormatedCurrencies(currencies);
+  const date_format = 'MMM-dd-yyyy';
+  const formatedCurrencies = getFormatedCurrencies(user.currencies);
+  // const currentCurrency = formatedCurrencies?.find(
+  //   (item) => item?.id === currency?.id
+  // );
   const currentCurrency = formatedCurrencies?.find(
-    (item) => item?.id === currency?.id
+    (item) => item?.id === item?.id
   );
   const currentDate = DATE_FORMATS.find((item) => item.value === date_format);
-  const currentCountry = countries.find((item) => item.value === user.country);
+  // const currentCountry = countries.find((item) => item.value === user.country);
 
   const prevValues = {
-    currency: currentCurrency,
+    // currency: currentCurrency,
     dateFormat: currentDate,
-    country: currentCountry,
-    fullName: user.fullName,
-    email: user.email,
+    // country: currentCountry,
+    fullName: user.name,
+    email:user.email,
   };
 
   const initialState = {
     currency: currentCurrency,
     dateFormat: currentDate,
-    country: currentCountry,
+    // country: currentCountry,
   };
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingData, setIsFetchingData] = useState(false);
 
   const formikInitialValues = {
-    fullName: user.fullName,
+    name: user.name|| '',
     email: user.email || '',
+    currencies:user.currencies,
   };
 
   const linkSocAccFormikInitialValues = {
+    name: user.name || '',
     email: user.email || '',
     newPassword: '',
     confirmPassword: '',
+  };
+  const [isForgetPasswordModalOpen, setForgetPasswordModalOpen] = useState(false);
+
+  const openForgetPasswordModal = () => {
+    setForgetPasswordModalOpen(true);
+  };
+
+  const closeForgetPasswordModal = () => {
+    setForgetPasswordModalOpen(false);
   };
 
   const [state, setState] = useState<IuseMyAccountState>(initialState);
@@ -109,29 +127,29 @@ export const useMyAccountState = () => {
     optionName: keyof typeof initialState,
     value: string | boolean | SingleValue<IOption>
   ) => {
-    setState((prevState) => ({
-      ...prevState,
-      [optionName]: value,
-    }));
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [optionName]: value,
+  //   }));
   };
 
-  const onChangeCountryValueHandler = (
-    newValue: any,
-    actionMeta: ActionMeta<IOption> | unknown
-  ) => onChangeStateFieldHandler('country', newValue);
+  // const onChangeCountryValueHandler = (
+  //   newValue: any,
+  //   actionMeta: ActionMeta<IOption> | unknown
+  // ) => onChangeStateFieldHandler('country', newValue);
 
-  const onChangeCurrencyValueHandler = (
-    newValue: any,
-    actionMeta: ActionMeta<IOption> | unknown
-  ) => onChangeStateFieldHandler('currency', newValue);
+  // const onChangeCurrencyValueHandler = (
+  //   newValue: any,
+  //   actionMeta: ActionMeta<IOption> | unknown
+  // ) => onChangeStateFieldHandler('currency', newValue);
 
-  const onChangeDateFormatValueHandler = (
-    newValue: any,
-    actionMeta: ActionMeta<IOption> | unknown
-  ) => onChangeStateFieldHandler('dateFormat', newValue);
+  // const onChangeDateFormatValueHandler = (
+  //   newValue: any,
+  //   actionMeta: ActionMeta<IOption> | unknown
+  // ) => onChangeStateFieldHandler('dateFormat', newValue);
 
-  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) =>
-    formik.handleChange(event);
+  // const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => void
+  //   formik.handleChange(event);
 
   const formik = useFormik({
     initialValues: formikInitialValues,
@@ -147,18 +165,18 @@ export const useMyAccountState = () => {
     validateOnBlur: true,
   });
 
-  const linkSocAccFormik = useFormik({
-    initialValues: linkSocAccFormikInitialValues,
-    onSubmit: (values) => onLinkSocAccHandler(values),
-    validationSchema: bindSocialAccdValidationSchema,
-  });
+  // const linkSocAccFormik = useFormik({
+  //   initialValues: linkSocAccFormikInitialValues,
+  //   onSubmit: (values) => onLinkSocAccHandler(values),
+  //   validationSchema: bindSocialAccdValidationSchema,
+  // });
 
   const getProfileHandler = async () => {
     try {
       setIsFetchingData(true);
       const { data } = await getProfile(
-        user.active_account || '',
-        isSkipOnboarding
+        user.active || false,
+        user.id,
       );
       dispatch(updateUserProfile(data));
       setIsFetchingData(false);
@@ -207,7 +225,7 @@ export const useMyAccountState = () => {
     resetPasswordFormikInitialValues.newPassword ===
       resetPasswordFormik.values.newPassword;
 
-  const onSettingsClickButtonHandler = () => {
+  const resetPasswordHandler = () => {
     if (!isEqualFields) {
       resetPasswordFormik.setValues(resetPasswordFormikInitialValues);
     }
@@ -219,9 +237,9 @@ export const useMyAccountState = () => {
       ...prevState,
       currency: currentCurrency,
       dateFormat: currentDate,
-      country: currentCountry,
+      // country: currentCountry,
     }));
-    formik.setValues({ email: user.email, fullName: user.fullName });
+    // formik.setValues({ email: user.email, fullName: user.name });
   };
 
   const onLinkSocAccHandler = async (
@@ -236,14 +254,14 @@ export const useMyAccountState = () => {
       };
 
       await linkSocialAccount(payload);
-      dispatch(
-        setGoogleSocialAccount({
-          accData: { ...socialAccount.google },
-          isLinkedSocAcc: false,
-        })
-      );
-      dispatch(updateUser({ ...user, country: countryValue.value }));
-      onChangeStateFieldHandler('country', countryValue);
+      // dispatch(
+      //   setGoogleSocialAccount({
+      //     accData: { ...socialAccount.google },
+      //     isLinkedSocAcc: false,
+      //   })
+      // );
+      // dispatch(updateUser({ ...user, country: countryValue.value }));
+      // onChangeStateFieldHandler('country', countryValue);
       setLinkSocAccWindowToggle();
       setIsShowSuccesPopup();
       setIsCreatingAcc(false);
@@ -257,31 +275,31 @@ export const useMyAccountState = () => {
   const updateUserProfileHandler = async (
     formikValues: typeof formikInitialValues
   ) => {
-    try {
-      setIsLoading(true);
+    // try {
+    //   setIsLoading(true);
 
-      const payload = !user.active_account
-        ? {
-            fullName: formikValues.fullName,
-            email: formikValues.email,
-            country: state.country.value,
-          }
-        : {
-            fullName: formikValues.fullName,
-            email: formikValues.email,
-            country: state.country.value,
-            currency: state.currency.id,
-            date_format: state.dateFormat.value,
-            active_account: user.active_account,
-          };
-      const { data } = await updateProfile(payload);
-      dispatch(updateUserProfile(data));
-      setIsShowSuccesPopup();
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
+    //   const payload = !user.active
+    //     ? {
+    //         fullName: formikValues.name,
+    //         email: formikValues.email,
+    //         // country: state.country.value,
+    //       }
+    //     : {
+    //         fullName: formikValues.name,
+    //         email: formikValues.email,
+    //         // country: state.country.value,
+    //         currency: state.currency.id,
+    //         date_format: state.dateFormat.value,
+    //         active_account: user.active,
+    //       };
+    //   const { data } = await updateProfile(payload);
+    //   dispatch(updateUserProfile(data));
+    //   setIsShowSuccesPopup();
+    //   setIsLoading(false);
+    // } catch (error) {
+    //   setIsLoading(false);
+    //   console.log(error);
+    // }
   };
 
   const resetPasswordFields = getResetPasswordInputFields({
@@ -298,50 +316,52 @@ export const useMyAccountState = () => {
   });
 
   const accountsFields = getInputFields({
-    isDisabledCountry: !user.country,
-    isDisabledSelect: !user.active_account ? true : false,
-    countries,
+    // isDisabledCountry: !user.country,
+    isDisabledSelect: !user.active? true : false,
+    // countries,
     formatedCurrencies,
     dateFormats: DATE_FORMATS,
     funcArray: [
-      onChangeCurrencyValueHandler,
-      onChangeDateFormatValueHandler,
-      onChangeCountryValueHandler,
-      onChangeInput,
+      // onChangeCurrencyValueHandler,
+      // onChangeDateFormatValueHandler,
+      // onChangeCountryValueHandler,
+      // onChangeInput,
     ],
     state,
   });
 
   const isDisableUpdateUserProfileButton =
-    state.country?.value === prevValues?.country?.value &&
-    state.currency?.value === prevValues?.currency?.value &&
+    // state.country?.value === prevValues?.country?.value &&
+    // state.currency?.value === prevValues?.currency?.value &&
     state.dateFormat?.value === prevValues?.dateFormat?.value &&
-    formik.values.fullName === prevValues.fullName &&
+    formik.values.name === prevValues.fullName &&
     formik.values.email === prevValues.email;
 
+  const onHandler = isResetPassword
+    ? resetPasswordFormik.handleSubmit
+    : formik.handleSubmit;
   const onSubmitHandler = isResetPassword
     ? resetPasswordFormik.handleSubmit
     : formik.handleSubmit;
+  // const isEmptyResetPasswordFields =
+  //   !resetPasswordFormik.values.confirmPassword &&
+  //   !resetPasswordFormik.values.newPassword;
 
-  const isEmptyResetPasswordFields =
-    !resetPasswordFormik.values.confirmPassword &&
-    !resetPasswordFormik.values.newPassword;
+  // const isDisabledButton = isResetPassword
+  //   ? !resetPasswordFormik.isValid || isEmptyResetPasswordFields || isLoading
+  //   : !formik.isValid || isDisableUpdateUserProfileButton || isLoading;
 
-  const isDisabledButton = isResetPassword
-    ? !resetPasswordFormik.isValid || isEmptyResetPasswordFields || isLoading
-    : !formik.isValid || isDisableUpdateUserProfileButton || isLoading;
-
-  const isLinkSocialAccButton =
-    !socialAccount.isLinkedSocAcc && socialAccount.google.id;
+  // const isLinkSocialAccButton =
+  //   !socialAccount.isLinkedSocAcc && socialAccount.google.id;
 
   return {
-    ...state,
+    // ...state,
     isFetchingData,
     isLoading,
     isCreatingAcc,
     countryValue,
     isLinkSocAccWindowOpen,
-    linkSocAccFormik,
+    // linkSocAccFormik,
     setLinkSocAccWindowToggle,
     isShowNewPassword,
     setIsShowNewPassword,
@@ -349,20 +369,23 @@ export const useMyAccountState = () => {
     setIsShowConfirmPassword,
     onChangeLinkedCountryValueHandler,
     onSubmitHandler,
+    // onHandler,
     setIsResetPassword,
     getProfileHandler,
     onCancelbuttonClickHandler,
-    onSettingsClickButtonHandler,
+    // resetPasswordHandler,
     setIsShowSuccesPopup,
-    isLinkSocialAccButton,
+    // isLinkSocialAccButton,
     isShowSuccesPopup,
-    isDisabledButton,
+    // isDisabledButton,
     formik,
     resetPasswordFormik,
     isResetPassword,
     accountsFields,
     resetPasswordFields,
     user,
-    isDisableUpdateUserProfileButton,
+    // isDisableUpdateUserProfileButton,
+    isForgetPasswordModalOpen,
+    setForgetPasswordModalOpen,
   };
 };

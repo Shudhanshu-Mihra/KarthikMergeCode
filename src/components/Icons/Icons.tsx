@@ -61,6 +61,7 @@ import { ReactComponent as deleteAccount } from 'assets/icons/delete.svg';
 import { ReactComponent as sideBarUSer } from 'assets/icons/SideBarUsers.svg';
 import { ReactComponent as termAndService } from 'assets/icons/termOfService.svg';
 import { ReactComponent as privecy } from 'assets/icons/privecy.svg';
+import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
 
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
@@ -119,6 +120,7 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   locationIcon,
   termAndService,
   privecy,
+  resetIcon,
   loderIcon
 };
 

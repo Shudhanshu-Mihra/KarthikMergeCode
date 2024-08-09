@@ -29,11 +29,11 @@ export const AuthTabs: FC<IAuthTabsprops> = (props) => {
               {STRINGS.sign_in_up.sign_in}
             </Styled.Tab>
           </Styled.ActiveTabWrapper>
-          <Styled.ActiveTabWrapper>
+          {/* <Styled.ActiveTabWrapper>
             <Styled.Tab isActive={isSignUp} onClick={onSignUpClickHandler}>
               {STRINGS.sign_in_up.sign_up}
             </Styled.Tab>
-          </Styled.ActiveTabWrapper>
+          </Styled.ActiveTabWrapper> */}
         </>
       ) : (
         <Styled.ActiveTabWrapper>

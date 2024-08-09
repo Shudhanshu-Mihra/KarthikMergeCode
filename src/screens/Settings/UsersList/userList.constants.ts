@@ -9,7 +9,7 @@ export const USERS_LIST_INITIAL_STATE = {
   isEdit: false,
   selectedItemId: '',
   searchedUsers: [],
-  isFetchingData: true,
+  isFetchingData: false,
   role: null,
   companies: [],
   prevRole: null,

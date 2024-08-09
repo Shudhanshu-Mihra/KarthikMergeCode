@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
 
-// import { SettingsItemPageContent } from "components/SettingsItemPageContent";
+import { SettingsItemPageContent } from "components/SettingsItemPageContent";
 import { LoaderComponent } from "components/Loader";
-// import { SuccessPopup } from "components/SuccessPopup";
+import { SuccessPopup } from "components/SuccessPopup";
 
 import { UserListStyles as Styled } from "./UserList.styles";
 import { useUserListState } from "./UserList.state";
@@ -26,7 +26,7 @@ export const UsersList: FC = () => {
     onEnterGoToClick,
     onChangeItemsPerPage,
     onGoToClick,
-    userRole,
+    // userRole,
     onClickDeleteUserButton,
     selectedUserName,
     itemsPerPage,
@@ -47,7 +47,7 @@ export const UsersList: FC = () => {
     isSentSuccessPopup,
     isResentSuccessPopup,
     
-    active_account,
+    active,
     setIsSentSuccessPopup,
     setIsResendSuccessPopup,
     onChangePage,
@@ -69,23 +69,23 @@ export const UsersList: FC = () => {
 
   useEffect(() => {
     !searchValue && onGetAllCompanyMembersHandler();
-  }, [searchValue, active_account]);
+  }, [searchValue, active]);
 
   useEffect(() => {
     debouncedValue &&
       onGetAllCompanyMembersHandler({
         search: debouncedValue,
       });
-  }, [debouncedValue, active_account]);
+  }, [debouncedValue, active]);
 
   useEffect(() => {
     if (!count) return;
     onChangePagesAmount(Number(itemsPerPage.value), count);
-  }, [count, itemsPerPage, active_account]);
+  }, [count, itemsPerPage, active]);
 
   return (
     <Styled.Section>
-      <ModalBox
+      {/* <ModalBox
         modalFields={
           role?.value === "owner" && !isEdit
             ? modalFields.slice(0, 3)
@@ -109,14 +109,14 @@ export const UsersList: FC = () => {
         isInvitation={isInvitation}
         isUserList
         categoryName="user"
-        // isPAllChecked={isPAllChecked}
-        // permissionState = {permissionState}
+        isPAllChecked={isPAllChecked}
+        permissionState = {permissionState}
         // setPermission={setPermission}
-        // setPAllChecked={setPAllChecked}
+        setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role?.value || null}
-      />
-      {/* <SuccessPopup
+      /> */}
+      <SuccessPopup
         positionTop="0"
         isShowPopup={isResentSuccessPopup || isSentSuccessPopup}
         closePopupFc={
@@ -127,8 +127,8 @@ export const UsersList: FC = () => {
             ? "Invitation resent successfully"
             : "Invitation sent successfully"
         }
-      /> */}
-      {/* {isFetchingData ? (
+      />
+      {isFetchingData ?  (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
@@ -143,7 +143,7 @@ export const UsersList: FC = () => {
           onBlurHandler={onBlurHandler}
           members={members}
           isMemeberList
-          userRole={userRole}
+          // userRole={userRole}
           onDeleteIconClickHandler={onDeleteIconClickHandler}
           onEditIconClickHandler={onEditIconClickHandler}
           pages={pages}
@@ -162,7 +162,8 @@ export const UsersList: FC = () => {
           onChangePage={onChangePage}
           isGuard
         />
-      )} */}
+       
+      )}
     </Styled.Section>
   );
 };

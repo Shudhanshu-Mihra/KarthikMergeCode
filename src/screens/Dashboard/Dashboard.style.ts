@@ -84,8 +84,7 @@ export const DashboardStyles = {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
   `,
   PurchasesTitle: styled.h3`
-    font-size: 18px;
-    font-weight: 500;
+   
     margin-bottom: 1%;
     font-size: 18px;
     padding: 1%;

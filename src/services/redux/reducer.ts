@@ -6,19 +6,19 @@ import {
   signUpUserReducer,
   SIGN_UP_USER_INITIAL_STATE,
 } from 'screens/SignUp/reducer/signup.reducer';
-import { ISIGN_UP_USER_INITIAL_STATE } from 'screens/SignUp/types/signup.types';
-import { capiumLoginReducer } from 'screens/CapiumLogin/reducer/capiumLogin.reducer';
-import { ICAPIUM_LOGIN_ACCOUNT_INITIAL_STATE } from 'screens/CapiumLogin/types/capiumLogin.types';
+import { ISIGN_UP_SUPPORT_USER_INITIAL_STATE } from 'screens/SignUp/types/signup.types';
+// import { capiumLoginReducer } from 'screens/CapiumLogin/reducer/capiumLogin.reducer';
+// import { ICAPIUM_LOGIN_ACCOUNT_INITIAL_STATE } from 'screens/CapiumLogin/types/capiumLogin.types';
 // import {
 //   filesUploadReducer,
 //   FILES_UPLOAD_PREVIEW_INITIAL_STATE,
 // } from 'screens/FilesUploadPreview/reducer/filesUploadPreview.reducer';
 // import { IFILES_UPLOAD_PREVIEW_INITIAL_STATE } from 'screens/FilesUploadPreview/types/filesUploadPreview.types';
-import {
-  inboxReducer,
-  INBOX_INITIAL_STATE,
-} from 'screens/Inbox/reducer/inbox.reducer';
-import { IINBOX_INITIAL_STATE } from 'screens/Inbox/types/inbox.types';
+// import {
+//   inboxReducer,
+//   INBOX_INITIAL_STATE,
+// } from 'screens/Inbox/reducer/inbox.reducer';
+// import { IINBOX_INITIAL_STATE } from 'screens/Inbox/types/inbox.types';
 import { IDASHBOARD_INITIAL_STATE } from 'screens/Dashboard/types';
 import {
   dashboardReducer,
@@ -72,12 +72,12 @@ export const persistConfig = {
 };
 
 export interface IState {
-  user: ISIGN_UP_USER_INITIAL_STATE;
-  capiumLoginAccount: ICAPIUM_LOGIN_ACCOUNT_INITIAL_STATE;
+  user: ISIGN_UP_SUPPORT_USER_INITIAL_STATE;
+  // capiumLoginAccount: ICAPIUM_LOGIN_ACCOUNT_INITIAL_STATE;
   // filesUpload: IFILES_UPLOAD_PREVIEW_INITIAL_STATE;
-  inbox: IINBOX_INITIAL_STATE;
+  // inbox: IINBOX_INITIAL_STATE;
   dashboard: IDASHBOARD_INITIAL_STATE;
-  // // master: IMASTER_INITIAL_STATE;
+  // master: IMASTER_INITIAL_STATE;
   // receiptDetails: IRECEIPT_DETAILS_INITIAL_STATE;
   settings: ISETTINGS_INITIAL_STATE;
   // invites: IINVITES_INITIAL_STATE;
@@ -87,9 +87,9 @@ export interface IState {
 
 const combineReducer = combineReducers<IState>({
   user: signUpUserReducer,
-  capiumLoginAccount: capiumLoginReducer,
+  // capiumLoginAccount: capiumLoginReducer,
   // filesUpload: filesUploadReducer,
-  inbox: inboxReducer,
+  // inbox: inboxReducer,
   dashboard: dashboardReducer,
   // master: MasterReducer,
   // receiptDetails: ReceiptDetailsReducer,
@@ -109,7 +109,7 @@ const reducer = (state: combineReducerType | undefined, action: AnyAction) => {
         user: SIGN_UP_USER_INITIAL_STATE,
         dashboard: DASHBOARD_INITIAL_STATE,
         // master: MASTER_INITIAL_STATE,
-        inbox: INBOX_INITIAL_STATE,
+        // inbox: INBOX_INITIAL_STATE,
         // filesUpload: FILES_UPLOAD_PREVIEW_INITIAL_STATE,
         // receiptDetails: RECEIPT_DETAILS_INITIAL_STATE,
         settings: SETTINGS_INITIAL_STATE,

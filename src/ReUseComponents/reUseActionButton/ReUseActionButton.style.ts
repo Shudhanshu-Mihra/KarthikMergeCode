@@ -68,7 +68,7 @@ export const reUseActionButtonStyle = {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 600;
     // border-radius: 6px;
-    width: ${(props) => props.customWidth ? props.customWidth : `max-content`};
+    width: ${(props) => props.customWidth ? props.customWidth : `max-content` }!important;
     min-width: max-content;
     box-shadow: ${(props) => `0px 0px 5px ${props.theme.colors.boxShadowBlackButton}`};
     background-color: ${(props) => props.theme.colors.lightGray};
@@ -96,36 +96,60 @@ export const reUseActionButtonStyle = {
       color: inherit;
     `,
 
-  displayContent: styled("div")`
+  // displayContent: styled("div")<Pick<IReUseActionButtonProps, 'buttonType'>>`
+  displayContent: styled("div")<{buttonType?: string, customColor?: string, fontSize?: string}>`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    font-size: ${(props) => props.fontSize};
+    color: ${(props) => props?.customColor ? props.customColor : 'inherit'} !important;
     // &:not(:last-child) {
     // margin-right: 14px;
     }
 
     svg {
-      stroke: ${(props) => props.theme.colors.white}; 
-      fill: ${(props) => props.theme.colors.white}; 
-      height: 12px;
+      // stroke: ${(props) => props.theme.colors.white}; 
+      // stroke: ${(props) => props.buttonType == 'text-link' ? props.customColor : props.theme.colors.white } !important; 
+      fill: ${(props) => props.buttonType == 'text-link' ? props.customColor : props.theme.colors.white } !important; 
+      height: ${(props) => props.fontSize? `calc(${props.fontSize} - 6px)` : '12px'};
       width: auto;
+
+      path {
+        stroke: inherit !important;
+        fill: inherit !important;
+      }
     }
   `,
-  textlink: styled.button<IReUseActionButtonProps>`
+  textlink: styled(Link)<IReUseActionButtonProps>`
     font-size: ${(props) => props.theme.size.default};
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 14px;
     font-weight: 600;
-    border-radius: 6px;
+    color: ${(props) => props?.customColor ? props.customColor : 'inherit'} !important;
     width: max-content;
-    box-shadow: ${(props) => `0px 0px 5px ${props.theme.colors.boxShadowBlackButton}`};
-    background-color: ${(props) => props.theme.colors.lightGray};
+    align-self: center;
+    // box-shadow: ${(props) => `0px 0px 5px ${props.theme.colors.boxShadowBlackButton}`};
+    // background-color: ${(props) => props.theme.colors.lightGray};
     ${(props) => props.themedButton && THEME[props.themedButton]};
     // ${(props) => props.widthType && WIDTH[props.widthType]};
-    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-    opacity: ${(props) => (props.disabled ? 0.8 : 1)};
-    padding: 10px 20px;
+    cursor: ${(props) => (props.isDisabled ? 'not-allowed' : 'pointer')};
+    opacity: ${(props) => (props.isDisabled ? 0.8 : 1)};
+    padding: 5px;
+  `,
+  textlinkp: styled.p<IReUseActionButtonProps>`
+    font-size: ${(props) => props.theme.size.default};
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    color: ${(props) => props?.customColor ? props.customColor : 'inherit'} !important;
+    width: max-content;
+    align-self: center;
+    // box-shadow: ${(props) => `0px 0px 5px ${props.theme.colors.boxShadowBlackButton}`};
+    // background-color: ${(props) => props.theme.colors.lightGray};
+    ${(props) => props.themedButton && THEME[props.themedButton]};
+    // ${(props) => props.widthType && WIDTH[props.widthType]};
+    cursor: ${(props) => (props.isDisabled ? 'not-allowed' : 'pointer')};
+    opacity: ${(props) => (props.isDisabled ? 0.8 : 1)};
+    padding: 5px;
   `,
 };
 

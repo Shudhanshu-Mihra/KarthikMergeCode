@@ -1,7 +1,6 @@
 import { add, format } from 'date-fns';
 import decode from 'jwt-decode';
 import imageCompression from 'browser-image-compression';
-
 import { ICurrency } from 'screens/SignUp/types/signup.types';
 // import { IInvites } from 'screens/Invites/types/invites.types';
 import { getCompanyLogo } from 'screens/Settings/settings.api';
@@ -61,11 +60,11 @@ export const dateDiffInDays = (a: Date, b: Date) => {
 
 export const getIsDisabledLink = (
   linkRoute: string,
-  active_account?: string | null
+  active_user?: boolean | null
 ) => {
-  return !active_account &&
+  return !active_user &&
     linkRoute !== ROUTES.invites &&
-    !active_account &&
+    !active_user &&
     linkRoute !== ROUTES.settings
     ? true
     : false;
@@ -123,16 +122,16 @@ export const getCompaniesLogoHandler = async (
   }
 };
 
-// export const getInitials = (name: string) => {
-//   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
+export const getInitials = (name: string) => {
+  let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
-//   let initials = [...(name.matchAll(rgx) as any)] || [];
+  let initials = [...(name.matchAll(rgx) as any)] || [];
 
-//   initials = (
-//     (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
-//   ).toUpperCase();
-//   return initials;
-// };
+  initials = (
+    (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
+  ).toUpperCase();
+  return initials;
+};
 
 export const getFormattedDate = (date: string | Date, dateFormat: string) => {
   const formattedDate = format(new Date(date), dateFormat);
@@ -231,7 +230,10 @@ export const getSelectedUser = (members: IMember[], memberId: string) => {
   return members.find((member: { id: string }) => member.id === memberId);
 };
 
-//  
+// export const getSelectedItems = (items: IInvites[], itemId: string) => {
+//   if (!items.length) return;
+//   return items?.find((el: { id: string }) => el.id === itemId);
+// };
 
 export const onCreateFormDataHandler = (
   data: IFormdataProps,

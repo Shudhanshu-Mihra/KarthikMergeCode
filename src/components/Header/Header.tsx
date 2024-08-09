@@ -16,11 +16,11 @@ export const Header: FC = () => {
 		isOpenSwitcher,
 		switcherRef,
 		companySwitcher,
-		activeCompany,
+		// activeCompany,
 		activeAccountId,
 		isFetchingData,
 		isSwitchCompany,
-		active_account,
+		active,
 		isAvatarHover,
 		avatarLinks,
 		userProfilePhoto,
@@ -30,12 +30,12 @@ export const Header: FC = () => {
 		// onSwitchCompany,
 		onClickSwitcherHandler,
 		// onSwitchCompanyHandler,
-		onGetAllCompaniesHandler,
+		// onGetAllCompaniesHandler,
 	} = useHeaderState();
 
-	useEffect(() => {
-		active_account && onGetAllCompaniesHandler();
-	}, [isFetchingData]);
+	// useEffect(() => {
+	// 	active_account && onGetAllCompaniesHandler();
+	// }, [isFetchingData]);
 
 	// useEffect(() => {
 	// 	isSwitchCompany && onSwitchCompany();
@@ -45,7 +45,7 @@ export const Header: FC = () => {
 		<Styled.Header>
 			<Styled.Container>
 				{/* header icon part  */}
-				<Styled.Link to={ROUTES.home} is_disabled={!active_account ? "true" : ""}>
+				<Styled.Link to={ROUTES.home} is_disabled={!active ? "true" : ""}>
 					<Styled.LogoWrapper>
 						<Styled.LogoIconWrapper>
 							<Icon type="receiptHubLogo" />
@@ -55,7 +55,7 @@ export const Header: FC = () => {
 				</Styled.Link>
 				{/* header icon part  end */}
 
-				<LinksBox active_account={active_account} />
+				<LinksBox active_user={active} />
 				<Styled.BlocksWrapper>
 					<Styled.Notifications>
 						{/* {active_account ? (

@@ -8,7 +8,7 @@ import { ReUseDatePicker } from 'ReUseComponents/reUseDatePicker/ReuseDatePicker
 
 export const Dashboard: FC = () => {
   const {
-    getReceiptsStatisticHandler,
+    // getReceiptsStatisticHandler,
     navigateToInvites,
     user,
     datePickerRef,
@@ -24,12 +24,12 @@ export const Dashboard: FC = () => {
   } = useDashboardState();
 
   useEffect(() => {
-    if (!user.active_account) {
+    if (!user.active) {
       navigateToInvites();
       return;
     }
-    getReceiptsStatisticHandler();
-  }, [user.active_account]);
+    // getReceiptsStatisticHandler();
+  }, [user.active]);
 
   return (
     <Styled.Wrapper>

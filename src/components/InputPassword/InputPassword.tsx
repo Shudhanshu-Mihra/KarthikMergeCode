@@ -41,13 +41,13 @@ export const InputPassword: React.FC<InputProps> = (props) => {
           isError={!!errorText && touched}
           onBlur={onBlur}
           name={inputName}
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? 'text':'password'}
           value={password}
           onChange={onChangePassword}
         />
         <Styled.Button onClick={onClick} data-testid="button">
           <Icon
-            type={showPassword ? 'hidePassword' : 'showPassword'}
+           type={showPassword ? 'showPassword': 'hidePassword' }
           />
         </Styled.Button>
         {touched && !!errorText && <ErrorText errorText={errorText} />}

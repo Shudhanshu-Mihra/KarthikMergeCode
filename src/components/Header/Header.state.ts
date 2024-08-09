@@ -7,13 +7,13 @@ import { useUploadAvatar } from 'hooks/useUploadAvatar';
 import { useLogout } from 'hooks/useLogout';
 import { useGetCompanyLogo } from 'hooks/useGetCompanyLogo';
 
-import {
-  setCompanySwitcher,
-  setIsSwitchCompany,
-} from 'screens/Settings/reducer/settings.reducer';
-import { switchAccount } from 'screens/SignUp/reducer/signup.reducer';
+// import {
+//   setCompanySwitcher,
+//   setIsSwitchCompany,
+// } from 'screens/Settings/reducer/settings.reducer';
+// import { switchAccount } from 'screens/SignUp/reducer/signup.reducer';
 
-import { getUserCompanies, selectActiveAccount } from './header.api';
+// import { getUserCompanies, selectActiveAccount } from './header.api';
 
 import { getAvatarLinks } from 'constants/header-links';
 // import { setIsCompanyChanged } from '../../screens/Inbox/reducer';
@@ -23,14 +23,14 @@ export const useHeaderState = () => {
   const {
     user: {
       token,
-      user: { active_account, profile_image, id },
+      user: { active, profile_image, id },
     },
     settings: { companySwitcher, isFetchingData, isSwitchCompany },
   } = useSelector((state: IState) => state);
 
-  const activeCompany = companySwitcher?.find(
-    (account) => account.id === active_account
-  );
+  // const activeCompany = companySwitcher?.find(
+  //   (account) => account.id === active_account
+  // );
 
   const { userProfilePhoto, isUploadingPhoto } = useUploadAvatar(
     profile_image,
@@ -40,7 +40,7 @@ export const useHeaderState = () => {
 
   const [isAvatarHover, setIsAvatarHover] = useState(false);
   const [isOpenSwitcher, setIsOpenSwitcher] = useState(false);
-  const [activeAccountId, setActiveAccountId] = useState(active_account || '');
+  const [activeAccountId, setActiveAccountId] = useState(active || false);
 
   const onMouseEnterHandler = () => setIsAvatarHover(true);
   const onMouseLeaveHandler = () => setIsAvatarHover(false);
@@ -71,15 +71,15 @@ export const useHeaderState = () => {
   // const onSwitchCompanyHandler = (event: React.MouseEvent<HTMLDivElement>) =>
   //   onSwitchCompany(event.currentTarget.id);
 
-  const onGetAllCompaniesHandler = async () => {
-    try {
-      const { data } = await getUserCompanies();
-      const companiesWithLogo = await getCompanyLogo(data, token);
-      dispatch(setCompanySwitcher(companiesWithLogo || []));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const onGetAllCompaniesHandler = async () => {
+  //   try {
+  //     const { data } = await getUserCompanies();
+  //     const companiesWithLogo = await getCompanyLogo(data, token);
+  //     dispatch(setCompanySwitcher(companiesWithLogo || []));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return {
     isOpenSwitcher,
@@ -90,15 +90,15 @@ export const useHeaderState = () => {
     // onSwitchCompany,
     switcherRef,
     companySwitcher,
-    activeCompany,
+    // activeCompany,
     activeAccountId,
-    active_account,
+    active,
     isAvatarHover,
     avatarLinks,
     userProfilePhoto,
     isUploadingPhoto,
     useUploadAvatar,
-    onGetAllCompaniesHandler,
+    // onGetAllCompaniesHandler,
     onMouseEnterHandler,
     onMouseLeaveHandler,
   };
