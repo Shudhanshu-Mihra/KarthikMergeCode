@@ -63,14 +63,11 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
         userRole={userRole?.role as TRoles}
         buttonText={isMemeberList ? 'Create User' : 'Create Company'}
       /> */}
-
       <ReUseActionPlaceholder>
-
       <ReUseSearch searchValue={searchValue} onChangeSearchValueHandler={onChangeSearchValueHandler} onBlurHandler={onBlurHandler} onFocusSearchHandler={onFocusSearchHandler} />
-      </ReUseActionPlaceholder>
-      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
-     
 
+      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
+      </ReUseActionPlaceholder>
       {isContentLoading ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />

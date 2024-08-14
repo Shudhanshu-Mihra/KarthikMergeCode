@@ -12,6 +12,11 @@ interface ICreateCompanyMemberPayload {
   thisUserPermissions: any[];
 }
 
+interface ICreateAdminUserPayload {
+  name: string;
+  email: string;
+  password:string;
+}
 interface IUpdateCompanyMember {
   name?: string;
   email?: string;
@@ -31,8 +36,13 @@ export const getCompanyMembers = (params?: ISearchParams) => {
 };
 
 export const createCompanyMember = (payload: ICreateCompanyMemberPayload) => {
-  console.log('-----',payload)
+  // console.log('-----',payload)
   const URL = `company-member/create`;
+  return apiServices.postData(URL, payload);
+};
+
+export const createAdminUsers = (payload: ICreateAdminUserPayload) => {
+  const URL = `admin/support-members`;
   return apiServices.postData(URL, payload);
 };
 

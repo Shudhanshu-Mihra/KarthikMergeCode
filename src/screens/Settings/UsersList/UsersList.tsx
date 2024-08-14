@@ -11,6 +11,7 @@ import { ModalBox } from "./ModalBox";
 export const UsersList: FC = () => {
   const {
     isLoading,
+    adminInviteFormArr,
     isModalWindowOpen,
     searchValue,
     formik,
@@ -39,7 +40,7 @@ export const UsersList: FC = () => {
     isContentLoading,
     isFocus,
     searchedUsers,
-    modalFields,
+    // modalFields,
     count,
     isFetchingData,
     isDisableButton,
@@ -85,15 +86,16 @@ export const UsersList: FC = () => {
 
   return (
     <Styled.Section>
-      {/* <ModalBox
+      <ModalBox
         modalFields={
-          role?.value === "owner" && !isEdit
-            ? modalFields.slice(0, 3)
-            : modalFields
+          role?.value === "admin" && !isEdit
+            ? adminInviteFormArr.slice(0, 3)
+            : adminInviteFormArr
         }
         text="Name"
         isLoading={isLoading}
-        isDisableButton={isDisableButton}
+        // isDisableButton={isDisableButton}
+        isDisableButton={false}
         onCloseModalWindowHandler={onModalWindowCancelClickButtonHandler}
         onSaveButtonCLickHandler={formik.handleSubmit}
         onEnterCreateItemClick={onEnterInsertUser}
@@ -115,7 +117,7 @@ export const UsersList: FC = () => {
         setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role?.value || null}
-      /> */}
+      />
       <SuccessPopup
         positionTop="0"
         isShowPopup={isResentSuccessPopup || isSentSuccessPopup}

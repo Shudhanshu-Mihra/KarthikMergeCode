@@ -6,7 +6,7 @@ import { ButtonStyles } from './Button.style';
 import { LoaderComponent } from '../Loader';
 
 export type ButtonStyleProps = {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
   iconType?: 'google';
   children?: React.ReactNode;
   isDisabled?: boolean;
