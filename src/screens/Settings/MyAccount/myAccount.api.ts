@@ -10,7 +10,7 @@ interface IUpdateUserProfile {
 }
 
 interface IChangePassword {
-  token : string;
+  password:string;
   newPassword: string;
 }
 
@@ -23,7 +23,7 @@ export const getProfile = (
 };
 
 export const resetPassword = (payload: IChangePassword) => {
-  const URL = `auth/update-password`;
+  const URL = `/auth/reset-password`;
   return apiServices.changeData(URL, payload);
 };
 

@@ -10,7 +10,6 @@ import { CompanyOwnerModalWindowStyles } from './InviteCompanyOwnerModalWindow.s
 import { Input } from '../Input';
 import { CustomSelect } from '../CustomSelect';
 import { CheckboxItem } from '../Checkbox';
-
 import { USER_ROLES } from 'constants/strings';
 
 interface InsertUserModalWindowProps

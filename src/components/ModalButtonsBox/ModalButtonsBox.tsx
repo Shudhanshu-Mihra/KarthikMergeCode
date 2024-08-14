@@ -4,6 +4,8 @@ import { Button } from '../Button';
 
 import { ModalButtonsBoxStyles as Styled } from './ModalButtonsBox.style';
 
+import { createAdminUsers } from 'screens/Settings/settings.api';
+
 interface IModalButtonsBox {
   saveButtonText?: string;
   isNoPadding?: boolean;
@@ -45,6 +47,20 @@ export const ModalButtonsBox: FC<IModalButtonsBox> = (props) => {
             Cancel
           </Button>
         )}
+        {/* <Button
+           onClick={() => createAdminUsers({
+            name: "ktest",
+            email: "ktest@gmail.com",
+            password: "ktest",
+          })}
+          themedButton="roundedRed"
+          width="rounded"
+          isDisabled={isDisableButton}
+          isLoading={isLoading}
+          type={type}
+        >
+          {!!saveButtonText ? saveButtonText : isSaveButton ? 'Save' : 'Send'}
+        </Button> */}
         <Button
           onClick={onSaveButtonCLickHandler}
           themedButton="roundedRed"

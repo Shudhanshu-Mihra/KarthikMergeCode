@@ -3,12 +3,12 @@ import { FieldInputProps, FieldMetaProps } from 'formik';
 
 import { FieldItem } from '../FieldItem';
 
-import { IResetPasswordFields, TInputFields } from '../types/MyAccount.types';
+import { IResetPasswordFieldsProps, TInputFields } from '../types/MyAccount.types';
 import { AccountFieldsStyle as Styled } from './AccountFields.style';
 
 interface IAccountFieldsProps {
   isResetPassword: boolean;
-  resetPasswordFields: IResetPasswordFields[];
+  // resetPasswordFields: IResetPasswordFieldsProps[];
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
   formikMeta: (name: string) => FieldMetaProps<string>;
   resetPasswordFormikProps: (nameOrOptions: string) => FieldInputProps<string>;
@@ -18,7 +18,7 @@ interface IAccountFieldsProps {
 export const AccountFields: FC<IAccountFieldsProps> = (props) => {
   const {
     isResetPassword,
-    resetPasswordFields,
+    // resetPasswordFields,
     accountsFields,
     formikMeta,
     formikProps,
@@ -30,7 +30,7 @@ export const AccountFields: FC<IAccountFieldsProps> = (props) => {
     <>
       {isResetPassword ? (
         <Styled.ResetPasswordFiledsWrapper>
-          {resetPasswordFields.map((item) => (
+          {/* {resetPasswordFields.map((item) => (
             <FieldItem
               key={item.label}
               showPassword={item.isShowPassword}
@@ -41,7 +41,7 @@ export const AccountFields: FC<IAccountFieldsProps> = (props) => {
               formikMeta={resetPasswordFormikMeta}
               formikProps={resetPasswordFormikProps}
             />
-          ))}
+          ))} */}
         </Styled.ResetPasswordFiledsWrapper>
       ) : (
         <Styled.FieldsBlockWrapper>

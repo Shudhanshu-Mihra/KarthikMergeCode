@@ -19,47 +19,57 @@ export const USERS_LIST_INITIAL_STATE = {
   isInvitation: false,
   givePermissionsForAPI: []
 };
-
-export const formikInitialValues = {
-  fullName: '',
-  email: '',
-};
-
-export const getInputFields = (props: IgetInputFieldsProps) => {
-  const { options, funcArray, state } = props;
-  return [
-    {
-      type: 'input',
-      label: 'Full Name',
-      name: 'fullName',
-    },
-    {
-      type: 'input',
-      label: 'Email',
-      name: 'email',
-    },
+// export const formikInitialValues = {
+//   name: '',
+//   email: '',
+//   password:'',
+//   role:'',
+// };
+// export const getInputFields = (props: IgetInputFieldsProps) => {
+//   const { options, funcArray, state } = props;
+//   return [
+//     {
+//       type: 'input',
+//       label: 'Full Name',
+//       name: 'fullName',
+//     },
+//     {
+//       type: 'input',
+//       label: 'Email',
+//       name: 'email',
+//     },
+//     {
+//       type: 'input',
+//       label: 'Password',
+//       name: 'password',
+//     },
+//     {
+//       type: 'input',
+//       label: 'Role',
+//       name: 'role',
+//     },
     
-    {
-      type: 'select',
-      name: 'company',
-      label: 'Company',
-      value: state?.companies || undefined,
-      isMulti: true,
-      options: options[1],
-      isDisabled: false,
-      onChangeSelect: funcArray[1],
-    },
-    {
-      type: 'select',
-      name: 'select',
-      label: 'Role',
-      value: state.role,
-      options: options[0],
-      isDisabled: false,
-      onChangeSelect: funcArray[0],
-    },
-  ];
-};
+//     // {
+//     //   type: 'select',
+//     //   name: 'company',
+//     //   label: 'Company',
+//     //   value: state?.companies || undefined,
+//     //   isMulti: true,
+//     //   options: options[1],
+//     //   isDisabled: false,
+//     //   onChangeSelect: funcArray[1],
+//     // },
+//     // {
+//     //   type: 'select',
+//     //   name: 'select',
+//     //   label: 'Role',
+//     //   value: state.role,
+//     //   options: options[0],
+//     //   isDisabled: false,
+//     //   onChangeSelect: funcArray[0],
+//     // },
+//   ];
+// };
 
 export const userPermissionInitialState=[
   {p_id:1,

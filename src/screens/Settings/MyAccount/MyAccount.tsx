@@ -11,6 +11,7 @@ import { AccountFields } from './AccountFields';
 import { FormButtonPanel } from 'components/FormButtonPanel';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
 import { PasswordChangeModelWindow } from './PasswordChangeModelWindow/PasswordChangeModelWindow';
+import { string } from 'yup';
 
 
 export const MyAccount: FC = () => {
@@ -36,7 +37,7 @@ export const MyAccount: FC = () => {
     setIsShowConfirmPassword,
     onChangeLinkedCountryValueHandler,
     setIsShowSuccesPopup,
-    onCancelbuttonClickHandler,
+    // onCancelbuttonClickHandler,
     getProfileHandler,
     setIsResetPassword,
     // resetPasswordHandler,
@@ -44,7 +45,12 @@ export const MyAccount: FC = () => {
     // onHandler,
     isForgetPasswordModalOpen,
     setForgetPasswordModalOpen,
-    UpdatingPassword
+    UpdatingPassword,
+    // passwordFormik,
+    closeForgetPasswordModal,
+    // passFormikInitialValue,
+    resetPasswordArr,
+    formikResetPassword,
   } = useMyAccountState();
 
   useEffect(() => {
@@ -82,7 +88,7 @@ export const MyAccount: FC = () => {
             ? 'The password has been successfully changed'
             : 'User profile has been successfully changed'
         }
-      /> */}
+      />  */}
       {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -92,19 +98,24 @@ export const MyAccount: FC = () => {
           <Styled.Form onSubmit={onSubmitHandler}>
             <AccountFields
               isResetPassword={isResetPassword}
-              resetPasswordFields={resetPasswordFields}
+              // resetPasswordFields={resetPasswordFields}
               formikProps={formik.getFieldProps}
               formikMeta={formik.getFieldMeta}
               resetPasswordFormikProps={resetPasswordFormik.getFieldProps}
               resetPasswordFormikMeta={resetPasswordFormik.getFieldMeta}
               accountsFields={accountsFields}
+              
             />
             <PasswordChangeModelWindow
                 isOpen={isForgetPasswordModalOpen}
-                onRequestClose={()=>{setForgetPasswordModalOpen(false)}}
+                onRequestClose={closeForgetPasswordModal}
                 isLoading={false}
-                onFormHandleSubmit={UpdatingPassword}
-      />
+                {...resetPasswordFormik}
+                resetPasswordArr={resetPasswordArr}
+                formikResetPassword={formikResetPassword}
+                formikProps={formikResetPassword.getFieldProps}
+                formikMeta={formikResetPassword.getFieldMeta}
+            />
             {/* <Buttons
               settingsButtonText={
                 isLinkSocialAccButton
