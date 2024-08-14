@@ -1,8 +1,14 @@
 import * as Yup from 'yup';
-import { RequiredStringSchema } from 'yup/lib/string';
+// import { RequiredStringSchema } from 'yup/lib/string';
+// import { AnyObject } from 'yup';
 import { AnyObject } from 'yup/lib/types';
 
 import { REGEXPS } from 'constants/validation-regexp';
+import * as yup from 'yup';
+
+export type RequiredStringSchema = yup.StringSchema<string, AnyObject> & {
+  required(): RequiredStringSchema;
+};
 
 export const VALIDATION_TYPE = {
   password: 'password',
@@ -127,7 +133,8 @@ export const resetPasswordValidationSchema = Yup.object().shape({
 });
 
 export const validationHashMapping: {
-  [x: string]: RequiredStringSchema<string | undefined, AnyObject>;
+  // [x: string]: RequiredStringSchema<string | undefined, AnyObject>;
+  [x: string]: RequiredStringSchema;
 } = {
   [VALIDATION_TYPE.email]: emailValidation,
   [VALIDATION_TYPE.password]: passwordValidation,

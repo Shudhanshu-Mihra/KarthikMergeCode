@@ -1,5 +1,5 @@
 import { add, format } from 'date-fns';
-import decode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import imageCompression from 'browser-image-compression';
 import { ICurrency } from 'screens/SignUp/types/signup.types';
 // import { IInvites } from 'screens/Invites/types/invites.types';
@@ -261,7 +261,7 @@ export const isTokenExpired = (token: string) => {
     expiresIn: number;
     iat: number;
     exp: number;
-  } = decode(token);
+  } = jwtDecode(token);
 
   if (decodedToken.exp * 1000 < new Date().getTime()) {
     return true;
