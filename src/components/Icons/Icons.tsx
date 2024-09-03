@@ -62,7 +62,8 @@ import { ReactComponent as sideBarUSer } from 'assets/icons/SideBarUsers.svg';
 import { ReactComponent as termAndService } from 'assets/icons/termOfService.svg';
 import { ReactComponent as privecy } from 'assets/icons/privecy.svg';
 import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
-
+import { ReactComponent as Inflow } from '../../assets/icons/green-inflow.svg';
+import { ReactComponent as Outflow } from 'assets/icons/outflow-red.svg';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -121,7 +122,10 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   termAndService,
   privecy,
   resetIcon,
-  loderIcon
+  loderIcon,
+  Inflow,
+  Outflow,
+
 };
 
 export const Icon = (props: {

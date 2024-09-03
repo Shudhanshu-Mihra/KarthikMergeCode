@@ -16,8 +16,8 @@ import {
 } from 'services/utils';
 
 import {
-  formikInitialValues,
-  getInputFields,
+  // formikInitialValues,
+  // getInputFields,
   USERS_LIST_INITIAL_STATE,
   userPermissionInitialState,
 } from './userList.constants';
@@ -28,6 +28,7 @@ import {
   getCompanyMembers,
   getManyCompanies,
   resendInvitation,
+  createAdminUsers,
   updateCompanyMember,
 } from '../settings.api';
 import { setCompanies, setMembers } from '../reducer/settings.reducer';
@@ -48,6 +49,49 @@ export const useUserListState = () => {
   } = useSelector((state: IState) => state);
 
   // const userRole = getUserRole(accounts || [], active_account || '');
+
+  // interface IADMIN_USERS {
+  //   fullName:string;
+  //   email:string;
+  //   password:string;
+  //   role:string;
+  // }
+  const ADMIN_USERS_initialState ={
+    fullName:'',
+    email:'',
+    password:'',
+    role:'',
+  };
+
+  const adminInviteFormArr = [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+    },
+    {
+      type: 'input',
+      label: 'Password',
+      name: 'password',
+    },
+    {
+      type: 'input',
+      label: 'Role',
+      name: 'role',
+    },]
+
+    const formik = useFormik({
+      initialValues: ADMIN_USERS_initialState,
+      onSubmit: (values) =>
+        isEdit ? onEditUserHandler(values) : onInviteUserToCompanyHandler(values),
+      validationSchema: myAccountValidationScheme,
+      validateOnBlur: true,
+    });
 
   const formattedCompanies = companies?.companies?.map((item) => ({
     value: item.id,
@@ -90,7 +134,6 @@ export const useUserListState = () => {
     onGetCompaniesHandler();
     onModalWindowToggle();
   };
-
   const onChangeStateFieldHandler = (
     optionName: keyof typeof initialState,
     value: string | boolean | number | SingleValue<IOption> | IMember[]
@@ -100,7 +143,15 @@ export const useUserListState = () => {
       [optionName]: value,
     }));
   };
-
+  const onChangeStateFieldHandlerAdmin = (
+    optionName: keyof typeof ADMIN_USERS_initialState,
+    value: string
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      [optionName]: value,
+    }));
+  };
   const PermissionsForAPIHandler = (selectedPermission: any[]) => {
     onChangeStateFieldHandler('givePermissionsForAPI', selectedPermission);
   }
@@ -200,15 +251,6 @@ export const useUserListState = () => {
       isSearching: true,
     }));
   };
-
-  const formik = useFormik({
-    initialValues: formikInitialValues,
-    onSubmit: (values) =>
-      isEdit ? onEditUserHandler(values) : onInviteUserToCompanyHandler(values),
-    validationSchema: myAccountValidationScheme,
-    validateOnBlur: true,
-  });
-
   const {
     onBackwardClick,
     onForwardClick,
@@ -248,11 +290,11 @@ export const useUserListState = () => {
         ? selectedUser?.memberInvite?.email
         : selectedUser?.user?.email;
 
-    formik.setValues({
-      email: email || '',
-      fullName: selectedUser?.name || '',
-    });
-
+    // formik.setValues({
+    //   email: email || '',
+    //   fullName: selectedUser?.name || '',
+      
+    // });
     setIsEdit(true);
     setState((prevState) => ({
       ...prevState,
@@ -308,20 +350,18 @@ export const useUserListState = () => {
     }
   };
 
-  const onEditUserHandler = async (values: typeof formikInitialValues) => {
+  const onEditUserHandler = async (values: typeof ADMIN_USERS_initialState) => {
     try {
       onChangeStateFieldHandler('isLoading', true);
       const payload =
-        isEdit && !state.isInvitation
-          ? {
-              role: state.role?.value || '',
-            }
-          : {
-              role: state.role?.value || '',
-              name: values.fullName,
+        {
+              // role: values.role || '',
+               name: values.fullName,
               email: values.email,
-              isInviteCompanyMember: state.isInvitation,
+              password: values.password
+              // isInviteCompanyMember: state.isInvitation,
             };
+            console.log("payload",payload);
       // const { data: updatedAcc } = await updateCompanyMember(
       //   { ...payload, active_account: active_account || '' },
       //   state.selectedItemId
@@ -336,11 +376,11 @@ export const useUserListState = () => {
       // });
 
       // dispatch(setMembers({ count: data.count, members: data.data }));
-      onChangeStateFieldHandler('isLoading', false);
-      state.isInvitation && onChangeStateFieldHandler('isInvitation', false);
-      setIsEdit(false);
-      formik.resetForm();
-      onModalWindowToggle();
+      // onChangeStateFieldHandler('isLoading', false);
+      // state.isInvitation && onChangeStateFieldHandler('isInvitation', false);
+      // setIsEdit(false);
+      // formik.resetForm();
+      // onModalWindowToggle();
     } catch (error) {
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('isInvitation', false);
@@ -352,24 +392,31 @@ export const useUserListState = () => {
   };
 
   const onInviteUserToCompanyHandler = async (
-    values: typeof formikInitialValues
+    values: typeof ADMIN_USERS_initialState
   ) => {
     try {
       onChangeStateFieldHandler('isLoading', true);
       const payload = {
         email: values.email || '',
+        password: values.password || '',
         name: values.fullName || '',
-        role: state.role?.value || '',
-        companiesIds: state.companies?.map((item) => item.value) || [],
-        thisUserPermissions: state.givePermissionsForAPI,
+        // name: values.name || '',
+        // role: state.role?.value || '',
+        // companiesIds: state.companies?.map((item) => item.value) || [],
+        // thisUserPermissions: state.givePermissionsForAPI,
+        // email: "Test",
+        // password:"test",
+        // name: "test",
+        // // name: values.name || '',
+        // // role: state.role?.value || '',
+        // role:"test",
       };
-
-      await createCompanyMember(payload);
+      console.log("payload----",payload);
+      await createAdminUsers(payload);
       onChangePageHandler(0);
-      await onGetAllCompanyMembersHandler({
-        take: +itemsPerPage.value,
-      });
-
+      // await onGetAllCompanyMembersHandler({
+      //   take: +itemsPerPage.value,
+      // });
       onModalWindowToggle();
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('role', { value: '', label: '' });
@@ -402,12 +449,25 @@ export const useUserListState = () => {
   const onFocusSearchHandler = () => onChangeStateFieldHandler('isFocus', true);
   const onBlurHandler = () => onChangeStateFieldHandler('isFocus', false);
 
-  const modalFields = getInputFields({
-    options: [USER_ROLES, formattedCompanies],
-    state: { role: state.role, companies: state.companies },
-    funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
-  });
+  // const modalFields = getInputFields({
+  //   options: [USER_ROLES, formattedCompanies],
+  //   state: { role: state.role, companies: state.companies },
+  //   funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
+  // });
 
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => void
+  formik.handleChange(event);
+
+  // const createAdminUsers = useFormik({
+  //   initialValues: adminState,
+  //   validateOnBlur: true,
+  //   onSubmit: (values) => {
+  //     console.log('Collected Data:', values);
+  //     // Call the handler passed as a prop with the form values
+  //     // onSaveNewPasswordHandler(values);
+  //     onInviteUserToCompanyHandler(values);
+  //   },
+  // });
   const isDisableButton =
     isEdit && !state.isInvitation
       ? state.prevRole?.value === state.role?.value
@@ -416,7 +476,7 @@ export const useUserListState = () => {
         (state.prevEmail === formik.values.email &&
           state.prevName === formik.values.fullName &&
           state.prevRole?.value === state.role?.value)
-      : state.role?.value === 'owner'
+      : state.role?.value === 'admin'
       ? !formik.isValid || !formik.dirty || !state.role?.value
       : !formik.isValid ||
         !formik.dirty ||
@@ -433,8 +493,9 @@ export const useUserListState = () => {
     inputPaginationValue,
     itemsPerPage,
     count,
-    modalFields,
+    // modalFields,
     formik,
+    adminInviteFormArr,
     members,
     debouncedValue,
     isModalWindowOpen,
@@ -476,5 +537,6 @@ export const useUserListState = () => {
     isSecondModalOpen,
 
     PermissionsForAPIHandler,
+    createAdminUsers,
   };
 };

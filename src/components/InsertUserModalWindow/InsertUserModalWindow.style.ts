@@ -85,5 +85,10 @@ SecondModalHeadingWrapper:styled.div`
 display:flex;
 gap:20px;
 margin-top:10px;`,
-
+CloseIconWrapper: styled.div`
+position: absolute;
+top: 20px;
+right: 30px;
+cursor: pointer;
+`,
 };

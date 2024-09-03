@@ -99,7 +99,8 @@ export const setInterseptors = () => {
           ...config,
           headers: { Authorization: `Bearer ${data.access_token}` },
         };
-      } catch (err: any) {
+      } 
+      catch (err: any) {
         store.dispatch({ type: 'LOGOUT' });
         processQueue(err, null);
         isRefreshing = false;
@@ -116,7 +117,6 @@ export const setInterseptors = () => {
   });
   return instance;
 };
-
 const token = store.getState().user.token;
 export const apiServices = {
   postData: async (requestUrl: string, payload: any) => {

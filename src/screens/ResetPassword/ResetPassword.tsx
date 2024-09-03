@@ -2,8 +2,7 @@ import { FC } from 'react';
 
 import { AuthImageSection } from 'components/AuthImageSection';
 import { AuthTabs } from 'components/AuthTabs';
-// import { SuccessModalWindow } from 'components/SuccessModalWindow';
-
+import { SuccessModalWindow } from 'components/SuccessModalWindow';
 import { ResetPasswordStyles as Styled } from './ResetPassword.style';
 import { RESET_PASSWORD_STRINGS as Strings } from './constants';
 import { ResetPasswordForm } from './ResetPasswordForm';
@@ -20,7 +19,7 @@ export const ResetPassword: FC = () => {
   return (
     <Styled.MainWrapper>
       <AuthImageSection />
-      {/* <SuccessModalWindow
+       <SuccessModalWindow
         isExpiredToken={isExpiredToken}
         text={
           isExpiredToken
@@ -31,7 +30,7 @@ export const ResetPassword: FC = () => {
           isExpiredToken ? onCloseExpiredModal : onCloseModalHandler
         }
         isModalWindowOpen={isSuccess || isExpiredToken}
-      /> */}
+      /> 
       <Styled.Section>
         <Styled.RightSideContentWrapper>
           <AuthTabs tabText={Strings.resetPassword} />

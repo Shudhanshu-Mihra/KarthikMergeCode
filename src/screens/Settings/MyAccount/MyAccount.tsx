@@ -11,6 +11,7 @@ import { AccountFields } from './AccountFields';
 import { FormButtonPanel } from 'components/FormButtonPanel';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
 import { PasswordChangeModelWindow } from './PasswordChangeModelWindow/PasswordChangeModelWindow';
+import { string } from 'yup';
 
 
 export const MyAccount: FC = () => {
@@ -22,7 +23,7 @@ export const MyAccount: FC = () => {
     formik,
     isLoading,
     resetPasswordFormik,
-    // isDisabledButton,
+    isDisabledButton,
     isShowSuccesPopup,
     isShowNewPassword,
     isShowConfirmPassword,
@@ -36,7 +37,7 @@ export const MyAccount: FC = () => {
     setIsShowConfirmPassword,
     onChangeLinkedCountryValueHandler,
     setIsShowSuccesPopup,
-    onCancelbuttonClickHandler,
+    // onCancelbuttonClickHandler,
     getProfileHandler,
     setIsResetPassword,
     // resetPasswordHandler,
@@ -44,6 +45,12 @@ export const MyAccount: FC = () => {
     // onHandler,
     isForgetPasswordModalOpen,
     setForgetPasswordModalOpen,
+    UpdatingPassword,
+    // passwordFormik,
+    closeForgetPasswordModal,
+    // passFormikInitialValue,
+    resetPasswordArr,
+    formikResetPassword,
   } = useMyAccountState();
 
   useEffect(() => {
@@ -70,18 +77,18 @@ export const MyAccount: FC = () => {
         touched={linkSocAccFormik.touched}
         countryValue={countryValue}
       /> */}
-      {/* <SuccessPopup
+       <SuccessPopup
         positionTop="0"
         isShowPopup={isShowSuccesPopup}
         closePopupFc={setIsShowSuccesPopup}
         titleText={
-          isLinkSocialAccButton
-            ? 'The social account has been successfully linked'
-            : isResetPassword
+          // isLinkSocialAccButton
+          //   ? 'The social account has been successfully linked'
+            isResetPassword
             ? 'The password has been successfully changed'
             : 'User profile has been successfully changed'
         }
-      /> */}
+      />  
       {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -91,20 +98,27 @@ export const MyAccount: FC = () => {
           <Styled.Form onSubmit={onSubmitHandler}>
             <AccountFields
               isResetPassword={isResetPassword}
-              resetPasswordFields={resetPasswordFields}
+              // resetPasswordFields={resetPasswordFields}
               formikProps={formik.getFieldProps}
               formikMeta={formik.getFieldMeta}
               resetPasswordFormikProps={resetPasswordFormik.getFieldProps}
               resetPasswordFormikMeta={resetPasswordFormik.getFieldMeta}
               accountsFields={accountsFields}
+              
             />
             <PasswordChangeModelWindow
                 isOpen={isForgetPasswordModalOpen}
-                onRequestClose={()=>{setForgetPasswordModalOpen(false)}}
+                onRequestClose={closeForgetPasswordModal}
                 isLoading={false}
-                onFormHandleSubmit={()=>{console.log("onFormHandleSubmit")}}
-      />
-            {/* <Buttons
+                {...resetPasswordFormik}
+                resetPasswordArr={resetPasswordArr}
+                formikResetPassword={formikResetPassword}
+                formikProps={formikResetPassword.getFieldProps}
+                formikMeta={formikResetPassword.getFieldMeta}
+                // isDisabledButton = {isDisabledButton}
+                // isCancelButton={isResetPassword} 
+            />
+             {/* <Buttons
               settingsButtonText={
                 isLinkSocialAccButton
                   ? 'Link Social Account'
@@ -123,7 +137,7 @@ export const MyAccount: FC = () => {
               isDisabledButton={isDisabledButton}
               isLoading={isLoading}
               isCancelButton={isResetPassword}
-            /> */}
+            />  */}
             <FormButtonPanel>
               
               <ReUseActionButton displayText='Reset Password' buttonType='text-link' onClick={()=>{setForgetPasswordModalOpen(true)}} displayIconType='resetIcon' fontSize='18px' customColor={`${theme.colors.red}`} />
@@ -131,7 +145,7 @@ export const MyAccount: FC = () => {
               <ReUseActionButton displayText='Cancel' buttonType='actionButton' 
               onClick={()=>{setForgetPasswordModalOpen(false)}}widthType='roundedBig' margin='0 0 0 auto' themedButton='roundedWhite'/>
 
-              <ReUseActionButton displayText='update' buttonType='actionButton' 
+              <ReUseActionButton displayText='update' buttonType='actionButton'
               widthType='rounded'  themedButton='roundedRed'/>
             </FormButtonPanel>
           </Styled.Form>

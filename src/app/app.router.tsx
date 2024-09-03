@@ -56,23 +56,22 @@ export const AppRouter: FC = () => {
     date_end: '',
     active_account: user?.id || '',
   };
+  // const testUSer = async () => {
+  //   try {
+  //     const { data } = await getUserExist(payload);
 
-  const testUSer = async () => {
-    try {
-      const { data } = await getUserExist(payload);
 
+  //     if (data === "USER DELETED") {
+  //       localStorage.clear();
+  //       window.location.reload()
+  //     }
 
-      if (data === "USER DELETED") {
-        localStorage.clear();
-        window.location.reload()
-      }
-
-    } catch (e) {
-    }
-  }
-  useEffect(() => {
-    testUSer()
-  }, [])
+  //   } catch (e) {
+  //   }
+  // }
+  // useEffect(() => {
+  //   testUSer()
+  // }, [])
   return (
     <BrowserRouter>
       <Routes>

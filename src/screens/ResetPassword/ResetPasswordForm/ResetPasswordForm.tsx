@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
 
 import { Button } from 'components/Button';
-// import { InputItem } from 'components/InputItem';
+// import { InputIte } from 'components/InputItem';
 
 import { ResetPasswordFormStyles as Styled } from './ResetPasswordForm.style';
 import { RESET_PASSWORD_INPUTS, RESET_PASSWORD_STRINGS } from '../constants';

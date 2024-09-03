@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 // import { HeaderPanelMaster } from '../HeaderPanelMaster';
+// import { HeaderPanelMaster } from 'components/HeaderPanelMaster';
 import { LoaderComponent } from '../Loader';
 import { PaginationPanel } from '../PaginationPanel';
 import { SettingsItemPageContentStyle as Styled } from './SettingsItemPageContent.style';
@@ -53,24 +54,11 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
 
   return (
     <Styled.ContentWrapper>
-      {/* <HeaderPanelMaster
-        onBlurHandler={onBlurHandler}
-        onFocusSearchHandler={onFocusSearchHandler}
-        onChangeSearchValueHandler={onChangeSearchValueHandler}
-        searchValue={searchValue}
-        onAddClickButtonHandler={onAddClickButtonHandler}
-        isGuard={isGuard}
-        userRole={userRole?.role as TRoles}
-        buttonText={isMemeberList ? 'Create User' : 'Create Company'}
-      /> */}
-
       <ReUseActionPlaceholder>
-
       <ReUseSearch searchValue={searchValue} onChangeSearchValueHandler={onChangeSearchValueHandler} onBlurHandler={onBlurHandler} onFocusSearchHandler={onFocusSearchHandler} />
-      </ReUseActionPlaceholder>
-      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
-     
 
+      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
+      </ReUseActionPlaceholder>
       {isContentLoading ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -89,7 +77,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
             onEditIconClickHandler={onEditIconClickHandler}
             companies={companies}
           />
-          {/* {isPaginationPanel ? (
+          {isPaginationPanel ? (
             <Styled.paginationPosition>
             <PaginationPanel
               pages={pages}
@@ -105,7 +93,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
               onGoToClick={onGoToClick}
             />
             </Styled.paginationPosition>
-          ) : null} */}
+          ) : null}
         </div>
       ) : null}
     </Styled.ContentWrapper>

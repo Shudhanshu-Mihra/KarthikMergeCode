@@ -9,6 +9,13 @@ export const LinkSocaAccModalWindowStyles = {
     padding: 28px 33px 28px 33px;
     width: 100%;
     flex: 1;
+    color:#404A5F;
+  `,
+   CloseIconWrapper: styled.div`
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
   `,
 };
 

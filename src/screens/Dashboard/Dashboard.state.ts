@@ -40,8 +40,15 @@ export interface IuseDashboardState {
   formattedDate: string;
   isInputDate: boolean;
   isLoading: boolean;
+  statusValue: {
+    value: string;
+    label: string;
+  };
+  userValue:{
+    value: string;
+    label: string;
+  };
 }
-
 export const useDashboardState = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,7 +64,6 @@ export const useDashboardState = () => {
     },
     settings: { companySwitcher },
   } = useSelector((state: IState) => state);
-
   const date_format = 'MMM-dd-yyyy';
   const [state, setState] = useState<IuseDashboardState>(DASHBOARD_INITIAL_STATE);
   const timeFilterOptions = getTimeFilterOptions();
@@ -78,6 +84,32 @@ export const useDashboardState = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isContentLoading, setIsContentLoading] = useState(false);
 
+  const onChangeStatusValueHandler = async (
+    newValue: any,
+    actionMeta: ActionMeta<unknown>
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      statusValue: {
+        value: newValue.value,
+        label: `Status - ${newValue.label}`,
+      },
+    }));
+  };
+
+  const onChangeUserValueHandler = async (
+    newValue: any,
+    actionMeta: ActionMeta<unknown>
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      userValue: {
+        value: newValue.value,
+        label: `User - ${newValue.label}`,
+      },
+    }));
+  };
+  
   const onSelectFiles = useSelectFiles();
 
   const navigateToInvites = () => navigate(ROUTES.invites, { replace: true });
@@ -182,8 +214,8 @@ export const useDashboardState = () => {
       setIsDatePickerOpen();
       const dateStart = setAndFormatDateToISO(date[0].toISOString());
       const dateEnd = setAndFormatDateToISO(date[1].toISOString(), true);
-
-      // await onFetchSalesInvoicesHandler({
+//##############################################
+   // await onFetchSalesInvoicesHandler({
       //   ...fetchParams,
       //   date_start: isEqual ? '' : dateStart,
       //   date_end: isEqual ? '' : dateEnd,
@@ -205,7 +237,14 @@ export const useDashboardState = () => {
       // });
     }
   };
-
+  const statusFilterOptions = [
+    { value: 'all', label: `All` },
+    { value: 'processing', label: `Processing` },
+    { value: 'accepted', label: `Accepted` },
+    { value: 'review', label: `Review` },
+    { value: 'rejected', label: `Rejected` },
+  ];
+     
   const onChangeDateFilterValueHandler = async (
     newValue: any,
     actionMeta?: ActionMeta<unknown>
@@ -279,7 +318,8 @@ export const useDashboardState = () => {
     setIsDatePickerOpen,
     onChangeDateFilterValueHandler,
     onClickOutsideDatePickerHandler,
-    
-    
+    statusFilterOptions,
+    onChangeStatusValueHandler,
+    onChangeUserValueHandler,
   };
 };
