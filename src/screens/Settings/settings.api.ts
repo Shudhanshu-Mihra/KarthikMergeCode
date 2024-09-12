@@ -152,6 +152,6 @@ export const getProfilePhoto = (id: string, token: string) => {
       'Content-Type': 'image/jpeg',
       Authorization: `Bearer ${token}`,
     },
-    responseType: 'blob',
+    // responseType: 'blob',
   });
 };

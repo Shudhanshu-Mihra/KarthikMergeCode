@@ -39,5 +39,11 @@ export const getAvatarLinks = (logout: () => void) => [
     onClick: logout,
   },
 ];
-
 export const SUPPORT_CENTER_ROUTE = 'https://support.google.com/';
+//new
+export const getAdminLinks = (userRole: string) => {
+  if (userRole !== 'superadmin') {
+    return ADMIN_LINKS.filter(link => link.title !== 'USERS');
+  }
+  return ADMIN_LINKS;
+};

@@ -9,7 +9,7 @@ import { setUserAvatar } from '../SignUp/reducer/signup.reducer';
 
 export const useSettingsState = () => {
   const {
-    user: { name, active, profile_image, id },
+    user: { name, active, profile_image, id},
     token,
   } = useSelector((state: IState) => state.user);
 

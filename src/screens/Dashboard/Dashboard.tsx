@@ -7,7 +7,9 @@ import { CustomSelect } from 'components/CustomSelect';
 import { Icon } from 'components/Icons';
 import { colors } from 'react-select/dist/declarations/src/theme';
 import { theme } from 'styles/theme';
-
+import { getAdminLinks } from 'constants/header-links';
+import { useMyAccountState } from 'screens/Settings/MyAccount/MyAccount.state';
+import ProgressImage from '../../assets/temp-image/progress.png';
 export const Dashboard: FC = () => {
   const {
     navigateToInvites,
@@ -26,9 +28,12 @@ export const Dashboard: FC = () => {
     statusValue,
     onChangeUserValueHandler,
     userValue,
-
   } = useDashboardState();
 
+  // const {
+  //   role
+  // } = useMyAccountState();
+  // getAdminLinks(role);
   const [selectedUser, setSelectedUser] = useState<string>('Users');
   const [selectedStatus, setSelectedStatus] = useState<string>('Status');
   // const { onChangeStatusValueHandler, statusValue } = useDashboardState();
@@ -40,6 +45,9 @@ export const Dashboard: FC = () => {
     // getReceiptsStatisticHandler();
   }, [user.active]);
 
+  const {
+		role
+	} = useMyAccountState();
   const userFilterOptions = [
     { value: 'all', label: `All` },
     { value: 'user-1', label: `User 1` },
@@ -53,12 +61,19 @@ export const Dashboard: FC = () => {
       
         <Styled.MainWrapper>
           <Styled.TopSection>
+          {role === 'superadmin' && (
             <Styled.Dropdown>
-            <CustomSelect onChangeValueHandler={onChangeUserValueHandler} options={userFilterOptions} value={userValue} paginate />
+              <CustomSelect
+                onChangeValueHandler={onChangeUserValueHandler}
+                options={userFilterOptions}
+                value={userValue}
+                paginate
+              />
             </Styled.Dropdown>
-            <Styled.Dropdown>
+          )}
+            {/* <Styled.Dropdown>
             <ReUseStatusFilter onChangeStatusValueHandler={onChangeStatusValueHandler} statusValue={statusValue} />
-            </Styled.Dropdown>
+            </Styled.Dropdown> */}
             <Styled.DateDropdown>
               <ReUseDatePicker
                 datePickerRef={datePickerRef}
@@ -121,6 +136,9 @@ export const Dashboard: FC = () => {
           </Styled.PurchasesContainer>
             {/* Sales Summary Components */}
           </Styled.SalesWrapper>
+          {/* <Styled.ProgressContainer>
+          <img src={ProgressImage} alt="Progress Chart"/>
+          </Styled.ProgressContainer> */}
         </Styled.MainWrapper>
       {/* </Styled.Wrapper> */}
     </Styled.LayoutWrapper>
