@@ -21,18 +21,22 @@ import {
   USERS_LIST_INITIAL_STATE,
   userPermissionInitialState,
 } from './userList.constants';
-import { IuseUserListState } from './types/userList.types';
+import { IuseUserListState, Idata} from './types/userList.types';
 import {
   createCompanyMember,
   deleteCompanyMember,
-  getCompanyMembers,
+  // deleteAdminUser,
+  // getCompanyMembers,
+  getAllAdminUsers,
   getManyCompanies,
   resendInvitation,
   createAdminUsers,
+  deleteAdminUser,
   updateCompanyMember,
+  createAdminUser,
 } from '../settings.api';
-import { setCompanies, setMembers } from '../reducer/settings.reducer';
-// import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
+import {setStoreAdminUserData } from '../reducer/settings.reducer';
+import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
 
 import { USER_ROLES } from 'constants/strings';
 
@@ -40,7 +44,8 @@ export const useUserListState = () => {
   const dispatch = useDispatch();
   const {
     user: {
-      user: { active },
+      user: { active, id },
+      // adminUserData:{selectedId},
     },
     settings: {
       companies,
@@ -50,24 +55,28 @@ export const useUserListState = () => {
 
   // const userRole = getUserRole(accounts || [], active_account || '');
 
-  // interface IADMIN_USERS {
-  //   fullName:string;
-  //   email:string;
-  //   password:string;
-  //   role:string;
-  // }
+  interface IADMIN_USERS {
+    fullName:string;
+    email:string;
+    password:string;
+    role:string;
+  }
   const ADMIN_USERS_initialState ={
     fullName:'',
+    name:'',
     email:'',
     password:'',
-    role:'',
   };
-
+  interface Ipayload {
+    name: string;
+    email:string;
+    password:string;
+  }
   const adminInviteFormArr = [
     {
       type: 'input',
       label: 'Full Name',
-      name: 'fullName',
+      name: 'name',
     },
     {
       type: 'input',
@@ -78,11 +87,6 @@ export const useUserListState = () => {
       type: 'input',
       label: 'Password',
       name: 'password',
-    },
-    {
-      type: 'input',
-      label: 'Role',
-      name: 'role',
     },]
 
     const formik = useFormik({
@@ -93,20 +97,19 @@ export const useUserListState = () => {
       validateOnBlur: true,
     });
 
-  const formattedCompanies = companies?.companies?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  // const formattedCompanies = companies?.companies?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
 
   const initialState = USERS_LIST_INITIAL_STATE;
-
   const [state, setState] = useState<IuseUserListState>(initialState);
   const [isEdit, setIsEdit] = useState(false);
   const [isModalWindowOpen, onModalWindowToggle] = useToggle();
   const [isDeleteModalWindowOpen, onDeleteModalWindowToggle] = useToggle();
   const [isSentSuccessPopup, setIsSentSuccessPopup] = useToggle();
   const [isResentSuccessPopup, setIsResendSuccessPopup] = useToggle();
-
+  const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
   const [permissionState, setPermission] = useState(userPermissionInitialState);
   const [isPAllChecked, setPAllChecked] = useToggle();
   // const onChangePermissionHanler = (id) => {
@@ -131,7 +134,7 @@ export const useUserListState = () => {
   };
 
   const onModalWindowToggleHandler = () => {
-    onGetCompaniesHandler();
+    // onGetCompaniesHandler();
     onModalWindowToggle();
   };
   const onChangeStateFieldHandler = (
@@ -169,12 +172,12 @@ export const useUserListState = () => {
   const onGetCompaniesHandler = async () => {
     try {
       const { data: companiesData } = await getManyCompanies({});
-      dispatch(
-        setCompanies({
-          companies: companiesData.data,
-          count: companiesData.count,
-        })
-      );
+      // dispatch(
+      //   setCompanies({
+      //     companies: companiesData.data,
+      //     count: companiesData.count,
+      //   })
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -182,9 +185,17 @@ export const useUserListState = () => {
 
   const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
     try {
-      // const { data } = await getCompanyMembers({
+      const response = await getAllAdminUsers(); 
+      const usersData = response.data;
+      console.log('Admin Users Response:', response.data); 
+      dispatch(setStoreAdminUserData(response.data));
+      // setDataAdminUsers(usersData);
+      // console.log(selectedId);
+      // console.log('Fetched Admin Users3:',dataAdminUsers);
+
+      // const { data } = await getAllAdminUsers({
       //   ...params,
-      //   active_account: active_account || '',
+      //   // active_account: active_account || '',
       // });
       // state.isSearching
       //   ? onChangeStateFieldHandler('searchedUsers', data.data)
@@ -218,8 +229,8 @@ export const useUserListState = () => {
 
     onChangeStateFieldHandler('isContentLoading', false);
     setCurrentPage(0);
-    if (!count) return;
-    onChangePagesAmount(Number(newValue?.value), count);
+    // if (!count) return;
+    // onChangePagesAmount(Number(newValue?.value), count);
   };
 
   const onChangePage = async ({ selected }: {selected: number}) => {
@@ -319,7 +330,6 @@ export const useUserListState = () => {
     }));
     onModalWindowToggle();
   };
-
   const onClickDeleteUserButton = async () => {
     try {
       const isLastElementOnPage = members.length === 1;
@@ -356,7 +366,7 @@ export const useUserListState = () => {
       const payload =
         {
               // role: values.role || '',
-               name: values.fullName,
+              name: values.fullName,
               email: values.email,
               password: values.password
               // isInviteCompanyMember: state.isInvitation,
@@ -430,6 +440,19 @@ export const useUserListState = () => {
       onChangeStateFieldHandler('companies', null);
       onChangeStateFieldHandler('isLoading', false);
       console.log(error);
+    }
+  };
+
+  const onFormSubmitHandler = async (values:Ipayload) => {
+    try {
+      const payload = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      };
+      await createAdminUser(payload);
+    } catch (error) {
+      console.error('Error creating admin user:', error);
     }
   };
 
@@ -535,8 +558,9 @@ export const useUserListState = () => {
     setPAllChecked,
     setIsSecondModalOpen,
     isSecondModalOpen,
-
+    onFormSubmitHandler,
     PermissionsForAPIHandler,
     createAdminUsers,
+    dataAdminUsers,
   };
 };

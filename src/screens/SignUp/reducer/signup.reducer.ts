@@ -26,6 +26,7 @@ export const SIGN_UP_USER_INITIAL_STATE: ISIGN_UP_SUPPORT_USER_INITIAL_STATE = {
     active: false,
     name:'',
     role:'',
+    // adminUserData:[],
   },
   token: '',
   refreshToken: '',

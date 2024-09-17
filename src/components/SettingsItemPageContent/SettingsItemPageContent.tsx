@@ -1,5 +1,5 @@
-import { FC } from 'react';
-
+import { FC, useEffect } from 'react';
+import { useState } from 'react';
 // import { HeaderPanelMaster } from '../HeaderPanelMaster';
 // import { HeaderPanelMaster } from 'components/HeaderPanelMaster';
 import { LoaderComponent } from '../Loader';
@@ -10,7 +10,13 @@ import { ISettingsItemPageContentProps } from './types/settingsItemPageContent.t
 import { ReUseActionPlaceholder } from 'ReUseComponents/reUseActionPlaceHolder/ReUseActionPlaceHolder';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
 import { ReUseSearch } from 'ReUseComponents/reUseSearch/ReUseSearch';
-
+import { AdminListTabel } from 'screens/Settings/UsersList/AdminListTabel';
+import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
+import { getAllAdminUsers } from 'screens/Settings/settings.api';
+import { setStoreAdminUserData } from 'screens/Settings/reducer/settings.reducer';
+import { useSelector } from 'react-redux';
+import { RootState } from 'services/redux/store';
+import { IState } from 'services/redux/reducer';
 export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
   props
 ) => {
@@ -44,7 +50,44 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
     isFetchingData,
     companies,
   } = props;
+  // const {
+  //   dataAdminUsers
+  // } = useUserListState();
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    active: boolean;  
+  }
   const isContentLoading = false;
+  const adminUserData = useSelector((state: IState) => state.settings.adminUserData);
+      const [sortField, setSortField] = useState<string>('');
+      const [sortOrder, setSortOrder] = useState<string>('');
+    console.log("selectAdminUserData",adminUserData);
+      // Convert dataAdminUsers to array format for table
+      // let arr = Object.entries(dataAdminUsers).map(([key, value]) => value as User);
+      let arr = Object.entries(adminUserData).map(([, value]) => value);
+      console.log("arr:",arr);
+    
+      // Function to handle sorting
+      const requestSort = (columnId: string) => {
+        let newSortOrder = 'asc';
+        if (sortField === columnId && sortOrder === 'asc') {
+          newSortOrder = 'desc';
+        }
+        setSortField(columnId);
+        setSortOrder(newSortOrder);
+    
+        // Sort the users array based on the selected column and order
+        const sortedUsers = [...arr].sort((a, b) => {
+          if (a[columnId as keyof User] < b[columnId as keyof User]) return newSortOrder === 'asc' ? -1 : 1;
+          if (a[columnId as keyof User] > b[columnId as keyof User]) return newSortOrder === 'asc' ? 1 : -1;
+          return 0;
+        });
+    
+        arr = sortedUsers;
+      };
 
   const isPaginationPanel = isMemeberList
     ? (searchValue && searchedUsers?.length) ||
@@ -65,20 +108,14 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
         </Styled.LoaderWrapper>
       ) : !isFetchingData && !isContentLoading ? (
         <div>
-          <Table
-            onResendInvitationHandler={onResendInvitationHandler}
-            searchedCompanies={searchedCompanies}
-            isMemeberList={isMemeberList}
-            searchValue={searchValue}
-            searchedUsers={searchedUsers}
-            members={members}
-            userRole={userRole}
-            onDeleteIconClickHandler={onDeleteIconClickHandler}
-            onEditIconClickHandler={onEditIconClickHandler}
-            companies={companies}
-          />
+        <AdminListTabel
+        users={arr}
+        requestSort={requestSort}
+        sortField={sortField}
+        sortOrder={sortOrder}
+      />
           {isPaginationPanel ? (
-            <Styled.paginationPosition>
+          <Styled.paginationPosition>
             <PaginationPanel
               pages={pages}
               currentPage={currentPage}

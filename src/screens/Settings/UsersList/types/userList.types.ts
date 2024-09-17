@@ -24,3 +24,10 @@ export interface IgetInputFieldsProps {
     role: IOption | null;
   };
 }
+export interface Idata{
+  id: string,
+  name:string,
+  email:string,
+  role: string,
+  active: boolean
+}

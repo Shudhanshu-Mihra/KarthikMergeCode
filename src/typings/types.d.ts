@@ -501,8 +501,6 @@ declare global {
     inputValue: string;
     text: string;
   }
-
-
   interface IDeleteModalWindowProps {
     isLoading?: boolean;
     onCloseDeleteModalWindowHandler?: () => void;
@@ -512,7 +510,6 @@ declare global {
     categoryName?: string;
     account?: string;
   }
-
   interface IModalWindowsBox
     extends IMasterModalWindowProps,
     IDeleteModalWindowProps { }
@@ -585,7 +582,13 @@ declare global {
     skip?: number;
     active_account?: string | null;
   }
-
+interface IallUsers {
+    id?: string;
+    name?: string;
+    email?: string;
+    role?: string; 
+    active?: boolean;
+}
   interface IAccount {
     id: string;
     name: string;

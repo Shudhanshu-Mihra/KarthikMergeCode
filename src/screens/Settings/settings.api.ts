@@ -11,7 +11,11 @@ interface ICreateCompanyMemberPayload {
   companiesIds?: string[];
   thisUserPermissions: any[];
 }
-
+interface IcreateUser{
+  name: string;
+  email: string;
+  password:string;
+}
 interface ICreateAdminUserPayload {
   name: string;
   email: string;
@@ -24,6 +28,12 @@ interface IUpdateCompanyMember {
   active_account?: string;
   role: string;
 }
+interface IAdminUsersUpdate {
+  name : string;
+  email: string;
+  password: string;
+  active: boolean;
+}
 
 export const logOut = () => {
   const URL = `auth/log-out`;
@@ -34,7 +44,14 @@ export const getCompanyMembers = (params?: ISearchParams) => {
   const URL = 'company/get-members';
   return apiServices.fetchData(URL, params);
 };
-
+export const getAllAdminUsers = () => {
+  const URL = 'admin/users';
+  return apiServices.fetchData(URL);
+};
+export const createAdminUser = (payload: IcreateUser) => {
+  const URL = `admin/support-members`;
+  return apiServices.postData(URL, payload);
+};
 export const createCompanyMember = (payload: ICreateCompanyMemberPayload) => {
   // console.log('-----',payload)
   const URL = `company-member/create`;
@@ -53,12 +70,24 @@ export const updateCompanyMember = (
   const URL = `company-member/update/${memberId}`;
   return apiServices.changeData(URL, payload);
 };
-
+export const updateAdminUsers = (
+  payload: IAdminUsersUpdate,
+  memberId: string
+) => {
+  const URL = `admin/support-members/${memberId}`;
+  return apiServices.changeData(URL, payload);
+};
 export const resendInvitation = (invitationId: string) => {
   const URL = `company-member/resend-invitation/${invitationId}`;
   return apiServices.postData(URL, {});
 };
-
+export const deleteAdminUser = (
+  memberId: string,
+  active_account?: string
+) => {
+  const URL = `admin/support-members/${memberId}`;
+  return apiServices.deleteData(URL, { active_account });
+};
 export const deleteCompanyMember = (
   memberId: string,
   active_account?: string

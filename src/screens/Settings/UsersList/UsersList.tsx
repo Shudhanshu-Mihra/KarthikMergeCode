@@ -1,13 +1,12 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { SettingsItemPageContent } from "components/SettingsItemPageContent";
 import { LoaderComponent } from "components/Loader";
 import { SuccessPopup } from "components/SuccessPopup";
-
 import { UserListStyles as Styled } from "./UserList.styles";
 import { useUserListState } from "./UserList.state";
 import { ModalBox } from "./ModalBox";
-
+import { AdminListTabel } from "./AdminListTabel";
 export const UsersList: FC = () => {
   const {
     isLoading,
@@ -47,7 +46,6 @@ export const UsersList: FC = () => {
     isInvitation,
     isSentSuccessPopup,
     isResentSuccessPopup,
-    
     active,
     setIsSentSuccessPopup,
     setIsResendSuccessPopup,
@@ -63,14 +61,14 @@ export const UsersList: FC = () => {
     permissionState,
     setPermission,
     setPAllChecked,
-
+    onFormSubmitHandler,
     PermissionsForAPIHandler,
     role,
   } = useUserListState();
 
   useEffect(() => {
-    !searchValue && onGetAllCompanyMembersHandler();
-  }, [searchValue, active]);
+    onGetAllCompanyMembersHandler();
+  }, []);
 
   useEffect(() => {
     debouncedValue &&
@@ -97,7 +95,8 @@ export const UsersList: FC = () => {
         // isDisableButton={isDisableButton}
         isDisableButton={false}
         onCloseModalWindowHandler={onModalWindowCancelClickButtonHandler}
-        onSaveButtonCLickHandler={formik.handleSubmit}
+        //new
+        onSaveButtonCLickHandler={() => onFormSubmitHandler(formik.values)}
         onEnterCreateItemClick={onEnterInsertUser}
         isModalWindowOpen={isModalWindowOpen}
         headerText={isEdit ? "Edit User" : "Insert User"}
@@ -117,6 +116,10 @@ export const UsersList: FC = () => {
         setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role?.value || null}
+        // formik={{
+        //   ...formik,
+        //   handleSubmit: () => onFormSubmitHandler(formik.values), 
+        // }}
       />
       <SuccessPopup
         positionTop="0"
@@ -164,7 +167,6 @@ export const UsersList: FC = () => {
           onChangePage={onChangePage}
           isGuard
         />
-       
       )}
     </Styled.Section>
   );
