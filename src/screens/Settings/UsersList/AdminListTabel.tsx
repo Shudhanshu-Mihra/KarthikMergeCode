@@ -14,67 +14,20 @@ const TABLE_COLUMN_NAMES = [
   { id: 'active', name: 'Active Status' },
   { id: 'actions', name: 'Actions' }
 ];
-
-// Styles for the table
-// const Styled = {
-//   Head: styled.div`
-//     display: grid;
-//    grid-template-columns: repeat(6, minmax(100px, 150px));
-//     border-top: solid 1px ${({ theme }) => theme.colors.borderWhite};
-//     border-bottom: solid 1px ${({ theme }) => theme.colors.lightBlack};
-//     height: 49px;
-//     width: 100%;
-//     padding-left: 19px;
-//     padding-right: 9px;
-//   `,
-//   Row: styled.div`
-//     display: grid;
-//     grid-template-columns: repeat(6, minmax(100px, 150px));
-//     padding: 10px;
-//     border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
-//   `,
-//   Text: styled.div<{ alignRight?: boolean }>`
-//     color: ${({ theme }) => theme.colors.lightBlack};
-//     font-size: ${({ theme }) => theme.size.default};
-//     text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
-//   `,
-//   EmptyContentWrapper: styled.div`
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     min-height: 50px;
-//     background-color: ${({ theme }) => theme.colors.white};
-//     color: ${({ theme }) => theme.colors.lightBlack};
-//     border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
-//   `,
-//   ActionWrapper: styled.div`
-//   display: flex;
-  
-// `,
-// ActionButton: styled.button`
-//   background: transparent;
-//   border: none;
-//   cursor: pointer;
-//   &:disabled {
-//     cursor: not-allowed;
-//     opacity: 0.5;
-//   }
-// `,
-// };
 const Styled = {
   Container: styled.div`
     width: 100%;
-    overflow-x: auto;
+    
   `,
   Head: styled.div`
     display: grid;
     grid-template-columns: 0.5fr 1.5fr 2fr 1fr 1fr 1fr;
     border-top: solid 1px ${({ theme }) => theme.colors.borderWhite};
     border-bottom: solid 1px ${({ theme }) => theme.colors.lightBlack};
-    height: 49px;
+    height: 50px;
     width: 100%;
-    padding-left: 19px;
-    padding-right: 9px;
+    padding-left: 10px;
+    padding-right: 10px;
   `,
   Row: styled.div`
     display: grid;

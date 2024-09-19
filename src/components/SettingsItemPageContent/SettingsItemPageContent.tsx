@@ -60,34 +60,46 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
     role: string;
     active: boolean;  
   }
-  const isContentLoading = false;
   const adminUserData = useSelector((state: IState) => state.settings.adminUserData);
-      const [sortField, setSortField] = useState<string>('');
-      const [sortOrder, setSortOrder] = useState<string>('');
-    console.log("selectAdminUserData",adminUserData);
-      // Convert dataAdminUsers to array format for table
-      // let arr = Object.entries(dataAdminUsers).map(([key, value]) => value as User);
-      let arr = Object.entries(adminUserData).map(([, value]) => value);
-      console.log("arr:",arr);
-    
-      // Function to handle sorting
-      const requestSort = (columnId: string) => {
-        let newSortOrder = 'asc';
-        if (sortField === columnId && sortOrder === 'asc') {
-          newSortOrder = 'desc';
-        }
-        setSortField(columnId);
-        setSortOrder(newSortOrder);
-    
-        // Sort the users array based on the selected column and order
-        const sortedUsers = [...arr].sort((a, b) => {
-          if (a[columnId as keyof User] < b[columnId as keyof User]) return newSortOrder === 'asc' ? -1 : 1;
-          if (a[columnId as keyof User] > b[columnId as keyof User]) return newSortOrder === 'asc' ? 1 : -1;
-          return 0;
-        });
-    
-        arr = sortedUsers;
-      };
+  const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+
+  const [sortField, setSortField] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+
+  useEffect(() => {
+    // Filter users based on search value
+    const filterUsers = () => {
+      if (!searchValue) {
+        // If no search value, show all users
+        setFilteredUsers(Object.values(adminUserData));
+      } else {
+        const filtered = Object.values(adminUserData).filter((user: any) =>
+          user.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+      }
+    };
+
+    filterUsers();
+  }, [searchValue, adminUserData]);
+
+  const requestSort = (columnId: string) => {
+    let newSortOrder = 'asc';
+    if (sortField === columnId && sortOrder === 'asc') {
+      newSortOrder = 'desc';
+    }
+    setSortField(columnId);
+    setSortOrder(newSortOrder);
+
+    const sortedUsers = [...filteredUsers].sort((a, b) => {
+      if (a[columnId] < b[columnId]) return newSortOrder === 'asc' ? -1 : 1;
+      if (a[columnId] > b[columnId]) return newSortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    setFilteredUsers(sortedUsers);
+  };
 
   const isPaginationPanel = isMemeberList
     ? (searchValue && searchedUsers?.length) ||
@@ -98,41 +110,55 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
   return (
     <Styled.ContentWrapper>
       <ReUseActionPlaceholder>
-      <ReUseSearch searchValue={searchValue} onChangeSearchValueHandler={onChangeSearchValueHandler} onBlurHandler={onBlurHandler} onFocusSearchHandler={onFocusSearchHandler} />
-
-      <ReUseActionButton displayText="Create User" buttonType="actionButton" widthType="primary" themedButton="primary" onClick={onAddClickButtonHandler} displayIconType="addPlus" margin="0 0 0 auto" />
+        <ReUseSearch
+          searchValue={searchValue}
+          onChangeSearchValueHandler={onChangeSearchValueHandler}
+          onBlurHandler={onBlurHandler}
+          onFocusSearchHandler={onFocusSearchHandler}
+        />
+        <ReUseActionButton
+          displayText="Create User"
+          buttonType="actionButton"
+          widthType="primary"
+          themedButton="primary"
+          onClick={onAddClickButtonHandler}
+          displayIconType="addPlus"
+          margin="0 0 0 auto"
+        />
       </ReUseActionPlaceholder>
-      {isContentLoading ? (
+
+      {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
-      ) : !isFetchingData && !isContentLoading ? (
+      ) : (
         <div>
-        <AdminListTabel
-        users={arr}
-        requestSort={requestSort}
-        sortField={sortField}
-        sortOrder={sortOrder}
-      />
+          <AdminListTabel
+            users={filteredUsers}
+            requestSort={requestSort}
+            sortField={sortField}
+            sortOrder={sortOrder}
+          />
+
           {isPaginationPanel ? (
-          <Styled.paginationPosition>
-            <PaginationPanel
-              pages={pages}
-              currentPage={currentPage}
-              onChangePage={onChangePage}
-              onChangePaginationInputValue={onChangePaginationInputValue}
-              onForwardClick={onForwardClick}
-              onBackwardClick={onBackwardClick}
-              onEnterGoToClick={onEnterGoToClick}
-              onChangeItemsPerPage={onChangeItemsPerPage}
-              itemsPerPage={itemsPerPage}
-              inputPaginationValue={inputPaginationValue}
-              onGoToClick={onGoToClick}
-            />
+            <Styled.paginationPosition>
+              <PaginationPanel
+                pages={pages}
+                currentPage={currentPage}
+                onChangePage={onChangePage}
+                onChangePaginationInputValue={onChangePaginationInputValue}
+                onForwardClick={onForwardClick}
+                onBackwardClick={onBackwardClick}
+                onEnterGoToClick={onEnterGoToClick}
+                onChangeItemsPerPage={onChangeItemsPerPage}
+                itemsPerPage={itemsPerPage}
+                inputPaginationValue={inputPaginationValue}
+                onGoToClick={onGoToClick}
+              />
             </Styled.paginationPosition>
           ) : null}
         </div>
-      ) : null}
+      )}
     </Styled.ContentWrapper>
   );
 };

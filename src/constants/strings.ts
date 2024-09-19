@@ -90,17 +90,21 @@ export const USER_ROLES = [
     label: 'Admin',
   },
   {
-    value: 'user',
-    label: 'Regular User',
+    value: 'support-admin',
+    label: 'Support-admin',
   },
-  {
-    value: 'accountant',
-    label: 'Accountant',
-  },
-  {
-    value: 'owner',
-    label: 'Company Owner',
-  },
+  // {
+  //   value: 'user',
+  //   label: 'Regular User',
+  // },
+  // {
+  //   value: 'accountant',
+  //   label: 'Accountant',
+  // },
+  // {
+  //   value: 'owner',
+  //   label: 'Company Owner',
+  // },
 ];
 
 export const MAX_FILE_SIZE = 62914560; //13053968;

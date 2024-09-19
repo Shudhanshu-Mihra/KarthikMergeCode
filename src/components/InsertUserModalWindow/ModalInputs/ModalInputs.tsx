@@ -32,7 +32,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
     onChangeSelectHandler,
     formikProps,
     onEnterCreateItemClick,
-    // CustomSelectLabel
+    CustomSelectLabel
   } = props;
 
   const { touched, error } = formikMeta(inputType === 'input' ? inputName : '');
@@ -59,7 +59,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
         </Styled.InputWrapper>
       ) : (
         <Styled.selectWrapper>
-          {/* <CustomSelect
+          <CustomSelect
             onChangeValueHandler={onChangeSelectHandler}
             options={options}
             isFullWidth
@@ -67,7 +67,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
             isRemoveBorder
             value={selectValue}
             label={CustomSelectLabel}
-          /> */}
+          />
         </Styled.selectWrapper>
       )}
     </>

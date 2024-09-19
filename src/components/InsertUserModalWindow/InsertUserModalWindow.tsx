@@ -8,8 +8,8 @@ import { ModalWindowHeader } from '../ModalWindowHeader';
 import { InsertUserModalWindowStyles as Styled } from './InsertUserModalWindow.style';
 import { UserModalWindowStyles } from './InsertUserModalWindow.style';
 import { ModalInputs } from './ModalInputs/ModalInputs';
-// import { TInputFields } from './types/insertUser.types';
-import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
+import { TInputFields } from './types/insertUser.types';
+// import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
 import { ReactComponent as Close } from 'assets/icons/close.svg';
 import { useState } from 'react';
 // import { PermissionModule } from '../Permission/permission';
@@ -130,11 +130,10 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
                   formikProps={formikProps}
                   onEnterCreateItemClick={onEnterCreateItemClick}
                   options={input.options}
-                  // onChangeSelectHandler={input.onChangeSelect}
+                  onChangeSelectHandler={input.onChangeSelect}
                 />
               ))}
             </Styled.InputsWrapper>
-            {/* permission div start */}
             <Styled.CheckboxItemWrapper>
           {/* {permissionState.map((permission:any) => (
           <CheckboxItem
@@ -158,7 +157,7 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
               onSaveButtonCLickHandler={onSaveButtonCLickHandler}
               isSaveButton
               isNoPadding
-              isDisableButton={isDisableButton}
+              // isDisableButton={isDisableButton}
             />
              <Styled.CloseIconWrapper>
           <Close width={20} onClick={onCloseModalWindowHandler} />

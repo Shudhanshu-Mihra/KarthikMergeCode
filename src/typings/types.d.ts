@@ -298,9 +298,8 @@ declare global {
     value: string;
     label: string;
     id?: string;
-    [key: string]: string | undefined;
+    [key: string]: string;
   }
-
   enum Statuses {
     processing = "processing",
     review = "review",
@@ -351,10 +350,8 @@ declare global {
   type TStatuses = keyof typeof Statuses;
 
   enum Roles {
-    owner = "owner",
-    user = "user",
+    user = "support-users",
     admin = "admin",
-    accountant = "accountant",
   }
   type TRoles = keyof typeof Roles;
 

@@ -42,7 +42,7 @@ export const getAvatarLinks = (logout: () => void) => [
 export const SUPPORT_CENTER_ROUTE = 'https://support.google.com/';
 //new
 export const getAdminLinks = (userRole: string) => {
-  if (userRole !== 'superadmin') {
+  if (userRole === 'support-admin') {
     return ADMIN_LINKS.filter(link => link.title !== 'USERS');
   }
   return ADMIN_LINKS;

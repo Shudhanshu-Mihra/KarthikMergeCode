@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
-import { ActionMeta, SingleValue } from 'react-select';
+import { ActionMeta, SingleValue} from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useDebounce } from 'hooks/useDebounce';
 import { useToggle } from 'hooks/useToggle';
 import { usePagination } from 'hooks/usePagination';
@@ -39,12 +38,13 @@ import {setStoreAdminUserData } from '../reducer/settings.reducer';
 import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
 
 import { USER_ROLES } from 'constants/strings';
+import { dropdownIndicatorCSS } from 'react-select/dist/declarations/src/components/indicators';
 
 export const useUserListState = () => {
   const dispatch = useDispatch();
   const {
     user: {
-      user: { active, id },
+      user: {active, role},
       // adminUserData:{selectedId},
     },
     settings: {
@@ -52,8 +52,23 @@ export const useUserListState = () => {
       companyMembers: { count, members },
     },
   } = useSelector((state: IState) => state);
-
   // const userRole = getUserRole(accounts || [], active_account || '');
+  const initialState = USERS_LIST_INITIAL_STATE;
+
+  const [state, setState] = useState<IuseUserListState>(initialState);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isModalWindowOpen, onModalWindowToggle] = useToggle();
+  const [isDeleteModalWindowOpen, onDeleteModalWindowToggle] = useToggle();
+  const [isSentSuccessPopup, setIsSentSuccessPopup] = useToggle();
+  const [isResentSuccessPopup, setIsResendSuccessPopup] = useToggle();
+  const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
+  const [permissionState, setPermission] = useState(userPermissionInitialState);
+  const [isPAllChecked, setPAllChecked] = useToggle();
+
+  const onChangeRoleValueHandler = (
+    newValue: IOption,
+    actionMeta: ActionMeta<IOption> | unknown
+  ) => onChangeStateFieldHandler('role', newValue);
 
   interface IADMIN_USERS {
     fullName:string;
@@ -66,29 +81,14 @@ export const useUserListState = () => {
     name:'',
     email:'',
     password:'',
+    role:'',
   };
   interface Ipayload {
     name: string;
     email:string;
     password:string;
+    role:string;
   }
-  const adminInviteFormArr = [
-    {
-      type: 'input',
-      label: 'Full Name',
-      name: 'name',
-    },
-    {
-      type: 'input',
-      label: 'Email',
-      name: 'email',
-    },
-    {
-      type: 'input',
-      label: 'Password',
-      name: 'password',
-    },]
-
     const formik = useFormik({
       initialValues: ADMIN_USERS_initialState,
       onSubmit: (values) =>
@@ -102,16 +102,7 @@ export const useUserListState = () => {
   //   label: item.name,
   // }));
 
-  const initialState = USERS_LIST_INITIAL_STATE;
-  const [state, setState] = useState<IuseUserListState>(initialState);
-  const [isEdit, setIsEdit] = useState(false);
-  const [isModalWindowOpen, onModalWindowToggle] = useToggle();
-  const [isDeleteModalWindowOpen, onDeleteModalWindowToggle] = useToggle();
-  const [isSentSuccessPopup, setIsSentSuccessPopup] = useToggle();
-  const [isResentSuccessPopup, setIsResendSuccessPopup] = useToggle();
-  const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
-  const [permissionState, setPermission] = useState(userPermissionInitialState);
-  const [isPAllChecked, setPAllChecked] = useToggle();
+
   // const onChangePermissionHanler = (id) => {
   //   setPermissions((prevPermissions) =>
   //     prevPermissions.map((permission) =>
@@ -158,12 +149,6 @@ export const useUserListState = () => {
   const PermissionsForAPIHandler = (selectedPermission: any[]) => {
     onChangeStateFieldHandler('givePermissionsForAPI', selectedPermission);
   }
-
-  const onChangeRoleValueHandler = (
-    newValue: IOption,
-    actionMeta: ActionMeta<IOption> | unknown
-  ) => onChangeStateFieldHandler('role', newValue);
-
   const onChangeCompanyValueHandler = (
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
@@ -219,7 +204,7 @@ export const useUserListState = () => {
   };
 
   const onChangeItemsPerPage = async (newValue: SingleValue<IOption>) => {
-    setItemsPerPage(newValue as IOption);
+    // setItemsPerPage(newValue as IOption);
     onChangeStateFieldHandler('isContentLoading', true);
     onChangeStateFieldHandler('searchValue', '');
 
@@ -411,7 +396,7 @@ export const useUserListState = () => {
         password: values.password || '',
         name: values.fullName || '',
         // name: values.name || '',
-        // role: state.role?.value || '',
+        role:state.role?.value || '',
         // companiesIds: state.companies?.map((item) => item.value) || [],
         // thisUserPermissions: state.givePermissionsForAPI,
         // email: "Test",
@@ -448,6 +433,7 @@ export const useUserListState = () => {
       const payload = {
         name: values.name,
         email: values.email,
+        role: state.role?.value,
         password: values.password,
       };
       await createAdminUser(payload);
@@ -491,6 +477,14 @@ export const useUserListState = () => {
   //     onInviteUserToCompanyHandler(values);
   //   },
   // });
+  // const getDefaultRole = (userRole: string) => {
+  //   if (role === 'admin') {
+  //     return { value: 'support-admin', label: 'Support Admin' };
+  //   }
+  //   if (role === 'superadmin') {
+  //     return { value: 'admin', label: 'Admin' };
+  //   } 
+  // };
   const isDisableButton =
     isEdit && !state.isInvitation
       ? state.prevRole?.value === state.role?.value
@@ -505,7 +499,32 @@ export const useUserListState = () => {
         !formik.dirty ||
         !state.role?.value ||
         !state.companies?.length;
-
+        const adminInviteFormArr = [
+          {
+            type: 'input',
+            label: 'Full Name',
+            name: 'name',
+          },
+          {
+            type: 'input',
+            label: 'Email',
+            name: 'email',
+          },
+          {
+            type: 'input',
+            label: 'Password',
+            name: 'password',
+          },
+          {
+            type: 'select',
+            label: 'Role',
+            name: 'role',
+            value: state.role,
+            options: USER_ROLES,
+            isDisabled: false,
+            onChangeSelect: onChangeRoleValueHandler,
+          },
+        ];
   return {
     ...state,
     active,

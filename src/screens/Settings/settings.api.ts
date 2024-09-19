@@ -15,11 +15,13 @@ interface IcreateUser{
   name: string;
   email: string;
   password:string;
+ 
 }
 interface ICreateAdminUserPayload {
   name: string;
   email: string;
   password:string;
+  role: string;
 }
 interface IUpdateCompanyMember {
   name?: string;
@@ -49,7 +51,7 @@ export const getAllAdminUsers = () => {
   return apiServices.fetchData(URL);
 };
 export const createAdminUser = (payload: IcreateUser) => {
-  const URL = `admin/support-members`;
+  const URL = `admin/users`;
   return apiServices.postData(URL, payload);
 };
 export const createCompanyMember = (payload: ICreateCompanyMemberPayload) => {

@@ -55,7 +55,7 @@ export const getInputFields = (props: IGetInputFieldsProps) => {
       isDisabled: isDisabledSelect,
       value: state.dateFormat,
       options: dateFormats,
-      // onChangeSelect: funcArray[1],
+      onChangeSelect: funcArray[1],
     },
   ];
 };
