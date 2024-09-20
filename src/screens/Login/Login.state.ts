@@ -50,17 +50,16 @@ export const useLoginState = () => {
       const { data } = await login(loginValues);
       // dispatch(setCurrencies(data.currencies));
       dispatch(setUser(data));
-      console.log('signInHit',data);
-      localStorage.setItem('token',data.token);
-      localStorage.setItem('RefreshToken',data.refreshToken);
-      const Original_token = localStorage.getItem('token');
-      const Refresh_Token = localStorage.getItem('RefreshToken')
+      // localStorage.setItem('token',data.token);
+      // localStorage.setItem('RefreshToken',data.refreshToken);
+      // const Original_token = localStorage.getItem('token');
+      // const Refresh_Token = localStorage.getItem('RefreshToken');
       // data.company && dispatch(setUserInfo({ company: data.company }));
       // dispatch(setCurrencies(data.currencies));
       // data.company && dispatch(setCompany(data.company));
       // navigate(data.user.data.active === true ? ROUTES.home : ROUTES.login);
       navigate(
-        data.user.active === true || Original_token !== Refresh_Token
+        data.user.active === true ||!data.user.accounts.length
           ? ROUTES.home
           : ROUTES.login
       );
