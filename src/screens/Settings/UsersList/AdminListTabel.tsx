@@ -1,11 +1,14 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { styled } from 'styles/theme';
 import { TableButton } from 'components/TableButton/TableButton';
 import { Icon } from 'components/Icons/Icons';
 import { useUserListState } from './UserList.state';
 import { id } from 'date-fns/locale';
 import { deleteAdminUser } from '../settings.api';
-// Define the column names
+import { DeleteModalWindow } from 'components/DeleteModalWindow';
+import { ModalBox } from './ModalBox';
+import { text } from 'stream/consumers';
+
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -85,7 +88,56 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   const {
     onEditIconClickHandler,
     onClickDeleteUserButton,
+    formik,
+    // getInputFields,
+    modalFields,
+    onEnterInsertUser,
+    onDeleteModalWindowToggle,
+    isDeleteModalWindowOpen,
+    selectedUserName,
+    isPAllChecked,
+    permissionState,
+    setPAllChecked,
+    PermissionsForAPIHandler
   } = useUserListState();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [userNameAdmin, setUserNameAdmin] = useState<string | undefined>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const handleDeleteClick = (user: string, userName: string) => {
+    setSelectedUser(user); 
+    setUserNameAdmin(' '+userName);
+    console.log("userName: ", userName);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false); 
+    setSelectedUser(null); 
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedUser) {
+      setIsLoading(true);
+      await deleteAdminUser(selectedUser);  
+      setIsLoading(false);  
+      handleCloseDeleteModal();  
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);  
+  const handleEditClick = (user: string) => {
+    setSelectedUser(user);  
+    setIsEdit(true);  
+    setIsModalOpen(true);  
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);  
+    setSelectedUser(null); 
+    setIsEdit(false);  
+  };
   return (
     <>
       <Styled.Head>
@@ -110,10 +162,16 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
             <Styled.Text>{user.role}</Styled.Text>
             <Styled.Text>{user.active ? 'Active' : 'Inactive'}</Styled.Text>
             <Styled.ActionWrapper>
-            <Styled.ActionButton onClick={() => onEditIconClickHandler(user.id)}>
+            {/* <Styled.ActionButton onClick={() => onEditIconClickHandler(user.id)}>
+                <Icon type="edit" />
+              </Styled.ActionButton> */}
+              <Styled.ActionButton onClick={() => handleEditClick(user.id)}>
                 <Icon type="edit" />
               </Styled.ActionButton>
-              <Styled.ActionButton onClick={() => deleteAdminUser(user.id)}>
+              {/* <Styled.ActionButton onClick={() => deleteAdminUser(user.id)}>
+                <Icon type="remove" />
+              </Styled.ActionButton> */}
+              <Styled.ActionButton onClick={() => handleDeleteClick(user.id, user.name)}>
                 <Icon type="remove" />
               </Styled.ActionButton>
             </Styled.ActionWrapper>
@@ -122,6 +180,44 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
         ))
       ) : (
         <Styled.EmptyContentWrapper>No users found</Styled.EmptyContentWrapper>
+      )}
+      {isDeleteModalOpen && selectedUser && (
+        <DeleteModalWindow
+          onCloseDeleteModalWindowHandler={handleCloseDeleteModal}
+          onDeleteButtonClickHandler={handleConfirmDelete}
+          isDeleteModalWindowOpen={isDeleteModalOpen}
+          deleteItemName={userNameAdmin}  
+          isLoading={isLoading}  
+          categoryName="user"  
+        />
+      )}
+      {isModalOpen && (
+        <ModalBox
+          modalFields={modalFields.slice(0, 4)}
+          text="Name"
+          isLoading={false}  
+          isDisableButton={false}
+          onCloseModalWindowHandler={handleCloseModal}
+          onSaveButtonCLickHandler={formik.handleSubmit}
+          onEnterCreateItemClick={onEnterInsertUser}
+          isModalWindowOpen={isModalOpen}
+          headerText={isEdit ? 'Edit User' : 'Insert User'}
+          formikMeta={formik.getFieldMeta}  
+          formikProps={formik.getFieldProps}  
+          onCloseDeleteModalWindowHandler={onDeleteModalWindowToggle}
+          onDeleteButtonClickHandler={onClickDeleteUserButton}
+          isDeleteModalWindowOpen={isDeleteModalWindowOpen}
+          deleteItemName={`‘${selectedUserName}’`}
+          isEdit={isEdit}
+          isInvitation={false}
+          isUserList
+          categoryName="user"
+          isPAllChecked={isPAllChecked}
+          permissionState={permissionState}
+          setPAllChecked={setPAllChecked}
+          PermissionsForAPIHandler={PermissionsForAPIHandler}
+          role={selectedUser|| null}
+        />
       )}
     </>
   );

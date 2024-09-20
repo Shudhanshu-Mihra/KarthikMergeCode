@@ -10,13 +10,13 @@ import { myAccountValidationScheme } from 'services/validation';
 import { IState } from 'services/redux/reducer';
 import {
   getFirstLetterUppercase,
+
   getSelectedUser,
   getUserRole,
 } from 'services/utils';
 
 import {
-  // formikInitialValues,
-  // getInputFields,
+  getInputFields,
   USERS_LIST_INITIAL_STATE,
   userPermissionInitialState,
 } from './userList.constants';
@@ -458,11 +458,11 @@ export const useUserListState = () => {
   const onFocusSearchHandler = () => onChangeStateFieldHandler('isFocus', true);
   const onBlurHandler = () => onChangeStateFieldHandler('isFocus', false);
 
-  // const modalFields = getInputFields({
-  //   options: [USER_ROLES, formattedCompanies],
-  //   state: { role: state.role, companies: state.companies },
-  //   funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
-  // });
+  const modalFields = getInputFields({
+    options: [USER_ROLES],
+    state: { role: state.role, companies: state.companies },
+    funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
+  });
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => void
   formik.handleChange(event);
@@ -528,6 +528,7 @@ export const useUserListState = () => {
   return {
     ...state,
     active,
+    modalFields,
     // userRole,
     isEdit,
     currentPage,
@@ -535,7 +536,6 @@ export const useUserListState = () => {
     inputPaginationValue,
     itemsPerPage,
     count,
-    // modalFields,
     formik,
     adminInviteFormArr,
     members,

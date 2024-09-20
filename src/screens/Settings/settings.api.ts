@@ -76,7 +76,7 @@ export const updateAdminUsers = (
   payload: IAdminUsersUpdate,
   memberId: string
 ) => {
-  const URL = `admin/support-members/${memberId}`;
+  const URL = `admin/users/${memberId}`;
   return apiServices.changeData(URL, payload);
 };
 export const resendInvitation = (invitationId: string) => {
@@ -87,7 +87,7 @@ export const deleteAdminUser = (
   memberId: string,
   active_account?: string
 ) => {
-  const URL = `admin/support-members/${memberId}`;
+  const URL = `admin/users/${memberId}`;
   return apiServices.deleteData(URL, { active_account });
 };
 export const deleteCompanyMember = (

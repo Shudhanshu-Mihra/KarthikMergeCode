@@ -19,36 +19,36 @@ export const USERS_LIST_INITIAL_STATE = {
   isInvitation: false,
   givePermissionsForAPI: []
 };
-// export const formikInitialValues = {
-//   name: '',
-//   email: '',
-//   password:'',
-//   role:'',
-// };
-// export const getInputFields = (props: IgetInputFieldsProps) => {
-//   const { options, funcArray, state } = props;
-//   return [
-//     {
-//       type: 'input',
-//       label: 'Full Name',
-//       name: 'fullName',
-//     },
-//     {
-//       type: 'input',
-//       label: 'Email',
-//       name: 'email',
-//     },
-//     {
-//       type: 'input',
-//       label: 'Password',
-//       name: 'password',
-//     },
-//     {
-//       type: 'input',
-//       label: 'Role',
-//       name: 'role',
-//     },
-    
+export const formikInitialValues = {
+  name: '',
+  email: '',
+  password:'',
+  role:'',
+};
+export const getInputFields = (props: IgetInputFieldsProps) => {
+  return [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+    },
+    {
+      type: 'input',
+      label: 'Password',
+      name: 'password',
+    },
+    {
+      type: 'input',
+      label: 'Role',
+      name: 'role',
+    },
+  ]
+}
 //     // {
 //     //   type: 'select',
 //     //   name: 'company',

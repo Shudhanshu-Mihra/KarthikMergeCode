@@ -95,16 +95,16 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
 
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
-  // const openSecondModal = () => {
-  //   setIsSecondModalOpen(true);
-  // };
+  const openSecondModal = () => {
+    setIsSecondModalOpen(true);
+  };
 
    const closeSecondModal = () => {
     setIsSecondModalOpen(false);
   };
 
 
-  // const Role = role ? role[0].toUpperCase() + role.slice(1) : '';
+  const Role = role ? role[0].toUpperCase() + role.slice(1) : '';
     return (
     <>
       <ReactModal
@@ -134,8 +134,8 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
                 />
               ))}
             </Styled.InputsWrapper>
-            <Styled.CheckboxItemWrapper>
-          {/* {permissionState.map((permission:any) => (
+           {/* <Styled.CheckboxItemWrapper>
+           {permissionState.map((permission:any) => (
           <CheckboxItem
             // isChecked={isAllChecked}
             isChecked={permission.isChecked}
@@ -145,8 +145,8 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
             labelText={permission.p_name}
             name="allChecked"
           />
-        ))} */}
-        </Styled.CheckboxItemWrapper>
+        ))} 
+        </Styled.CheckboxItemWrapper>*/}
             {/* <Styled.Hyperlink onClick={openSecondModal}>
               Edit Permission <Styled.HyperLinkInnerText>for this user .</Styled.HyperLinkInnerText>
             </Styled.Hyperlink> */}
