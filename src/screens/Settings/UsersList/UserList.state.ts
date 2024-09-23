@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from 'hooks/useDebounce';
 import { useToggle } from 'hooks/useToggle';
 import { usePagination } from 'hooks/usePagination';
-
+import { SuccessModalWindow } from 'components/SuccessModalWindow';
 import { myAccountValidationScheme } from 'services/validation';
 import { IState } from 'services/redux/reducer';
 import {
@@ -19,6 +19,7 @@ import {
   getInputFields,
   USERS_LIST_INITIAL_STATE,
   userPermissionInitialState,
+  getEditInputFields,
 } from './userList.constants';
 import { IuseUserListState, Idata} from './types/userList.types';
 import {
@@ -37,8 +38,10 @@ import {
 import {setStoreAdminUserData } from '../reducer/settings.reducer';
 import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
 
-import { USER_ROLES } from 'constants/strings';
+import { USER_ROLES, IS_ACTIVE, EDIT_USERS} from 'constants/strings';
 import { dropdownIndicatorCSS } from 'react-select/dist/declarations/src/components/indicators';
+import { is } from 'date-fns/locale';
+import { stat } from 'fs';
 
 export const useUserListState = () => {
   const dispatch = useDispatch();
@@ -61,6 +64,7 @@ export const useUserListState = () => {
   const [isDeleteModalWindowOpen, onDeleteModalWindowToggle] = useToggle();
   const [isSentSuccessPopup, setIsSentSuccessPopup] = useToggle();
   const [isResentSuccessPopup, setIsResendSuccessPopup] = useToggle();
+  // const [isResentSuccessPopup, setIsResendSuccessPopup] = useState(false);
   const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
   const [permissionState, setPermission] = useState(userPermissionInitialState);
   const [isPAllChecked, setPAllChecked] = useToggle();
@@ -83,6 +87,11 @@ export const useUserListState = () => {
     password:'',
     role:'',
   };
+  const EDIT_ADMIN_USER_INITIALSTATE = {
+    name:'',
+    email:'',
+    active: null,
+  }
   interface Ipayload {
     name: string;
     email:string;
@@ -113,7 +122,7 @@ export const useUserListState = () => {
   //   );
   // };
 // permission start here 
-  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
+const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 // permission end here 
   const onModalWindowCancelClickButtonHandler = () => {
     onModalWindowToggle();
@@ -229,14 +238,11 @@ export const useUserListState = () => {
     });
     onChangeStateFieldHandler('isContentLoading', false);
   };
-
   const debouncedValue = useDebounce(state.searchValue, 250);
-
   const onEnterInsertUser = (event: React.KeyboardEvent) => {
     if (event.key !== 'Enter') return;
     formik.handleSubmit();
   };
-
   const onChangeSearchValueHandler = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -294,24 +300,26 @@ export const useUserListState = () => {
     setIsEdit(true);
     setState((prevState) => ({
       ...prevState,
-      role: {
-        label: getFirstLetterUppercase(selectedUser?.role || ''),
-        value: selectedUser?.role || '',
-      },
-      prevRole: {
-        label: getFirstLetterUppercase(selectedUser?.role || ''),
-        value: selectedUser?.role || '',
-      },
+      // name: {
+      //   label: getFirstLetterUppercase(selectedUser?.name || ''),
+      //   value: selectedUser?.role || '',
+      // },
+      // prevRole: {
+      //   label: getFirstLetterUppercase(selectedUser?.role || ''),
+      //   value: selectedUser?.role || '',
+      // },
       prevName: selectedUser?.name || '',
-      prevEmail:
-        selectedUser?.user?.email || selectedUser?.memberInvite?.email || '',
+      // prevEmail:selectedUser?.user?.email|| selectedUser?.memberInvite?.email || '',
+      prevEmail: selectedUser?.user?.email || '',
+      prevActive: selectedUser?.user?.active_account,
       selectedItemId: itemId,
       selectedUserName: selectedUser?.name || '',
-      isInvitation:
-        selectedUser?.memberInvite &&
-        !selectedUser?.memberInvite?.isCompanyInvite
-          ? true
-          : false,
+      // isInvitation:
+      //   selectedUser?.memberInvite &&
+      //   !selectedUser?.memberInvite?.isCompanyInvite
+      //     ? true
+      //     : false,
+
     }));
     onModalWindowToggle();
   };
@@ -353,10 +361,11 @@ export const useUserListState = () => {
               // role: values.role || '',
               name: values.fullName,
               email: values.email,
-              password: values.password
+              password: values.password,
               // isInviteCompanyMember: state.isInvitation,
             };
             console.log("payload",payload);
+            
       // const { data: updatedAcc } = await updateCompanyMember(
       //   { ...payload, active_account: active_account || '' },
       //   state.selectedItemId
@@ -385,7 +394,65 @@ export const useUserListState = () => {
       console.log(error);
     }
   };
-
+  const modalFieldsNew = [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+      // value: state.prevName,
+      value: formik.values.email,
+      options: USER_ROLES,
+      isDisabled: false,
+      onChangeSelect: onChangeRoleValueHandler,
+    },
+    {
+      type: 'select',
+      name: 'select',
+      label: 'Active',
+      value: state.role,
+      options: IS_ACTIVE,
+      isDisabled: false,
+      onChangeSelect: onChangeRoleValueHandler,
+    },
+  ];
+  const editModalFields = [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+      value: formik.values.name,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      error: formik.errors.fullName,
+      touched: formik.touched.fullName,
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+      value: formik.values.email,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      error: formik.errors.email,
+      touched: formik.touched.email,
+    },
+    {
+      type: 'select',
+      label: 'Role',
+      name: 'role',
+      value: state.active,
+      options: IS_ACTIVE,
+      isDisabled: false,
+      onChangeSelect: onChangeRoleValueHandler,
+      error: formik.errors.role,
+      touched: formik.touched.role,
+    },
+  ];
   const onInviteUserToCompanyHandler = async (
     values: typeof ADMIN_USERS_initialState
   ) => {
@@ -409,9 +476,8 @@ export const useUserListState = () => {
       console.log("payload----",payload);
       await createAdminUsers(payload);
       onChangePageHandler(0);
-      // await onGetAllCompanyMembersHandler({
-      //   take: +itemsPerPage.value,
-      // });
+      setIsResendSuccessPopup();
+      await onGetAllCompanyMembersHandler();
       onModalWindowToggle();
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('role', { value: '', label: '' });
@@ -449,7 +515,6 @@ export const useUserListState = () => {
       //   active_account: active_account || '',
       // });
       // dispatch(setMembers({ count: data.count, members: data.data }));
-      setIsResendSuccessPopup();
     } catch (error) {
       console.log(error);
     }
@@ -457,12 +522,20 @@ export const useUserListState = () => {
 
   const onFocusSearchHandler = () => onChangeStateFieldHandler('isFocus', true);
   const onBlurHandler = () => onChangeStateFieldHandler('isFocus', false);
-
-  const modalFields = getInputFields({
-    options: [USER_ROLES],
-    state: { role: state.role, companies: state.companies },
-    funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
-  });
+  const formattedCompanies = companies?.companies?.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
+//   const modalFields = getInputFields({
+//     options: [USER_ROLES],
+//     state: { role: state.role, companies: state.companies },
+//     funcArray: [onChangeRoleValueHandler, onChangeCompanyValueHandler],
+//   });
+// //new
+//   const newmodalFields = getEditInputFields({
+//     options: [USER_ROLES],
+//     state: { role: state.role, email:state.prevEmail, name: state.prevName },
+//   });
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => void
   formik.handleChange(event);
@@ -502,7 +575,7 @@ export const useUserListState = () => {
         const adminInviteFormArr = [
           {
             type: 'input',
-            label: 'Full Name',
+            label: 'Name',
             name: 'name',
           },
           {
@@ -525,10 +598,12 @@ export const useUserListState = () => {
             onChangeSelect: onChangeRoleValueHandler,
           },
         ];
+
+        
   return {
     ...state,
     active,
-    modalFields,
+    editModalFields,
     // userRole,
     isEdit,
     currentPage,
@@ -581,5 +656,9 @@ export const useUserListState = () => {
     PermissionsForAPIHandler,
     createAdminUsers,
     dataAdminUsers,
+    // newmodalFields,
+     modalFieldsNew,
+    // searchedCompanies,
+    // isMemeberList
   };
 };

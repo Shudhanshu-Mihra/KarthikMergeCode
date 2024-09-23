@@ -17,6 +17,7 @@ import { setStoreAdminUserData } from 'screens/Settings/reducer/settings.reducer
 import { useSelector } from 'react-redux';
 import { RootState } from 'services/redux/store';
 import { IState } from 'services/redux/reducer';
+import { SuccessModalWindow } from 'components/SuccessModalWindow';
 export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
   props
 ) => {
@@ -83,7 +84,7 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
 
     filterUsers();
   }, [searchValue, adminUserData]);
-
+//
   const requestSort = (columnId: string) => {
     let newSortOrder = 'asc';
     if (sortField === columnId && sortOrder === 'asc') {
@@ -139,7 +140,6 @@ export const SettingsItemPageContent: FC<ISettingsItemPageContentProps> = (
             sortField={sortField}
             sortOrder={sortOrder}
           />
-
           {isPaginationPanel ? (
             <Styled.paginationPosition>
               <PaginationPanel

@@ -549,6 +549,11 @@ declare global {
     isActive: boolean;
     isCompanyInvite: boolean;
   }
+  interface IEditAdminUser{
+    name: string;
+    email: string;
+    active: boolean;
+  }
   interface IMember {
     id: string;
     name: string;

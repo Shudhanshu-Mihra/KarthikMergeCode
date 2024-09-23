@@ -1,6 +1,7 @@
 export interface ISettingsItemPageContentProps
   extends TableSettingsProps,
   IPaginationPanelProps {
+  modalFields:any[];
   companies?: ICompanySettings[];
   searchedCompanies?: ICompanySettings[];
   members?: IMember[];

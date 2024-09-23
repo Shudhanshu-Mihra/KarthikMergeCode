@@ -81,12 +81,14 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
           }
           : UserModalWindowStyles;
 
-  const fields =
-    isEdit && isInvitation && isUserList
-      ? modalFields.slice(0, 3)
-      : isEdit && !isInvitation && isUserList
-        ? modalFields.slice(2, 3)
-        : modalFields;
+
+          const fields = modalFields;
+  // const fields =
+  //   isEdit && isInvitation && isUserList
+  //     ? modalFields.slice(0, 3)
+  //     : isEdit && !isInvitation && isUserList
+  //       ? modalFields.slice(2, 3)
+  //       : modalFields;
 
   // const handleCheckboxChange = (permission: any) => {
   //   console.log(permission);

@@ -1,5 +1,9 @@
-import { IgetInputFieldsProps } from './types/userList.types';
-
+import { IgetEditInputFieldsProps, IgetInputFieldsProps } from './types/userList.types';
+export const EDIT_USER_INITIAL_STATE = {
+  name:'',
+  email:'',
+  active:null,
+}
 export const USERS_LIST_INITIAL_STATE = {
   searchValue: '',
   isLoading: false,
@@ -17,7 +21,8 @@ export const USERS_LIST_INITIAL_STATE = {
   prevName: '',
   prevEmail: '',
   isInvitation: false,
-  givePermissionsForAPI: []
+  givePermissionsForAPI: [],
+  active:null,
 };
 export const formikInitialValues = {
   name: '',
@@ -25,7 +30,27 @@ export const formikInitialValues = {
   password:'',
   role:'',
 };
+export const getEditInputFields = (props:IgetEditInputFieldsProps) => {
+  return[
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+    },
+    {
+      type: 'input',
+      label: 'Role',
+      name: 'role',
+    },
+  ]
+}
 export const getInputFields = (props: IgetInputFieldsProps) => {
+  const { options, funcArray, state } = props;
   return [
     {
       type: 'input',
@@ -47,27 +72,28 @@ export const getInputFields = (props: IgetInputFieldsProps) => {
       label: 'Role',
       name: 'role',
     },
+    {
+      type: 'select',
+      name: 'company',
+      label: 'Company',
+      value: state?.companies || undefined,
+      isMulti: true,
+      options: options[1],
+      isDisabled: false,
+      onChangeSelect: funcArray[1],
+    },
+    {
+      type: 'select',
+      name: 'select',
+      label: 'Role',
+      value: state.role,
+      options: options[0],
+      isDisabled: false,
+      onChangeSelect: funcArray[0],
+    },
   ]
 }
-//     // {
-//     //   type: 'select',
-//     //   name: 'company',
-//     //   label: 'Company',
-//     //   value: state?.companies || undefined,
-//     //   isMulti: true,
-//     //   options: options[1],
-//     //   isDisabled: false,
-//     //   onChangeSelect: funcArray[1],
-//     // },
-//     // {
-//     //   type: 'select',
-//     //   name: 'select',
-//     //   label: 'Role',
-//     //   value: state.role,
-//     //   options: options[0],
-//     //   isDisabled: false,
-//     //   onChangeSelect: funcArray[0],
-//     // },
+    
 //   ];
 // };
 

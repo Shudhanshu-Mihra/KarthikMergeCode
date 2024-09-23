@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { styled } from 'styles/theme';
 import { TableButton } from 'components/TableButton/TableButton';
 import { Icon } from 'components/Icons/Icons';
@@ -8,7 +8,12 @@ import { deleteAdminUser } from '../settings.api';
 import { DeleteModalWindow } from 'components/DeleteModalWindow';
 import { ModalBox } from './ModalBox';
 import { text } from 'stream/consumers';
-
+import { getAllAdminUsers } from '../settings.api';
+import { SuccessPopup } from 'components/SuccessPopup';
+import { IS_ACTIVE } from 'constants/strings';
+import { ActionMeta } from 'react-select';
+import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from './userList.constants';
+import { IAdminUserEdit } from './types/userList.types';
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -89,8 +94,10 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     onEditIconClickHandler,
     onClickDeleteUserButton,
     formik,
-    // getInputFields,
-    modalFields,
+    adminInviteFormArr,
+    editModalFields,
+    // newmodalFields,
+    modalFieldsNew,
     onEnterInsertUser,
     onDeleteModalWindowToggle,
     isDeleteModalWindowOpen,
@@ -115,24 +122,75 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     setIsDeleteModalOpen(false); 
     setSelectedUser(null); 
   };
-
+  //new
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
   const handleConfirmDelete = async () => {
     if (selectedUser) {
       setIsLoading(true);
       await deleteAdminUser(selectedUser);  
       setIsLoading(false);  
-      handleCloseDeleteModal();  
+      handleCloseDeleteModal();
+      setIsSuccessPopupOpen(true);
     }
   };
+  const initialState = EDIT_USER_INITIAL_STATE;
+   type SingleValue<Option> = Option | null;
+  const [state, setState] = useState<IAdminUserEdit>(initialState);
+  const onChangeStateFieldHandler = (
+    optionName: keyof typeof USERS_LIST_INITIAL_STATE,
+    value: string | boolean | number | SingleValue<IOption> | IEditAdminUser[]
+  ) => {
+    setState((prevState) => ({
+      ...prevState,
+      [optionName]: value,
+    }));
+  };
+  const onChangeRoleValueHandler = (
+    newValue: IOption,
+    actionMeta: ActionMeta<IOption> | unknown
+  ) => onChangeStateFieldHandler('role', newValue);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);  
-  const handleEditClick = (user: string) => {
+  const [aminName, setAminName] = useState('');
+  const [AdminEmail, setAdminEmail] = useState('');
+  const [AminActive, setAminActive] = useState<boolean>();
+  const modalFieldsEdit = [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'fullName',
+      value: aminName,
+      isDisabled: false,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+      value: AdminEmail,
+      isDisabled: false,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
+    },
+    {
+      type: 'select',
+      name: 'select',
+      label: 'Active',
+      value: AminActive,
+      options: IS_ACTIVE,
+      isDisabled: false,
+      onChangeSelect: onChangeRoleValueHandler,
+    },
+  ];
+
+  const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
     setSelectedUser(user);  
     setIsEdit(true);  
-    setIsModalOpen(true);  
+    setIsModalOpen(true); 
+    setAminName(name);
+    setAdminEmail(email);
+    setAminActive(active);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);  
     setSelectedUser(null); 
@@ -165,12 +223,9 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
             {/* <Styled.ActionButton onClick={() => onEditIconClickHandler(user.id)}>
                 <Icon type="edit" />
               </Styled.ActionButton> */}
-              <Styled.ActionButton onClick={() => handleEditClick(user.id)}>
+              <Styled.ActionButton onClick={() => handleEditClick(user.id, user.name, user.email, user.active)}>
                 <Icon type="edit" />
               </Styled.ActionButton>
-              {/* <Styled.ActionButton onClick={() => deleteAdminUser(user.id)}>
-                <Icon type="remove" />
-              </Styled.ActionButton> */}
               <Styled.ActionButton onClick={() => handleDeleteClick(user.id, user.name)}>
                 <Icon type="remove" />
               </Styled.ActionButton>
@@ -191,11 +246,20 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
           categoryName="user"  
         />
       )}
+      {isSuccessPopupOpen && (
+        <SuccessPopup
+        positionTop="0"
+        isShowPopup={isSuccessPopupOpen}
+        closePopupFc={()=> setIsSuccessPopupOpen(false)}
+        titleText="User was successfully deleted"
+      />)}
       {isModalOpen && (
+        //edit user
         <ModalBox
-          modalFields={modalFields.slice(0, 4)}
+          modalFields={modalFieldsNew}
+          // modalFields={modalFieldsEdit}
           text="Name"
-          isLoading={false}  
+          isLoading={false}
           isDisableButton={false}
           onCloseModalWindowHandler={handleCloseModal}
           onSaveButtonCLickHandler={formik.handleSubmit}
