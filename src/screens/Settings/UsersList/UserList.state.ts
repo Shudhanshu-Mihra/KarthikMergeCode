@@ -79,11 +79,12 @@ export const useUserListState = () => {
       label: 'Password',
       name: 'password',
     },
-    {
-      type: 'input',
-      label: 'Role',
-      name: 'role',
-    },]
+      // {
+      //   type: 'input',
+      //   label: 'Role',
+      //   name: 'role',
+      // },
+  ]
 
     const formik = useFormik({
       initialValues: ADMIN_USERS_initialState,

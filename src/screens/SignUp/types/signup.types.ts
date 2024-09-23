@@ -31,6 +31,12 @@ export interface ISocialAccounts {
 }
 
 export interface ICurrency {
+  // country: string;
+  // description: string;
+  // id: string;
+  // value: string;
+  // symbol?:string;
+
   country: string;
   description: string;
   id: string;
@@ -69,7 +75,8 @@ export interface ISIGN_UP_SUPPORT_USER_INITIAL_STATE {
   refreshToken: string;
 
   // socialAccount: ISocialAccounts;
-  // userInfo: IUserInfo;
+  userInfo: IUserInfo;
+  currencies:ICurrency[];
   // isSkipOnboarding: boolean;
 }
 

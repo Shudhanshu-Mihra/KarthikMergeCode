@@ -1,11 +1,12 @@
 import { add, format } from 'date-fns';
-import {jwtDecode} from 'jwt-decode';
+import decode from 'jwt-decode';
 import imageCompression from 'browser-image-compression';
 import { ICurrency } from 'screens/SignUp/types/signup.types';
 // import { IInvites } from 'screens/Invites/types/invites.types';
 import { getCompanyLogo } from 'screens/Settings/settings.api';
 
 import { ROUTES } from 'constants/routes';
+import { IReceiptInvoiceData } from 'screens/RIDATA/types/RIdata.type';
 
 interface IFormdataProps {
   active_account?: string | null;
@@ -18,7 +19,7 @@ interface IFormdataProps {
 
 interface ISortProps {
   sortValue?: string;
-  sortableItems: IReceipt[];
+  sortableItems: IReceiptInvoiceData[];
   sortField: TReceiptKeys;
   sortOrder: string;
 }
@@ -122,16 +123,16 @@ export const getCompaniesLogoHandler = async (
   }
 };
 
-export const getInitials = (name: string) => {
-  let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
+// export const getInitials = (name: string) => {
+//   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
-  let initials = [...(name.matchAll(rgx) as any)] || [];
+//   let initials = [...(name.matchAll(rgx) as any)] || [];
 
-  initials = (
-    (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
-  ).toUpperCase();
-  return initials;
-};
+//   initials = (
+//     (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
+//   ).toUpperCase();
+//   return initials;
+// };
 
 export const getFormattedDate = (date: string | Date, dateFormat: string) => {
   const formattedDate = format(new Date(date), dateFormat);
@@ -261,7 +262,7 @@ export const isTokenExpired = (token: string) => {
     expiresIn: number;
     iat: number;
     exp: number;
-  } = jwtDecode(token);
+  } = decode(token);
 
   if (decodedToken.exp * 1000 < new Date().getTime()) {
     return true;

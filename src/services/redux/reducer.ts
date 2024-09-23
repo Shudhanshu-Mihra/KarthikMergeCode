@@ -15,7 +15,7 @@ import { ISIGN_UP_SUPPORT_USER_INITIAL_STATE } from 'screens/SignUp/types/signup
 // } from 'screens/FilesUploadPreview/reducer/filesUploadPreview.reducer';
 // import { IFILES_UPLOAD_PREVIEW_INITIAL_STATE } from 'screens/FilesUploadPreview/types/filesUploadPreview.types';
 // import {
-//   inboxReducer,
+  // inboxReducer,
 //   INBOX_INITIAL_STATE,
 // } from 'screens/Inbox/reducer/inbox.reducer';
 // import { IINBOX_INITIAL_STATE } from 'screens/Inbox/types/inbox.types';
@@ -29,15 +29,19 @@ import {
 //   MasterReducer,
 //   MASTER_INITIAL_STATE,
 // } from 'screens/Master/reducer/master.reducer';
-// import { IRECEIPT_DETAILS_INITIAL_STATE } from 'screens/ReceiptDetails/types/receiptDetails.types';
+// import { IRECEIPT_DETAILS_INITIAL_STATE } from '../ReceiptDetails/types/receiptDetails.types';
+// import { IRECEIPT_DETAILS_INITIAL_STATE } from '../../components/ReceiptDetails/types/receiptDetails.types';
 // import {
 //   ReceiptDetailsReducer,
 //   RECEIPT_DETAILS_INITIAL_STATE,
-// } from 'screens/ReceiptDetails/reducer/receiptDetails.reducer';
+// } from '../../components/ReceiptDetails/reducer/receiptDetails.reducer';
+// } from '../../components/rec';
 import {
   SettingsReducer,
   SETTINGS_INITIAL_STATE,
 } from 'screens/Settings/reducer/settings.reducer';
+import { RIdataReducer, RIDATA_INITIAL_STATE } from 'screens/RIDATA/reducer/RIdata.reducer';
+import { IRIDATA_INITIAL_STATE } from 'screens/RIDATA/types/RIdata.type';
 import { ISETTINGS_INITIAL_STATE } from 'screens/Settings/types/settings.types';
 // import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
 // import {
@@ -54,6 +58,10 @@ import { ISETTINGS_INITIAL_STATE } from 'screens/Settings/types/settings.types';
 // } from 'screens/ExpenseReport/reducer';
 // import { IINVOICE_INITIAL_STATE } from 'screens/SalesInvoices/types/salesInvoices.types';
 // import { IREPORT_INITIAL_STATE } from 'screens/ExpenseReport/types/expenseReport.types';
+
+// const initialState: IRIDATA_INITIAL_STATE = {
+//   recieptInvoiceData: [],
+// };
 
 export const persistConfig = {
   key: 'root',
@@ -83,6 +91,8 @@ export interface IState {
   // invites: IINVITES_INITIAL_STATE;
   // invoices: IINVOICE_INITIAL_STATE;
   // reports: IREPORT_INITIAL_STATE;
+  RIdata: IRIDATA_INITIAL_STATE;
+  
 }
 
 const combineReducer = combineReducers<IState>({
@@ -97,6 +107,7 @@ const combineReducer = combineReducers<IState>({
   // invites: InvitesReducer,
   // invoices: salesInvoicesReducer,
   // reports: expenseReportReducer,
+  RIdata: RIdataReducer
 });
 
 export type combineReducerType = ReturnType<typeof combineReducer>;

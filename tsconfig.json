@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "strict": false,
+    "strict": true,
     "target": "es5",
     "allowJs": true,
     "module": "esnext",
@@ -9,19 +9,14 @@
     "baseUrl": "./src",
     "skipLibCheck": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true,   
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ]
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
+

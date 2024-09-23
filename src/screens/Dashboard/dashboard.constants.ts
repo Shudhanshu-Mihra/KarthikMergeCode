@@ -1,5 +1,7 @@
 export const DASHBOARD_INITIAL_STATE = {
   dateFilterValue: { value: 'all', label: 'Date - All' },
+  statusValue: { value: 'all', label: 'Status - All' },
+  userValue:{value: 'all', label: 'Users - All'},
   datePickerValue: null,
   datePickerRangeValue: null,
   formattedDate: '',

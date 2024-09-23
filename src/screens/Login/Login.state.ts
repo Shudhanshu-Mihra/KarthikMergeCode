@@ -48,16 +48,22 @@ export const useLoginState = () => {
   ) => {
     try {
       const { data } = await login(loginValues);
-      // dispatch(setCurrencies(data.currencies));
+      dispatch(setCurrencies(data.currencies));
+      
       dispatch(setUser(data));
-      console.log('signInHit',data);
+      console.log('signInHit',data.currencies);
+      localStorage.setItem('token',data.token);
+      localStorage.setItem('RefreshToken',data.refreshToken);
+      const Original_token = localStorage.getItem('token');
+      const Refresh_Token = localStorage.getItem('RefreshToken')
       // data.company && dispatch(setUserInfo({ company: data.company }));
       // dispatch(setCurrencies(data.currencies));
       // data.company && dispatch(setCompany(data.company));
+      // navigate(data.user.data.active === true ? ROUTES.home : ROUTES.login);
       navigate(
-        !data.user.id || !data.user.active === true
-          ? ROUTES.login
-          : ROUTES.home
+        data.user.active === true || Original_token !== Refresh_Token
+          ? ROUTES.home
+          : ROUTES.login
       );
     } catch (error: any) {
       const { data } = error.response;
@@ -93,4 +99,7 @@ export const useLoginState = () => {
     onSignUpClickHandler,
     onTogglePasswordVisibility,
   };
+
+  
 };
+

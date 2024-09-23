@@ -34,34 +34,34 @@ export const SIGN_UP_USER_INITIAL_STATE: ISIGN_UP_SUPPORT_USER_INITIAL_STATE = {
   //   google: { googleEmail: '', googleId: '', id: '' },
   //   isLinkedSocAcc: false,
   // },
-  // userInfo: {
-  //   company: {
-  //     currency: {
-  //       country: '',
-  //       description: '',
-  //       id: '',
-  //       value: '',
-  //     },
-  //     created: '',
-  //     date_format: '',
-  //     id: '',
-  //     name: '',
-  //     logo: '',
-  //     integration_company: [
-  //       { integrate_company_id: 1, integrate_company_name: 'Item 1', imageUrl: 'https://via.placeholder.com/50', isIntegrate: false },
-  //       { integrate_company_id: 2, integrate_company_name: 'Item 2', imageUrl: 'https://via.placeholder.com/50', isIntegrate: true },
-  //       { integrate_company_id: 3, integrate_company_name: 'Item 3', imageUrl: 'https://via.placeholder.com/50', isIntegrate: false },
-  //     ]
-  //   },
-  // },
-  // currencies: [
-  //   {
-  //     country: '',
-  //     description: '',
-  //     id: '',
-  //     value: '',
-  //   },
-  // ],
+  userInfo: {
+    company: {
+      currency: {
+        country: '',
+        description: '',
+        id: '',
+        value: '',
+      },
+      created: '',
+      date_format: '',
+      id: '',
+      name: '',
+      logo: '',
+      integration_company: [
+        { integrate_company_id: 1, integrate_company_name: 'Item 1', imageUrl: 'https://via.placeholder.com/50', isIntegrate: false },
+        { integrate_company_id: 2, integrate_company_name: 'Item 2', imageUrl: 'https://via.placeholder.com/50', isIntegrate: true },
+        { integrate_company_id: 3, integrate_company_name: 'Item 3', imageUrl: 'https://via.placeholder.com/50', isIntegrate: false },
+      ]
+    },
+  },
+  currencies: [
+    {
+      country: '',
+      description: '',
+      id: '',
+      value: '',
+    },
+  ],
   // isSkipOnboarding: false,
 };
 
@@ -136,7 +136,7 @@ export const SignUpUserSlice = createSlice({
       state: ISIGN_UP_SUPPORT_USER_INITIAL_STATE,
       action: PayloadAction<ICurrency[]>
     ) => {
-      state.user.currencies = action.payload;
+      state.currencies = action.payload;
     },
     updateUserProfile: (
       state: ISIGN_UP_SUPPORT_USER_INITIAL_STATE,

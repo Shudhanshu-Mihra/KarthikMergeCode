@@ -21,4 +21,10 @@ export const ModalButtonsBoxStyles = {
     max-width: 175px;
     width: 100%;
   `,
+  CloseIconWrapper: styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+`,
 };

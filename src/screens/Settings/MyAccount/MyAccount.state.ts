@@ -349,12 +349,12 @@ export const useMyAccountState = () => {
     state,
   });
 
-  // const isDisableUpdateUserProfileButton =
-  //   // state.country?.value === prevValues?.country?.value &&
-  //   // state.currency?.value === prevValues?.currency?.value &&
-  //   state.dateFormat?.value === prevValues?.dateFormat?.value &&
-  //   formik.values.name === prevValues.fullName &&
-  //   formik.values.email === prevValues.email;
+  const isDisableUpdateUserProfileButton =
+    // state.country?.value === prevValues?.country?.value &&
+    // state.currency?.value === prevValues?.currency?.value &&
+    state.dateFormat?.value === prevValues?.dateFormat?.value &&
+    formik.values.name === prevValues.fullName &&
+    formik.values.email === prevValues.email;
 
   // const onHandler = isResetPassword
   //   ? resetPasswordFormik.handleSubmit
@@ -370,16 +370,15 @@ export const useMyAccountState = () => {
         password: currentPassword,
         newPassword:newPassword,
       };
-      console.log("My account on submit...");
       await resetPassword(payload);
     };
-  // const isEmptyResetPasswordFields =
-  //   !resetPasswordFormik.values.confirmPassword &&
-  //   !resetPasswordFormik.values.newPassword;
+  const isEmptyResetPasswordFields =
+    !resetPasswordFormik.values.confirmPassword &&
+    !resetPasswordFormik.values.newPassword;
 
-  // const isDisabledButton = isResetPassword
-  //   ? !resetPasswordFormik.isValid || isEmptyResetPasswordFields || isLoading
-  //   : !formik.isValid || isDisableUpdateUserProfileButton || isLoading;
+  const isDisabledButton = isResetPassword
+    ? !resetPasswordFormik.isValid || isEmptyResetPasswordFields || isLoading
+    : !formik.isValid || isDisableUpdateUserProfileButton || isLoading;
 
   //  const isLinkSocialAccButton =
   //    !socialAccount.isLinkedSocAcc && socialAccount.google.id;
@@ -416,11 +415,11 @@ export const useMyAccountState = () => {
     },
   ];
   
-  // const validate = (values: IResetPasswordFields[]) => {
-  //   const errors: Partial<IResetPasswordFields>[] = [];
-  //   // Validation logic here, e.g., check for empty fields
-  //   return errors;
-  // };
+  const validate = (values: IResetPasswordFields[]) => {
+    const errors: Partial<IResetPasswordFields>[] = [];
+    // Validation logic here, e.g., check for empty fields
+    return errors;
+  };
 
 //  const passwordFormik = useFormik({
 //     initialValues:passFormikInitialValue,
@@ -439,16 +438,6 @@ export const useMyAccountState = () => {
     console.log(payload);
     resetPassword(payload);
   };
-
-  // const UpdatingPassword =()=>{
-  //   // console.log("UpdatingPassword is calling");
-  //   console.log(token);
-  //   const payload = {
-  //     token:token,
-  //     newPassword:"password1",
-  //   }
-  //   resetPassword(payload)
-  // }
 
   return {
     ...state,
@@ -474,7 +463,7 @@ export const useMyAccountState = () => {
     setIsShowSuccesPopup,
     // isLinkSocialAccButton,
     isShowSuccesPopup,
-    // isDisabledButton,
+    isDisabledButton,
     formik,
     resetPasswordFormik,
     isResetPassword,

@@ -10,13 +10,15 @@ import {
 import { ModalButtonsBox } from 'components/ModalButtonsBox';
 import { IGetResetPasswordFields } from '../types/MyAccount.types';
 import { FieldItem } from '../FieldItem';
-
+import { ReactComponent as Close } from 'assets/icons/close.svg';
 interface ForgetPasswordModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isLoading: boolean;
   resetPasswordArr: IResetPasswordFields[];
   formikResetPassword: ReturnType<any>;
+  // isDisabledButton:boolean;
+  // isCancelButton:boolean;
   // passwordFormArr: ReturnType<typeof passwordFormArr1>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
   formikMeta: (name: string) => FieldMetaProps<string>;
@@ -27,9 +29,9 @@ interface ForgetPasswordModalProps {
 
 
 export const PasswordChangeModelWindow: FC<ForgetPasswordModalProps> = ( { isOpen, onRequestClose , isLoading , formikMeta,
-  formikProps, resetPasswordArr,formikResetPassword }) => {
+  formikProps, resetPasswordArr,formikResetPassword}) => {
   // Set up Formik for the reset password form
- 
+ //isDisabledButton, isCancelButton 
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={PasswordChangeModel}>
@@ -37,6 +39,9 @@ export const PasswordChangeModelWindow: FC<ForgetPasswordModalProps> = ( { isOpe
 
       <Styled.MainContentWrapper>
         <h2>Reset Password</h2>
+        <Styled.CloseIconWrapper>
+          <Close width={20} onClick={onRequestClose} />
+          </Styled.CloseIconWrapper>
         {/* <ResetPasswordField 
           resetPasswordFields={formik.values}
           resetPasswordFormikProps={formik.getFieldProps}
@@ -63,7 +68,8 @@ export const PasswordChangeModelWindow: FC<ForgetPasswordModalProps> = ( { isOpe
           onCancelClickHandler={onRequestClose}
           onSaveButtonCLickHandler={formikResetPassword.handleSubmit} 
           isSaveButton
-          // isDisableButton={!isValid}
+          // isDisableButton={isDisabledButton}
+          // isCancelButton = {isCancelButton}
         />
       {/* </form> */}
 

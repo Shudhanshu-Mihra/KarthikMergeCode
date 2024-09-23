@@ -23,7 +23,7 @@ export const MyAccount: FC = () => {
     formik,
     isLoading,
     resetPasswordFormik,
-    // isDisabledButton,
+    isDisabledButton,
     isShowSuccesPopup,
     isShowNewPassword,
     isShowConfirmPassword,
@@ -77,18 +77,18 @@ export const MyAccount: FC = () => {
         touched={linkSocAccFormik.touched}
         countryValue={countryValue}
       /> */}
-      {/* <SuccessPopup
+       <SuccessPopup
         positionTop="0"
         isShowPopup={isShowSuccesPopup}
         closePopupFc={setIsShowSuccesPopup}
         titleText={
-          isLinkSocialAccButton
-            ? 'The social account has been successfully linked'
-            : isResetPassword
+          // isLinkSocialAccButton
+          //   ? 'The social account has been successfully linked'
+            isResetPassword
             ? 'The password has been successfully changed'
             : 'User profile has been successfully changed'
         }
-      />  */}
+      />  
       {isFetchingData ? (
         <Styled.LoaderWrapper>
           <LoaderComponent theme="preview" />
@@ -115,8 +115,10 @@ export const MyAccount: FC = () => {
                 formikResetPassword={formikResetPassword}
                 formikProps={formikResetPassword.getFieldProps}
                 formikMeta={formikResetPassword.getFieldMeta}
+                // isDisabledButton = {isDisabledButton}
+                // isCancelButton={isResetPassword} 
             />
-            {/* <Buttons
+             {/* <Buttons
               settingsButtonText={
                 isLinkSocialAccButton
                   ? 'Link Social Account'
@@ -135,7 +137,7 @@ export const MyAccount: FC = () => {
               isDisabledButton={isDisabledButton}
               isLoading={isLoading}
               isCancelButton={isResetPassword}
-            /> */}
+            />  */}
             <FormButtonPanel>
               
               <ReUseActionButton displayText='Reset Password' buttonType='text-link' onClick={()=>{setForgetPasswordModalOpen(true)}} displayIconType='resetIcon' fontSize='18px' customColor={`${theme.colors.red}`} />

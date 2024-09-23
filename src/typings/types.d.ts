@@ -1,4 +1,5 @@
 import React from "react";
+import { IReceiptInvoiceData } from "screens/RIDATA/types/RIdata.type";
 import { boolean } from "yup";
 
 declare global {
@@ -9,7 +10,7 @@ declare global {
     type: "capium" | "google";
   }
   interface IusePhotoDetailsContentState {
-    receiptid: string;
+    recieptid: string;
     statusValue: string;
     paymentTypeValue: SingleValue<IOption> | any;
     categoryValue: IOption | any;
@@ -24,8 +25,15 @@ declare global {
     vatCodeValue: string;
     taxValue: number | null;
     totalValue: number | null;
-    dateValue: Date | null;
+    created: Date | null;
     formattedDate: string;
+    RIdata: [
+    recieptInvoiceData: IReceiptInvoiceData[],  // Array of receipt invoice data
+    selectedReciept: IReceiptInvoiceData | null ,
+    selectedReceiptIndex: number | null,
+    selectedRecieptType: string ,
+    selectedRecieptPhoto: string[]
+    ];
   }
   interface IuseexpenseContentState {
     statusValue: string;
@@ -95,24 +103,24 @@ declare global {
 
   interface IUpdateReceiptItemPayload {
     id: string;
-    active_account?: string;
-    category?: string | null;
-    currency?: string | null;
-    description?: string | null;
-    custom_id?: string | null;
-    net?: number | null;
-    photos?: string[];
-    receipt_date?: Date | null;
-    status?: string | null;
-    supplier?: string | null;
-    supplier_account?: string | null;
-    tax?: number | null;
-    total?: number | null;
-    payment_type?: string | null;
-    vat_code?: string | null;
-    payment_status?: boolean;
-    approve_status?: boolean;
-    publish_status?: boolean;
+    description: string | null;
+    status: string | null ;
+    receipt_date: Date | null | string;
+    supplier: string | null;
+    supplier_account: string | null;
+    category: string | null;
+    vat_code: string | null;
+    net: string|number | null;
+    tax: string | null;
+    total: string | null;
+    currency: string | null;
+    publish_status: boolean;
+    active_account: string;
+    payment_status: boolean;
+    // custom_id?: string | null;
+    // photos?: string[];
+    // payment_type?: string | null;
+    // approve_status?: boolean;
   }
 
   interface IPaginationPanelProps {
@@ -175,7 +183,7 @@ declare global {
     creator: ICreator;
   }
 
-  type TReceiptKeys = keyof IReceipt;
+  type TReceiptKeys = keyof IReceiptInvoiceData;
   type TInvoiceKeys = keyof IInvoice;
   type TSorterOrder = "asc" | "desc" | "";
 
@@ -185,23 +193,23 @@ declare global {
     onCheckedAllItemsHandler?: (
       event: React.ChangeEvent<HTMLInputElement>
     ) => void;
-    onCheckedPublishMockFuncHandler: (
+    onCheckedPublishMockFuncHandler?: (
       event: React.ChangeEvent<HTMLInputElement>
     ) => void;
-    receiptList?: IReceipt[];
+    receiptList?: IReceiptInvoiceData[];
     isFetchingReceipts: boolean;
-    isAllChecked: boolean;
-    onCheckedPaidHandler: (
+    isAllChecked?: boolean;
+    onCheckedPaidHandler?: (
       event: React.ChangeEvent<HTMLInputElement>
     ) => Promise<void>;
-    onCheckedApproveHandler: (
+    onCheckedApproveHandler?: (
       event: React.ChangeEvent<HTMLInputElement>
     ) => Promise<void>;
     dateFormat: string;
     sortField: string;
     sortOrder: TSorterOrder;
     // datePickerRef: React.RefObject<HTMLButtonElement>;
-    requestSort: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    requestSort?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   }
 
   interface IActionMenuContentProps extends IEmailModalWindowProps {

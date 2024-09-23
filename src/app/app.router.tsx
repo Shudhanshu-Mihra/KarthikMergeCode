@@ -39,7 +39,9 @@ import { ROUTES } from 'constants/routes';
 import { useSelector } from 'react-redux';
 import { getUserExist } from '../screens/Dashboard/dashboard.api';
 import { IState } from '../services/redux/reducer';
-import RIdata from 'screens/RIDATA/RIdata';
+import { RIdata } from 'screens/RIDATA/RIdata';
+import { RIdetails } from 'screens/RIdetails';
+// import { ReceiptDetails } from 'components/ReceiptDetails/ReceiptDetails';
 // import { ExpenseReport } from 'screens/ExpenseReport';
 // import { ExpenseDetails } from 'screens/ExpenseDetails';
 
@@ -56,23 +58,22 @@ export const AppRouter: FC = () => {
     date_end: '',
     active_account: user?.id || '',
   };
+  // const testUSer = async () => {
+  //   try {
+  //     const { data } = await getUserExist(payload);
 
-  const testUSer = async () => {
-    try {
-      const { data } = await getUserExist(payload);
 
+  //     if (data === "USER DELETED") {
+  //       localStorage.clear();
+  //       window.location.reload()
+  //     }
 
-      if (data === "USER DELETED") {
-        localStorage.clear();
-        window.location.reload()
-      }
-
-    } catch (e) {
-    }
-  }
-  useEffect(() => {
-    testUSer()
-  }, [])
+  //   } catch (e) {
+  //   }
+  // }
+  // useEffect(() => {
+  //   testUSer()
+  // }, [])
   return (
     <BrowserRouter>
       <Routes>
@@ -110,18 +111,18 @@ export const AppRouter: FC = () => {
               path={ROUTES.invoiceUploadFile}
               element={<FilesUpload />}
             />*/}
-            <Route
-              path={ROUTES.pendingriData}
-              element={<RIdata />}
-            />
+            <Route path={ROUTES.pendingriData} element={<RIdata />} >
+            </Route>
+            <Route path={ROUTES.ridetails} element={<RIdetails />} /> 
+            {/* <Route path={ROUTES.ridetails} element={<ReceiptDetails />} /> */}
             <Route
               path={ROUTES.profile}
               element={<MyAccount />}
             />
             <Route path={ROUTES.settings} element={<Settings />}>
-            {/* <Route index element={<MyAccount />} /> */}
-            <Route path={ROUTES.usersList} element={<UsersList />} />
-            {/* <Route path={ROUTES.companiesList} element={<CompanyList />} /> */}
+              {/* <Route index element={<MyAccount />} /> */}
+              <Route path={ROUTES.usersList} element={<UsersList />} />
+              {/* <Route path={ROUTES.companiesList} element={<CompanyList />} /> */}
               {/* <Route
                 path={ROUTES.termsOfService}
                 element={<TermsOfService />}

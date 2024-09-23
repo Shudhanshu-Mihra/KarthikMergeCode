@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { Button } from '../Button';
 
 import { ModalButtonsBoxStyles as Styled } from './ModalButtonsBox.style';
-
 import { createAdminUsers } from 'screens/Settings/settings.api';
 
 interface IModalButtonsBox {

@@ -22,6 +22,7 @@ export enum ROUTES {
   invites = '/invites',
   callback = '/callback',
   pendingriData = '/pending-ridata',
+  ridetails = '/ri-details',
   // purchaseInvoices = '/purchase-invoices',
   // receiptDetails = 'receipt-details',
   // salesInvoices = '/sales-invoices',

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Styled } from './Input.style';
 import { ErrorText } from '../ErrorText';
+import { CustomDatePicker } from 'components/CustomDatePicker';
+import { CustomSelect } from 'components/CustomSelect';
 // import { CustomDatePicker } from '../CustomDatePicker';
 
 interface InputProps {
@@ -20,15 +22,16 @@ interface InputProps {
   text?: string;
   textCode?:string;
   onChangeValue?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>
   ) => void;
   onKeyDown?: (event: React.KeyboardEvent) => void;
-  value: string;
+  value: string|number | undefined;
   isInputDate?: boolean;
   selectedDate?: Date | null;
   inputType?: string;
   onFocus?: () => void;
   isDisabled?: boolean;
+  formattedDate?: string;
 }
 
 export const Input: React.FC<InputProps> = (props) => {
@@ -55,10 +58,19 @@ export const Input: React.FC<InputProps> = (props) => {
     onKeyDown,
     onBlur,
     onFocus,
+    // date_component_props
+    formattedDate,
+    // onDatePickerClickHandler,
+    // onClickOutsideDatePickerHandler,
+    // datePickerRef,
+    // onChangeDate
   } = props;
+
+  // console.log("isInputDate", isInputDate);
+  
   return (
     <Styled.InputWrapper data-testid="input-component" isNoMargin={isNoMargin}>
-      {isHiddenLabel ? null : <Styled.Label>{text}{textCode}</Styled.Label>}
+      {/* {isHiddenLabel ? null : <Styled.Label>{text}{textCode}</Styled.Label>} */}
       {isTextArea ? (
         <Styled.TextArea
           inputHeight={inputHeight}
@@ -68,13 +80,18 @@ export const Input: React.FC<InputProps> = (props) => {
         />
       ) : (
         <>
-          {/* {isInputDate ? (
-            <CustomDatePicker
-              isInputDate={isInputDate}
-              selectedDate={selectedDate}
-              formattedDate=""
-            />
-          ) : ( */}
+            {isInputDate ? (
+       <CustomDatePicker
+         isInputDate={true}
+       selectedDate={selectedDate}
+        //  isDatePickerOpen={isDatePickerOpen}
+         formattedDate={formattedDate || ''}
+      //  onDatePickerClickHandler={onDatePickerClickHandler}
+      //  onClickOutsideDatePickerHandler={onClickOutsideDatePickerHandler}
+      //  datePickerRef={datePickerRef}
+      //  onChange={onChangeDate}
+     />
+          ) : (
             <Styled.Input
               data-testid="input-field"
               inputTheme={inputTheme}
@@ -84,6 +101,7 @@ export const Input: React.FC<InputProps> = (props) => {
               onFocus={onFocus}
               name={inputName}
               value={value}
+              // onChange={onChangeValue}
               onChange={onChangeValue}
               onKeyDown={onKeyDown}
               placeholder={placeHolder}
@@ -92,7 +110,7 @@ export const Input: React.FC<InputProps> = (props) => {
               isRemoveBoxShadow={isRemoveBoxShadow}
               isRemoveBorder={isRemoveBorder}
             />
-          {/* )} */}
+           )} 
         </>
       )}
       {touched && !!errorText && <ErrorText errorText={errorText} />}

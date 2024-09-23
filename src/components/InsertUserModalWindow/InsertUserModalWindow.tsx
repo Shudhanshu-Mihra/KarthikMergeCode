@@ -10,7 +10,7 @@ import { UserModalWindowStyles } from './InsertUserModalWindow.style';
 import { ModalInputs } from './ModalInputs/ModalInputs';
 // import { TInputFields } from './types/insertUser.types';
 import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
-
+import { ReactComponent as Close } from 'assets/icons/close.svg';
 import { useState } from 'react';
 // import { PermissionModule } from '../Permission/permission';
 import { Icon } from '../Icons/Icons';
@@ -60,6 +60,8 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
     role,
     
   } = props;
+
+console.log("modalFields" , modalFields);
 
   const modalStyles =
     (isEdit && isInvitation && isUserList) || modalFields.length === 3
@@ -160,6 +162,9 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
               isNoPadding
               isDisableButton={isDisableButton}
             />
+             <Styled.CloseIconWrapper>
+          <Close width={20} onClick={onCloseModalWindowHandler} />
+          </Styled.CloseIconWrapper>
           </Styled.Form>
         </Styled.Content>
       </ReactModal>
