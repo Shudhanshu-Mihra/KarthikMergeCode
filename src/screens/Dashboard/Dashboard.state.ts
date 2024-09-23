@@ -62,7 +62,7 @@ export const useDashboardState = () => {
       user,
       token,
     },
-    settings: { companySwitcher },
+    // settings: { companySwitcher },
   } = useSelector((state: IState) => state);
   const date_format = 'MMM-dd-yyyy';
   const [state, setState] = useState<IuseDashboardState>(DASHBOARD_INITIAL_STATE);
@@ -179,10 +179,10 @@ export const useDashboardState = () => {
 
   const setUserInfo = async (userData: IUserInfoData) => {
     try {
-      if (!companySwitcher.length) {
-        const { data } = await getUserCompanies();
-        dispatch(setCompanySwitcher(data || []));
-      }
+      // if (!companySwitcher.length) {
+      //   const { data } = await getUserCompanies();
+      //   dispatch(setCompanySwitcher(data || []));
+      // }
       const { company, active_account, account } = userData;
       dispatch(updateUserData({ company, account, active_account }));
     } catch (err) {

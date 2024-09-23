@@ -306,9 +306,8 @@ declare global {
     value: string;
     label: string;
     id?: string;
-    [key: string]: string | undefined;
+    [key: string]: string;
   }
-
   enum Statuses {
     processing = "processing",
     review = "review",
@@ -359,10 +358,8 @@ declare global {
   type TStatuses = keyof typeof Statuses;
 
   enum Roles {
-    owner = "owner",
-    user = "user",
+    user = "support-users",
     admin = "admin",
-    accountant = "accountant",
   }
   type TRoles = keyof typeof Roles;
 
@@ -509,8 +506,6 @@ declare global {
     inputValue: string;
     text: string;
   }
-
-
   interface IDeleteModalWindowProps {
     isLoading?: boolean;
     onCloseDeleteModalWindowHandler?: () => void;
@@ -520,7 +515,6 @@ declare global {
     categoryName?: string;
     account?: string;
   }
-
   interface IModalWindowsBox
     extends IMasterModalWindowProps,
     IDeleteModalWindowProps { }
@@ -563,6 +557,11 @@ declare global {
     isActive: boolean;
     isCompanyInvite: boolean;
   }
+  interface IEditAdminUser{
+    name: string;
+    email: string;
+    active: boolean;
+  }
   interface IMember {
     id: string;
     name: string;
@@ -593,7 +592,13 @@ declare global {
     skip?: number;
     active_account?: string | null;
   }
-
+interface IallUsers {
+    id?: string;
+    name?: string;
+    email?: string;
+    role?: string; 
+    active?: boolean;
+}
   interface IAccount {
     id: string;
     name: string;

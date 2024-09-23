@@ -8,8 +8,10 @@ import { HelpBox } from "./HelpSupport";
 import { HeaderStyles as Styled } from "./Header.style";
 import { useHeaderState } from "./Header.state";
 import { LinksBox } from "./LinksBox";
-
 import { ROUTES } from "constants/routes";
+import { useSelector } from "react-redux";
+import { useSettingsState } from "screens/Settings/Settings.state";
+import { useMyAccountState } from "screens/Settings/MyAccount/MyAccount.state";
 
 export const Header: FC = () => {
 	const {
@@ -40,7 +42,9 @@ export const Header: FC = () => {
 	// useEffect(() => {
 	// 	isSwitchCompany && onSwitchCompany();
 	// }, [isSwitchCompany]);
-
+	const {
+		role
+	} = useMyAccountState();
 	return (
 		<Styled.Header>
 			<Styled.Container>
@@ -54,14 +58,13 @@ export const Header: FC = () => {
 					</Styled.LogoWrapper>
 				</Styled.Link>
 				{/* header icon part  end */}
-
-				<LinksBox active_user={active} />
+				<LinksBox active_user={active} role={role} />
 				<Styled.BlocksWrapper>
 					<Styled.Notifications>
 						{/* {active_account ? (
 							<CompanySwitcher activeAccountId={activeAccountId} activeCompany={activeCompany} companies={companySwitcher} isOpenSwitcher={isOpenSwitcher} onClickSwitcherHandler={onClickSwitcherHandler} switcherRef={switcherRef} onSwitchCompanyHandler={onSwitchCompanyHandler} />
 						) : null} */}
-						<HelpBox />
+						{/* <HelpBox /> */}
 						<AvatarBox onMouseEnterHandler={onMouseEnterHandler} onMouseLeaveHandler={onMouseLeaveHandler} userProfilePhoto={userProfilePhoto} isUploadingPhoto={isUploadingPhoto} isAvatarHover={isAvatarHover} menuItems={avatarLinks} />
 					</Styled.Notifications>
 				</Styled.BlocksWrapper>

@@ -49,7 +49,7 @@ export const AppRouter: FC = () => {
   setInterseptors();
   const {
     user: {
-      user,
+      user:{role}, user
     },
 
   } = useSelector((state: IState) => state);
@@ -74,6 +74,10 @@ export const AppRouter: FC = () => {
   // useEffect(() => {
   //   testUSer()
   // }, [])
+//######################################################################################################
+  // {role === 'owner' && (
+  //   <Route path={ROUTES.usersList} element={<UsersList />} />
+  // )}
   return (
     <BrowserRouter>
       <Routes>

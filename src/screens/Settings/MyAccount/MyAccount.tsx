@@ -1,9 +1,9 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {theme} from '../../../styles/theme';
 import { LoaderComponent } from 'components/Loader';
 import { SuccessPopup } from 'components/SuccessPopup';
 import { LinkSocAccModalWindow } from 'components/LinkSocAccModalWindow';
-
+import { AvatarBox } from './AvatarBox';
 import { useMyAccountState } from './MyAccount.state';
 import { MyAccountStyles as Styled } from './MyAccount.style';
 import { Buttons } from './Buttons';
@@ -12,8 +12,7 @@ import { FormButtonPanel } from 'components/FormButtonPanel';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
 import { PasswordChangeModelWindow } from './PasswordChangeModelWindow/PasswordChangeModelWindow';
 import { string } from 'yup';
-
-
+import { useSettingsState } from '../Settings.state';
 export const MyAccount: FC = () => {
   const {
     accountsFields,
@@ -51,14 +50,43 @@ export const MyAccount: FC = () => {
     // passFormikInitialValue,
     resetPasswordArr,
     formikResetPassword,
+    onMouseEnterHandler,
+    onMouseLeaveHandler,
+    role,
+    active,
+    profile_image,
+    // avatatSrc,
+    // onMouseEnterHandler,
+    // onMouseLeaveHandler,
+    name
   } = useMyAccountState();
+  const{
+    onUploadProfilePhotoHandler,
+    isHover,
+    isUploadingPhoto,
 
+  } = useSettingsState();
+  const [profileGetUrl2, setProfileGetUrl2] = useState<string>("");
   useEffect(() => {
     getProfileHandler();
   }, []);
 
   return (
     <Styled.LayoutWrapper>
+     <AvatarBox
+        id="avatar"
+        name={name}
+        isActiveAccount={active}
+        isUploadingPhoto={isUploadingPhoto}
+        userRole={role}
+        // avatarSrc={profile_image_local_url} 
+        avatarSrc={profile_image} 
+        onChangeAvatarHandler={onUploadProfilePhotoHandler}
+        userFullName={name}
+        isHover={isHover}
+        onMouseEnterHandler={onMouseEnterHandler}
+        onMouseLeaveHandler={onMouseLeaveHandler}
+      />
       {/* <LinkSocAccModalWindow
         isLoading={isCreatingAcc}
         isModalWindowOpen={isLinkSocAccWindowOpen}

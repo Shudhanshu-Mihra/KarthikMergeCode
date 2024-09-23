@@ -19,6 +19,8 @@ export const MyAccountStyles = {
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-left: 50%;
+    margin-top: 5%;
   `,
   FieldsWrapper: styled.div`
     display: flex;

@@ -73,7 +73,6 @@ export interface ISIGN_UP_SUPPORT_USER_INITIAL_STATE {
   user: ISupport_User;
   token: string;
   refreshToken: string;
-
   // socialAccount: ISocialAccounts;
   userInfo: IUserInfo;
   currencies:ICurrency[];
@@ -91,5 +90,4 @@ export interface ISupport_User {
   password:string;
   currencies: ICurrency[];
   date_format : string;
-
 }

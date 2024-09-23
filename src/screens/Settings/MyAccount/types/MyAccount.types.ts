@@ -14,6 +14,7 @@ export interface IGetInputFieldsProps {
   formatedCurrencies: { label: string; value: string; id: string }[];
   countries: IOption[];
   dateFormats: IOption[];
+
 }
 
 export interface IGetResetPasswordFields {
@@ -34,7 +35,10 @@ export interface IResetPasswordFieldsProps {
   onChange: (e: React.ChangeEvent<any>) => void;
   onBlur: (e: React.FocusEvent<any>) => void;
 }
-
+// export interface IOption {
+//   label: string;
+//   value: string;
+// }
 
 export type TInputFields = ReturnType<typeof getInputFields>;
 

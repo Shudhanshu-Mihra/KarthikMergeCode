@@ -83,24 +83,55 @@ export const DATE_FORMATS = [
     label: 'MM/dd/yyyy',
   },
 ];
-
+export const EDIT_USERS = [
+  {
+    value: '',
+    label: 'Name',
+    name: 'name'
+  },
+  {
+    value: '',
+    label: 'Email',
+    name: 'mail'
+  },
+  {
+    value: '',
+    label: 'Role',
+    name: 'role'
+  },
+ 
+];
+export const IS_ACTIVE = [
+  {
+    value: 'true',
+    label: 'Active',
+  },
+  {
+    value: 'false',
+    label: 'Inactive',
+  },
+]
 export const USER_ROLES = [
   {
     value: 'admin',
     label: 'Admin',
   },
   {
-    value: 'user',
-    label: 'Regular User',
+    value: 'support-admin',
+    label: 'Support-admin',
   },
-  {
-    value: 'accountant',
-    label: 'Accountant',
-  },
-  {
-    value: 'owner',
-    label: 'Company Owner',
-  },
+  // {
+  //   value: 'user',
+  //   label: 'Regular User',
+  // },
+  // {
+  //   value: 'accountant',
+  //   label: 'Accountant',
+  // },
+  // {
+  //   value: 'owner',
+  //   label: 'Company Owner',
+  // },
 ];
 
 export const MAX_FILE_SIZE = 62914560; //13053968;

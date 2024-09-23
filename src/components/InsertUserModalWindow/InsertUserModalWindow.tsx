@@ -8,8 +8,8 @@ import { ModalWindowHeader } from '../ModalWindowHeader';
 import { InsertUserModalWindowStyles as Styled } from './InsertUserModalWindow.style';
 import { UserModalWindowStyles } from './InsertUserModalWindow.style';
 import { ModalInputs } from './ModalInputs/ModalInputs';
-// import { TInputFields } from './types/insertUser.types';
-import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
+import { TInputFields } from './types/insertUser.types';
+// import { TInputFields } from '../../screens/Settings/MyAccount/types/MyAccount.types';
 import { ReactComponent as Close } from 'assets/icons/close.svg';
 import { useState } from 'react';
 // import { PermissionModule } from '../Permission/permission';
@@ -83,12 +83,14 @@ console.log("modalFields" , modalFields);
           }
           : UserModalWindowStyles;
 
-  const fields =
-    isEdit && isInvitation && isUserList
-      ? modalFields.slice(0, 3)
-      : isEdit && !isInvitation && isUserList
-        ? modalFields.slice(2, 3)
-        : modalFields;
+
+          const fields = modalFields;
+  // const fields =
+  //   isEdit && isInvitation && isUserList
+  //     ? modalFields.slice(0, 3)
+  //     : isEdit && !isInvitation && isUserList
+  //       ? modalFields.slice(2, 3)
+  //       : modalFields;
 
   // const handleCheckboxChange = (permission: any) => {
   //   console.log(permission);
@@ -132,13 +134,12 @@ console.log("modalFields" , modalFields);
                   formikProps={formikProps}
                   onEnterCreateItemClick={onEnterCreateItemClick}
                   options={input.options}
-                  // onChangeSelectHandler={input.onChangeSelect}
+                  onChangeSelectHandler={input.onChangeSelect}
                 />
               ))}
             </Styled.InputsWrapper>
-            {/* permission div start */}
-            <Styled.CheckboxItemWrapper>
-          {/* {permissionState.map((permission:any) => (
+           {/* <Styled.CheckboxItemWrapper>
+           {permissionState.map((permission:any) => (
           <CheckboxItem
             // isChecked={isAllChecked}
             isChecked={permission.isChecked}
@@ -148,8 +149,8 @@ console.log("modalFields" , modalFields);
             labelText={permission.p_name}
             name="allChecked"
           />
-        ))} */}
-        </Styled.CheckboxItemWrapper>
+        ))} 
+        </Styled.CheckboxItemWrapper>*/}
             {/* <Styled.Hyperlink onClick={openSecondModal}>
               Edit Permission <Styled.HyperLinkInnerText>for this user .</Styled.HyperLinkInnerText>
             </Styled.Hyperlink> */}
@@ -160,7 +161,7 @@ console.log("modalFields" , modalFields);
               onSaveButtonCLickHandler={onSaveButtonCLickHandler}
               isSaveButton
               isNoPadding
-              isDisableButton={isDisableButton}
+              // isDisableButton={isDisableButton}
             />
              <Styled.CloseIconWrapper>
           <Close width={20} onClick={onCloseModalWindowHandler} />

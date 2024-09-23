@@ -15,6 +15,12 @@ export interface IuseUserListState {
   prevEmail: string;
   isInvitation: boolean;
   givePermissionsForAPI: any[];
+  active: boolean | any;
+}
+export interface IAdminUserEdit {
+  name: string;
+  email: string;
+  active:boolean | null;
 }
 export interface IgetInputFieldsProps {
   options: IOption[][];
@@ -23,4 +29,42 @@ export interface IgetInputFieldsProps {
     companies: IOption[];
     role: IOption | null;
   };
+}
+export interface IgetEditInputFieldsProps {
+  options: IOption[][];
+  state: {
+    name: string;
+    email: string;
+    role: IOption | null;
+  };
+}
+export interface Idata{
+  id: string,
+  name:string,
+  email:string,
+  role: string,
+  active: boolean
+}
+
+export interface ISettingsItemPageContentPropsUsers
+  extends TableSettingsProps,
+  IPaginationPanelProps {
+  modalFields:any[];
+  companies?: ICompanySettings[];
+  searchedCompanies?: ICompanySettings[];
+  // members?: IMember[];
+  // isFocus?: boolean;
+  // searchedUsers?: IMember[];
+  isMemeberList?: boolean;
+  // isContentLoading: boolean;
+  // onBlurHandler?: () => void;
+  // isGuard: boolean;
+  // onChangeSearchValueHandler: (
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => void;
+  // searchValue: string;
+  // onAddClickButtonHandler: () => void;
+  // onFocusSearchHandler?: () => void;
+  // onResendInvitationHandler?: (token: string) => void;
+  // isFetchingData: boolean;
 }

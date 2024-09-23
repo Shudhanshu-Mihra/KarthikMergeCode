@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { ISETTINGS_INITIAL_STATE } from '../types/settings.types';
+import { ISIGN_UP_SUPPORT_USER_INITIAL_STATE } from 'screens/SignUp/types/signup.types';
+import { IADMIN_USER, ISETTINGS_INITIAL_STATE } from '../types/settings.types';
+import { bool, boolean } from 'yup';
+import { stat } from 'fs';
 
 export const SETTINGS_INITIAL_STATE: ISETTINGS_INITIAL_STATE = {
   companyMembers: { members: [], count: null },
@@ -9,12 +11,11 @@ export const SETTINGS_INITIAL_STATE: ISETTINGS_INITIAL_STATE = {
   isFetchingData: false,
   isSwitchCompany: false,
   isLinkedSocAcc: false,
+  adminUserData : [],
 };
-
 const initialState = SETTINGS_INITIAL_STATE;
-
 export const SettingsSlice = createSlice({
-  name: 'masterSlice',
+  name: 'settingSlice',
   initialState,
   reducers: {
     setMembers: (
@@ -50,6 +51,12 @@ export const SettingsSlice = createSlice({
     ) => {
       state.isLinkedSocAcc = action.payload;
     },
+    setStoreAdminUserData:(
+      state: ISETTINGS_INITIAL_STATE,
+      action: PayloadAction<IADMIN_USER[]>
+    ) =>{
+      state.adminUserData = action.payload;
+    },
   },
 });
 
@@ -59,6 +66,7 @@ export const {
   setCompanySwitcher,
   setIsSwitchCompany,
   setIsLinkedSocAcc,
+  setStoreAdminUserData,
 } = SettingsSlice.actions;
 
 export const SettingsReducer = SettingsSlice.reducer;

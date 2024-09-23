@@ -50,8 +50,8 @@ export const useMyAccountState = () => {
     user: {
       token,
       user,
-  
-    },
+      user:{active, name, role, email, id, password, profile_image, currencies},
+    }
   } = useSelector((state: IState) => state);
   const dispatch = useDispatch();
   const date_format = "MMM-dd-yyyy";
@@ -89,6 +89,9 @@ export const useMyAccountState = () => {
   // };
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingData, setIsFetchingData] = useState(false);
+  const [isHover, setIsHover] = useState(false);
+  const onMouseEnterHandler = () => setIsHover(true);
+  const onMouseLeaveHandler = () => setIsHover(false);
 
   const formikInitialValues = {
     name: user.name || "",
@@ -478,6 +481,14 @@ export const useMyAccountState = () => {
     // passFormikInitialValue,
     resetPasswordArr,
     formikResetPassword,
-    closeForgetPasswordModal
+    closeForgetPasswordModal,
+    onMouseEnterHandler,
+    onMouseLeaveHandler,
+    active,
+    name,
+    role,
+    email,
+    id,
+    password, profile_image, currencies
   };
 };
