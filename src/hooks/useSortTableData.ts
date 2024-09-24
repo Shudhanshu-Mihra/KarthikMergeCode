@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { IReceiptInvoiceData } from 'screens/RIDATA/types/RIdata.type';
 // import { IReportGetAll } from 'screens/ExpenseReport/types/expenseReport.types';
 
-import { getSortedItems } from 'services/utils';
+// import { getSortedItems } from 'services/utils';
 
 interface IProps {
   items: IReceiptInvoiceData[] //| IReportGetAll[];
@@ -27,35 +27,35 @@ export const useSortableData = (props: IProps) => {
       ? items.filter((item) => item[sortField as TReceiptKeys])
       : items;
 
-    const { sortByDate, sortByObjValue, sortByValue, sortItemsHandler } =
-      getSortedItems({
-        sortableItems,
-        IReceiptInvoiceData: sortField || 'created',
-        sortOrder,
-        sortValue: sortField === 'approved_status' ? 'value' : 'name',
-      });
+    // const { sortByDate, sortByObjValue, sortByValue, sortItemsHandler } =
+    //   getSortedItems({
+    //     sortableItems,
+    //     IReceiptInvoiceData: sortField || 'created',
+    //     sortOrder,
+    //     sortValue: sortField === 'approved_status' ? 'value' : 'name',
+    //   });
 
-    if (sortField && sortOrder) {
-      if (isSortNameType) {
-        sortItemsHandler(sortByObjValue);
-      }
-      if (sortField === 'created') {
-        sortItemsHandler(sortByDate);
-      }
-      sortItemsHandler(sortByValue);
-    }
+    // if (sortField && sortOrder) {
+    //   if (isSortNameType) {
+    //     sortItemsHandler(sortByObjValue);
+    //   }
+    //   if (sortField === 'created') {
+    //     sortItemsHandler(sortByDate);
+    //   }
+    //   sortItemsHandler(sortByValue);
+    // }
 
-    if (nullItems.length) {
-      if (sortField === 'created') {
-        return sortOrder === 'asc'
-          ? sortableItems.concat(nullItems || [])
-          : nullItems?.concat(sortableItems);
-      } else {
-        return sortOrder === 'asc'
-          ? nullItems?.concat(sortableItems)
-          : sortableItems.concat(nullItems || []);
-      }
-    }
+    // if (nullItems.length) {
+    //   if (sortField === 'created') {
+    //     return sortOrder === 'asc'
+    //       ? sortableItems.concat(nullItems || [])
+    //       : nullItems?.concat(sortableItems);
+    //   } else {
+    //     return sortOrder === 'asc'
+    //       ? nullItems?.concat(sortableItems)
+    //       : sortableItems.concat(nullItems || []);
+    //   }
+    // }
 
     return sortableItems;
   }, [items, sortOrder, sortField]);

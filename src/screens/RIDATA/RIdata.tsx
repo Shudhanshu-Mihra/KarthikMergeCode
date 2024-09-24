@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRIdataState } from './RIdata.state';
 import { IReceiptInvoiceData } from './types/RIdata.type'; // Import the correct type
 import { ReUseStatusFilter } from 'ReUseComponents/reUseStatusFilter/ReUseStatusFilter';
@@ -28,12 +28,13 @@ export const RIdata = () => {
 
   useEffect(() => {
     const params = {
-      take: 100,
+		...RIdataParams,
+		take: 100,
     };
     // onFetchReceiptsHandler(RIdataParams);
     onFetchReceiptsHandler(params);
   }, [onFetchReceiptsHandler]);
-
+	
   if (isContentLoading) {
     return <p>Loading...</p>; // Display a loading message while fetching data
   }
@@ -43,8 +44,8 @@ export const RIdata = () => {
 
   if (derivedIsEmptyData) {
     return <p>No data available.</p>; // Display a message if no data is found
-  }
-  console.log("searchValue " , searchValue);
+	}
+	
   return (
     <>
       {/* adding the header part  */}

@@ -291,6 +291,7 @@ export const usePhotoDetailsContentState = () => {
     value: currency.value,
     label: `${currency.country} - ${currency.value}`,
     key: currency.id,
+    id:currency.id
   }));
   const onDatePickerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

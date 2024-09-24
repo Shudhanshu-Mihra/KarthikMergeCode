@@ -9,6 +9,7 @@ export interface IRIDATA_INITIAL_STATE {
   
 // Interface representing the structure of each receipt invoice data item
 export interface IReceiptInvoiceData {
+
     id: string;
     custom_id: string;
     description: string | null;

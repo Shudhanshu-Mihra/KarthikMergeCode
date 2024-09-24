@@ -306,7 +306,7 @@ declare global {
     value: string;
     label: string;
     id?: string;
-    [key: string]: string;
+    [key: string]: string | undefined;
   }
   enum Statuses {
     processing = "processing",

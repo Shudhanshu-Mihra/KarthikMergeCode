@@ -17,7 +17,7 @@ import { CheckboxItem } from "components/Checkbox";
 // import { PhotoDetailsContent } from "components/PhotoDetails/PhotoDetailsContent/PhotoDetailsContent";
 import { PhotoPreview } from "components/PhotoPreview";
 import { PhotoDetailsContent } from "components/PhotoDetailsContent/PhotoDetailsContent";
-
+import axios from "axios"
 
 export const RIdetails: React.FC = () => {
 	const { selectedReceiptIndex,
@@ -78,6 +78,21 @@ export const RIdetails: React.FC = () => {
 
 	useEffect(() => {
 		onFetchReceiptImageHandler();
+// 		const test=()=>{
+// 			const newItem = {
+// 				test: "test"
+// 			}
+// 			axios.post('http://192.168.1.4:3000/data', newItem)
+// 		  .then((response) => {
+			
+// 			  console.log("Ansh response :- ", response);
+// 		  })
+// 		  .catch((error) => {
+// 			console.error('Error adding new item:', error);
+// 		  });
+// }
+// test();
+		
 	}, [selectedReceipt]);
 	console.log("isImageLoading:- ",isImageLoading);
 	return (

@@ -41,7 +41,7 @@ export const StatusBar: FC<IStatusBarProps> = (props) => {
   const upperText = status && getFirstLetterUppercase(status);
 
   return (
-    <StatusBarStyles.MainWrapper status={status}>
+    <StatusBarStyles.MainWrapper status={status!}>
       {rid && (rid.toUpperCase())}
       {status && (upperText == "Accepted" ? <Icon type="approvedMark" /> : upperText == "Review" ? <Icon type="review" /> : <Icon type="removeCross" />)} {<StatusBarStyles.Text>{upperText}</StatusBarStyles.Text>}
     </StatusBarStyles.MainWrapper>

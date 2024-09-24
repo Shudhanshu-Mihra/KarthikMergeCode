@@ -256,7 +256,8 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
       {isModalOpen && (
         //edit user
         <ModalBox
-          modalFields={modalFieldsNew}
+          // modalFields={modalFieldsNew}
+          modalFields={adminInviteFormArr.slice(0,3)}
           // modalFields={modalFieldsEdit}
           text="Name"
           isLoading={false}

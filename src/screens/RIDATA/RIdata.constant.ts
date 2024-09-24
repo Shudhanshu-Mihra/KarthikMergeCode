@@ -46,21 +46,22 @@ export const statusFilterOptions = [
   export const INITIAL_STATE = {
     statusValue: { value: 'all', label: 'Status - All' },
     dateFilterValue: { value: 'all', label: 'Date - All' },
+    isEmptyData:false, //m
     searchValue: '',
     dateValue: null,
     dateRangeValue: null,
     formattedDate: '',
     isInputDate: false,
     showActions: false,
-    checkedIds: [],
+    checkedIds: [], //a
     isLoading: false,
     receiptsToSend: [],
     excelUrl: '',
     csvData: '',
-    isFetchingReceipts: true,
-    isContentLoading: false,
+    isFetchingReceipts: true, //a
+    isContentLoading: false, //a
       isFocus: false,
-    recieptInvoiceData: [{
+    receiptInvoiceData: [{
       active_status: false,
 approved_status: false,
 created: "2024-08-30T08:33:36.379Z",
@@ -78,7 +79,8 @@ type : "receipt",
 type_date: "2020-02-12T00:00:00.000Z",
 type_user: "Your Company Name",
 updated: "2024-08-30T08:33:36.379Z",
-vat_code : "NaN"
+      vat_code: "NaN",
+      type_currency: '',
     }]
   };
   

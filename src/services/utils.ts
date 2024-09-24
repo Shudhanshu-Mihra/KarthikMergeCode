@@ -277,39 +277,39 @@ export const setIsSorted = (
   columnName: string
 ) => sortField === columnName && sortOrder === 'asc';
 
-export const getSortedItems = (props: ISortProps) => {
-  const { sortField, sortOrder, sortableItems, sortValue } = props;
-  const descOrder = sortOrder === 'asc' ? 1 : -1;
-  const ascOrder = sortOrder === 'asc' ? -1 : 1;
+// export const getSortedItems = (props: ISortProps) => {
+//   const { sortField, sortOrder, sortableItems, sortValue } = props;
+//   const descOrder = sortOrder === 'asc' ? 1 : -1;
+//   const ascOrder = sortOrder === 'asc' ? -1 : 1;
 
-  const sortByDate = (a: IReceipt, b: IReceipt) => {
-    return Date.parse(a[sortField]) < Date.parse(b[sortField])
-      ? ascOrder
-      : Date.parse(a[sortField]) > Date.parse(b[sortField])
-      ? descOrder
-      : 0;
-  };
+//   const sortByDate = (a: IReceipt, b: IReceipt) => {
+//     return Date.parse(a[sortField]) < Date.parse(b[sortField])
+//       ? ascOrder
+//       : Date.parse(a[sortField]) > Date.parse(b[sortField])
+//       ? descOrder
+//       : 0;
+//   };
 
-  const sortByValue = (a: IReceipt, b: IReceipt) => {
-    return a[sortField] < b[sortField]
-      ? ascOrder
-      : a[sortField] > b[sortField]
-      ? descOrder
-      : 0;
-  };
+//   const sortByValue = (a: IReceipt, b: IReceipt) => {
+//     return a[sortField] < b[sortField]
+//       ? ascOrder
+//       : a[sortField] > b[sortField]
+//       ? descOrder
+//       : 0;
+//   };
 
-  const sortByObjValue = (a: IReceipt, b: IReceipt) => {
-    return a[sortField]?.[sortValue || ''] < b[sortField]?.[sortValue || '']
-      ? ascOrder
-      : a[sortField]?.[sortValue || ''] > b[sortField]?.[sortValue || '']
-      ? descOrder
-      : 0;
-  };
-  const sortItemsHandler = (func: (a: IReceipt, b: IReceipt) => number) =>
-    sortableItems.sort(func);
+//   const sortByObjValue = (a: IReceipt, b: IReceipt) => {
+//     return a[sortField]?.[sortValue || ''] < b[sortField]?.[sortValue || '']
+//       ? ascOrder
+//       : a[sortField]?.[sortValue || ''] > b[sortField]?.[sortValue || '']
+//       ? descOrder
+//       : 0;
+//   };
+//   const sortItemsHandler = (func: (a: IReceipt, b: IReceipt) => number) =>
+//     sortableItems.sort(func);
 
-  return { sortItemsHandler, sortByObjValue, sortByValue, sortByDate };
-};
+//   return { sortItemsHandler, sortByObjValue, sortByValue, sortByDate };
+// };
 
 
 export const getSortedInvoiceItems = (props: IInvoiceSortProps) => {
