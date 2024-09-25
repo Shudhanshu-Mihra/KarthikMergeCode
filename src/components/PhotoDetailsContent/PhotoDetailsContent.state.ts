@@ -230,8 +230,8 @@ export const usePhotoDetailsContentState = () => {
   // Update state type to reflect Date values
   const [state, setState] = useState({
     currencyValue: selectedReceipt?.type_currency || '',
-    type_date: selectedReceipt?.created ? new Date(selectedReceipt.created) : '',
-    formattedDate: selectedReceipt?.created 
+    type_date: selectedReceipt?.type_date ? new Date(selectedReceipt.type_date) : '',
+    formattedDate: selectedReceipt?.type_date 
       ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
       : '',
     status: selectedReceipt?.status || '',
@@ -252,9 +252,10 @@ export const usePhotoDetailsContentState = () => {
     if (selectedReceipt) {
       setState({
         currencyValue: selectedReceipt.type_currency || '',
-        type_date: selectedReceipt.created ? new Date(selectedReceipt.created) : '',
-        formattedDate: selectedReceipt.created 
-          ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
+        type_date: selectedReceipt.type_date ? new Date(selectedReceipt.type_date) : '',
+        
+        formattedDate: selectedReceipt.type_date 
+          ? format(new Date(selectedReceipt.type_date), DATE_FORMATS[0].value)
           : '',
         status: selectedReceipt.status || '',
         vat: selectedReceipt.vat_code || '',
@@ -288,7 +289,7 @@ export const usePhotoDetailsContentState = () => {
     id?: string
   }
   const currenciesData: ICurrenciesData[] = currencies.map((currency: ICurrency) => ({
-    value: currency.value,
+    value: currency.id,
     label: `${currency.country} - ${currency.value}`,
     key: currency.id,
     id:currency.id
@@ -330,7 +331,7 @@ export const usePhotoDetailsContentState = () => {
         id: selectedReceipt?.id ?? '', 
         description: selectedReceipt?.description || null, 
         status: 'review', 
-        receipt_date: state.type_date || selectedReceipt?.created || null,
+        receipt_date: state.type_date || selectedReceipt?.type_date || null,
         supplier: state.supplier || selectedReceipt?.type_user || null, 
         supplier_account: null, 
         category: null,

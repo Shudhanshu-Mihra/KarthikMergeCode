@@ -25,7 +25,8 @@ export interface IReceiptInvoiceData {
     net: string;
     tax: string;
     total: string;
-    type_date: string | null;
+    type_date: string | null ;
+    // type_date: string | null;
     type_user: string | null;
     type: string;
     type_currency: string;
@@ -55,6 +56,7 @@ export interface IGetReceiptsInvoiceParams {
     status?: string;
     take?: number;
     skip?: number;
+    search?:string
 }
 // export interface IImageKey {
 //     key: string | undefined;

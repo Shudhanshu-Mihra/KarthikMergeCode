@@ -95,7 +95,7 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		// 	setPurchaseItems(updatedItems);
 	// };
 	
-	
+	console.log("formattedDate:--- ",state.formattedDate);
 	return (
 		<Styled.ReceiptDetailContent>
 			<Styled.StatusBarWrapper>

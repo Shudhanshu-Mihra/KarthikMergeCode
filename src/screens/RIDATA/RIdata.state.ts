@@ -11,13 +11,15 @@ import { usePagination } from 'hooks/usePagination';
 import { setAndFormatDateToISO } from 'services/utils';
 import { format } from 'date-fns';
 import { useSortableData } from 'hooks/useSortTableData';
+import { DATE_FORMATS } from 'constants/strings';
+
 
 export const useRIdataState = () => {
   const [state, setState] = useState<IuseInboxState>(INITIAL_STATE);
   // const [state, setState] = useState<I>(INITIAL_STATE);
   const dispatch = useDispatch();
   const debouncedValue = useDebounce(state.searchValue, 800);
-
+  console.log(debouncedValue);
   // const receiptInvoiceData = useSelector(
   //   (state: IState) => state.RIdata.receiptInvoiceData
   // );
@@ -26,7 +28,7 @@ export const useRIdataState = () => {
       userInfo: { company },
       token,
     },
-    RIdata: { receiptInvoiceData }
+    RIdata: { receiptInvoiceData  }
   }  = useSelector((state: IState) => state);
     const onBlurHandler = () => onChangeStateFieldHandler('isFocus', false);
     
@@ -51,7 +53,8 @@ export const useRIdataState = () => {
         receiptInvoiceData: data.data || [],
         isEmptyData: data?.length === 0,
         isFetchingReceipts: false,
-          isContentLoading: false,
+        isContentLoading: false,
+          // formattedDate:receiptInvoiceData?.created || []
       }));
         for (let i = 0; i < receiptInvoiceData.length;i++){
             
@@ -127,7 +130,8 @@ const dateEnd =
         search: debouncedValue,
         status: state.statusValue.value === 'all' ? '' : state.statusValue.value,
         date_filter: state.dateFilterValue.value === 'all' ? '' : state.dateFilterValue.value,
-        take: +itemsPerPage.value,
+        // take: +itemsPerPage.value,
+        take: 100,
         skip: currentPage * +itemsPerPage.value,
         date_start: dateStart || '',
         date_end: dateEnd || '',
@@ -153,44 +157,6 @@ const dateEnd =
     setCurrentPage(0);
   };
     
-  const onChangeDate = async (date: Date) => {
-    if (Array.isArray(date)) {
-      const isEqual = Array.isArray(state.dateRangeValue) ? state.dateRangeValue[0]?.toISOString() === date[0].toISOString() && state.dateRangeValue[1]?.toISOString() === date[1].toISOString() : null;
-      setState((prevState) => (
-        {
-          ...prevState,
-          dateRangeValue: isEqual ? null : date,
-          formattedDate: isEqual ? '' : `${format(date[0], company.date_format)} - ${format(date[1], company.date_format)}`,
-        }));
-      // setIsDatePickerOpen();
-      const dateStart = setAndFormatDateToISO(date[0].toISOString());
-      const dateEnd = setAndFormatDateToISO(date[1].toISOString(), true);
-
-      // await onFetchReceiptsHandler({
-      //   ...RIdataParams,
-      //   date_start: isEqual ? '' : dateStart,
-      //   date_end: isEqual ? '' : dateEnd,
-      // });
-    } else {
-      console.log(date);
-      const isEqual = state.dateValue?.toISOString() === date.toISOString();
-      setState((prevState) => ({
-        ...prevState,
-        dateValue: isEqual ? null : date,
-        formattedDate: isEqual ? '' : format(date, company.date_format),
-      }));
-      // setIsDatePickerOpen();
-      const dateStart = setAndFormatDateToISO(date.toISOString());
-      const dateEnd = setAndFormatDateToISO(date.toISOString(), true);
-
-      // await onFetchReceiptsHandler({
-      //   ...RIdataParams,
-      //   date_start: isEqual ? '' : dateStart,
-      //   date_end: isEqual ? '' : dateEnd,
-      // });
-    }
-  };
-
   const {
     items: sortedReceipts,
     requestSort,
@@ -211,6 +177,7 @@ const dateEnd =
     company,
     sortField,
     sortOrder,
-    requestSort
+    requestSort,
+    debouncedValue
   };
 };

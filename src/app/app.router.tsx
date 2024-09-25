@@ -115,8 +115,9 @@ export const AppRouter: FC = () => {
               path={ROUTES.invoiceUploadFile}
               element={<FilesUpload />}
             />*/}
-            <Route path={ROUTES.pendingriData} element={<RIdata />} >
-            </Route>
+            <Route path={ROUTES.pendingriData} element={<RIdata />} />
+            
+            {/* </Route> */}
             <Route path={ROUTES.ridetails} element={<RIdetails />} /> 
             {/* <Route path={ROUTES.ridetails} element={<ReceiptDetails />} /> */}
             <Route

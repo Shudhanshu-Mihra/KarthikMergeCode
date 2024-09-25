@@ -75,29 +75,14 @@ export const RIdetails: React.FC = () => {
 			setPayStatus(what);
 		}
 	};
-
 	useEffect(() => {
 		onFetchReceiptImageHandler();
-// 		const test=()=>{
-// 			const newItem = {
-// 				test: "test"
-// 			}
-// 			axios.post('http://192.168.1.4:3000/data', newItem)
-// 		  .then((response) => {
-			
-// 			  console.log("Ansh response :- ", response);
-// 		  })
-// 		  .catch((error) => {
-// 			console.error('Error adding new item:', error);
-// 		  });
-// }
-// test();
 		
 	}, [selectedReceipt]);
 	console.log("isImageLoading:- ",isImageLoading);
 	return (
 		<Styled.MainSelector>
-			{selectedReceiptType !== "invoice" ? (
+			{selectedReceiptType !== "sale-invoice" ? (
 				<>
 					<ReceiptDetailsHeader
 						onClickGetNextReceiptHandler={onClickGetNextReceiptHandler}
@@ -108,38 +93,36 @@ export const RIdetails: React.FC = () => {
 						customId={selectedReceipt?.custom_id} />
 					<Styled.BodyWrapper>
 						<PhotoPreview imageSrc={imageUrl} isImageLoading={isImageLoading} isPDF={false} />
-						{/* <PhotoPreview imageSrc={imageUrl} isImageLoading={false} isPDF={false} /> */}
 						<Styled.ReceiptDetailWrapper>
 
-							{/* <PhotoDetailsContent changePaid={changePaid} fnChangePaid={fnChangePaid} actionValue={actionValue} fnGetPayStatus={getPayStatus} changePublish={changePublish} fnChangePublish={fnChangePublish} newPublish={newPublish} getLivePublish={getLivePublish} /> */}
 							<PhotoDetailsContent changePaid={changePaid} fnChangePaid={fnChangePaid} actionValue={actionValue} fnGetPayStatus={getPayStatus} changePublish={changePublish} fnChangePublish={fnChangePublish} newPublish={newPublish} getLivePublish={getLivePublish} />
-							{/* <Styled.ReceiptStatusContainer>
-								<Styled.CheckboxContainer>
-									<CheckboxItem
-										name={"Payment status"}
-										isChecked={payStatus || false}
-										labelText={"Mark as Paid"}
-										onChange={fnSetvalue}
-									// onChange={onChangePaymentStatus}
-									/>
-									<CheckboxItem
-										name={"Publish status"}
-										isChecked={livePublish || false}
-										labelText={"Mark as Published"}
-										onChange={fnSetPublish}
-									/>
-								</Styled.CheckboxContainer>
-								<Styled.Description>
-									<Styled.DescriptionInput type="text" placeholder="Description" />
-								</Styled.Description>
-							</Styled.ReceiptStatusContainer> */}
+							
 						</Styled.ReceiptDetailWrapper>
 						
 					</Styled.BodyWrapper>
 				</>
 
 			) : (
-				<h1>Welcome to Invoice</h1>
+					// <h1>Welcome to Invoice</h1>
+					
+					<>
+					<ReceiptDetailsHeader
+						onClickGetNextReceiptHandler={onClickGetNextReceiptHandler}
+						onClickGetPrevReceiptHandler={onClickGetPrevReceiptHandler}
+						totalReceiptsCount={receiptInvoiceData?.length}
+						currentReceiptPosition={Number(selectedReceiptIndex) + 1}
+						onGoBackHandler={onGoBackHandler}
+						customId={selectedReceipt?.custom_id} />
+					<Styled.BodyWrapper>
+						<PhotoPreview imageSrc={imageUrl} isImageLoading={isImageLoading} isPDF={false} />
+						<Styled.ReceiptDetailWrapper>
+
+							<PhotoDetailsContent changePaid={changePaid} fnChangePaid={fnChangePaid} actionValue={actionValue} fnGetPayStatus={getPayStatus} changePublish={changePublish} fnChangePublish={fnChangePublish} newPublish={newPublish} getLivePublish={getLivePublish} />
+							
+						</Styled.ReceiptDetailWrapper>
+						
+					</Styled.BodyWrapper>
+				</>
 			)}
 		</Styled.MainSelector>
 	);

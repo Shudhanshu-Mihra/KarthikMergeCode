@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 import { getCorrectCustomId } from 'services/utils';
 
-import { CheckboxItem } from 'components/Checkbox/Checkbox';
+// import { CheckboxItem } from 'components/Checkbox/Checkbox';
 import { StatusLabel } from 'components/StatusLabel/StatusLabel';
 
 import { TableInboxAdminItemStyles as Styled } from './TableInboxAdminItem.style';
@@ -23,7 +23,8 @@ interface TableInboxAdminProps {
   ) => void;
   isChecked?: boolean;
   tax: string | null;
-  date: string;
+  // date: string | null;
+  date: string ;
   supplier?: string | null;
   supplierAccount?: string | null;
   category?: string | null;
@@ -38,37 +39,37 @@ interface TableInboxAdminProps {
   paymentStatus?: boolean;
   approveStatus?: boolean;
   publishStatus?: boolean;
-  dateFormat?: string;
+  dateFormat: string;
   type: string;
   photos: string;
 }
 
 export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
   const {
-    isChecked,
+    // isChecked,
     category,
-    currency,
+    // currency,
     date,
     net,
     status,
     supplier,
-    supplierAccount,
+    // supplierAccount,
     total,
     vatCode,
     tax,
     receiptId,
     selectedReceiptIndex,
     customId,
-    paymentStatus,
-    approveStatus,
-    publishStatus,
+    // paymentStatus,
+    // approveStatus,
+    // publishStatus,
     dateFormat,
     type,
     photos,
-    onCheckedPaidHandler,
-    onCheckedApproveHandler,
-    onCheckedItemHandler,
-    onCheckedPublishMockFuncHandler,
+    // onCheckedPaidHandler,
+    // onCheckedApproveHandler,
+    // onCheckedItemHandler,
+    // onCheckedPublishMockFuncHandler,
   } = props;
 
   const { onReceiptDetailsClickHandler } = useTableInboxAdminItemState({
@@ -77,6 +78,8 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     photos,
     type,
   });
+  // console.log("date :-  ",date);
+  // console.log("dateFormat  :- ",dateFormat);
   return (
     <Styled.Item>
      
@@ -84,13 +87,14 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
       {/* <Styled.View id={receiptId} onClick={() => { console.log("clickk is working"); }}> */}
         <Styled.Link>{getCorrectCustomId(customId)}</Styled.Link>
       </Styled.View>
-      <Styled.Selector>
-        {!!date && dateFormat
-          ? format(new Date(date), dateFormat)
-          : '---'}
+      {/* <Styled.Selector>
+        {!!date && dateFormat ? format(new Date(date),dateFormat) : '---'}
+      </Styled.Selector> */}
+     < Styled.Selector>
+        {date || '---'}
       </Styled.Selector>
       <Styled.Selector>
-        <Styled.ValueWrapper>{type && type=='receipt' ? 'receipt' : 'invoice' || '---'}</Styled.ValueWrapper>
+        <Styled.ValueWrapper>{type && type==='receipt' ? 'receipt' : 'invoice' || '---'}</Styled.ValueWrapper>
       </Styled.Selector>
       <Styled.Selector>
         <Styled.ValueWrapper>{supplier || '---'}</Styled.ValueWrapper>

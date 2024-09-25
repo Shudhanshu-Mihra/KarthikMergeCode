@@ -463,7 +463,7 @@ export const  FieldsBox: FC<IFieldsBox> = ({
 
 const item = {
   value: 
-    { value: inputFields?.currencyValue, label:inputFields?.currencyValue, id: '1' } as SingleValue<IOption>, // Multiple selections
+    { value: inputFields?.currencyValue, label:inputFields?.currencyValue, id:inputFields?.currencyValue } as SingleValue<IOption>, // Multiple selections
   currencies:options,
    
     onChangeSelect: onChangeCurrencyFieldHandler,
@@ -487,7 +487,7 @@ const item = {
 //   // You can also use actionMeta to handle specific actions
 //   console.log('Action meta:', actionMeta);
 // };
-// console.log("currencies:---" , currencies);
+console.log("formattedDate:---" , formattedDate);
   return (
     <Styled.Container>
       {inputFields ? (
