@@ -14,6 +14,8 @@ import { IS_ACTIVE } from 'constants/strings';
 import { ActionMeta } from 'react-select';
 import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from './userList.constants';
 import { IAdminUserEdit } from './types/userList.types';
+import { setStoreAdminUserData } from '../reducer/settings.reducer';
+import { useDispatch } from 'react-redux';
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -95,7 +97,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     onClickDeleteUserButton,
     formik,
     adminInviteFormArr,
-    editModalFields,
+    // editModalFields,
     // newmodalFields,
     modalFieldsNew,
     onEnterInsertUser,
@@ -105,17 +107,24 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     isPAllChecked,
     permissionState,
     setPAllChecked,
-    PermissionsForAPIHandler
+    PermissionsForAPIHandler,
+    onFormSubmitHandlerEdit,
+    onFormSubmitHandler,
+    onModalWindowCancelClickButtonHandler,
+    onGetAllCompanyMembersHandler
   } = useUserListState();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUserEdit, setSelectedUserEdit] = useState<string>('');
   const [userNameAdmin, setUserNameAdmin] = useState<string | undefined>('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const handleDeleteClick = (user: string, userName: string) => {
     setSelectedUser(user); 
     setUserNameAdmin(' '+userName);
     console.log("userName: ", userName);
     setIsDeleteModalOpen(true);
+    onGetAllCompanyMembersHandler();
   };
 
   const handleCloseDeleteModal = () => {
@@ -154,37 +163,24 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   const [isEdit, setIsEdit] = useState(false);  
   const [aminName, setAminName] = useState('');
   const [AdminEmail, setAdminEmail] = useState('');
-  const [AminActive, setAminActive] = useState<boolean>();
-  const modalFieldsEdit = [
-    {
-      type: 'input',
-      label: 'Full Name',
-      name: 'fullName',
-      value: aminName,
-      isDisabled: false,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
-    },
-    {
-      type: 'input',
-      label: 'Email',
-      name: 'email',
-      value: AdminEmail,
-      isDisabled: false,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
-    },
-    {
-      type: 'select',
-      name: 'select',
-      label: 'Active',
-      value: AminActive,
-      options: IS_ACTIVE,
-      isDisabled: false,
-      onChangeSelect: onChangeRoleValueHandler,
-    },
-  ];
-
+  const [AminActive, setAminActive] = useState<boolean>(false);
+  // Type for select fields
+  // interface ISelectField {
+  //   type: 'select';
+  //   label: string;
+  //   name: string;
+  //   value: string | boolean;
+  //   isDisabled: boolean;
+  //   options: IOption[];
+  //   onChangeSelect: (newValue: IOption, actionMeta: unknown) => void;
+  // }
+  
+  // Union type that includes both input and select field types
+  // type ImodalFieldsAdmin = IInputField;
+  // type ImodalFieldsAdmin = IModalField[]
+  // const modalFieldsEdit:ImodalFieldsAdmin = [
   const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
-    setSelectedUser(user);  
+    setSelectedUserEdit(user);  
     setIsEdit(true);  
     setIsModalOpen(true); 
     setAminName(name);
@@ -196,6 +192,19 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     setSelectedUser(null); 
     setIsEdit(false);  
   };
+
+  useEffect(() => {
+    if (isEdit && selectedUserEdit) {
+      formik.setValues({
+        fullName:'',
+        name: aminName,
+        email: AdminEmail,
+        active: AminActive,
+        password:'',
+        role:''
+      });
+    }
+  }, [aminName, AdminEmail, AminActive, isEdit, selectedUserEdit]);
   return (
     <>
       <Styled.Head>
@@ -256,13 +265,15 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
       {isModalOpen && (
         //edit user
         <ModalBox
-          modalFields={modalFieldsNew}
-          // modalFields={modalFieldsEdit}
+          modalFields={adminInviteFormArr.slice(4, 7)}
           text="Name"
           isLoading={false}
           isDisableButton={false}
           onCloseModalWindowHandler={handleCloseModal}
-          onSaveButtonCLickHandler={formik.handleSubmit}
+          // onSaveButtonCLickHandler={formik.handleSubmit}
+          onSaveButtonCLickHandler={async () => {
+            await onFormSubmitHandlerEdit(selectedUserEdit, formik.values);
+            onModalWindowCancelClickButtonHandler(); }}
           onEnterCreateItemClick={onEnterInsertUser}
           isModalWindowOpen={isModalOpen}
           headerText={isEdit ? 'Edit User' : 'Insert User'}

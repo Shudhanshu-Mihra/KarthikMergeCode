@@ -1,7 +1,7 @@
 import { SingleValue } from 'react-select';
-
 import { getInputFields } from '../MyAccount.constants';
 
+export type TInputFields = ReturnType<typeof getInputFields>;
 export interface IGetInputFieldsProps {
   isDisabledCountry?: boolean;
   isDisabledSelect?: boolean;
@@ -35,13 +35,22 @@ export interface IResetPasswordFieldsProps {
   onChange: (e: React.ChangeEvent<any>) => void;
   onBlur: (e: React.FocusEvent<any>) => void;
 }
-// export interface IOption {
-//   label: string;
-//   value: string;
-// }
+export interface IOption {
+  label: string;
+  value: string;
+}
 
-export type TInputFields = ReturnType<typeof getInputFields>;
-
+// export type TInputFields = ReturnType<typeof getInputFields>;
+export type IAdminInputFields = {
+  label: string;
+  value: string;
+  type: string;
+  name: string;
+  isDisabled:boolean;
+  option: IOption[][];
+  onChange:(e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeSelect:((newValue: IOption, actionMeta: unknown) => void)[];
+}
 // export interface IResetPasswordFields {
 //   onToggleVisibility: () => void;
 //   isShowPassword: boolean;
@@ -60,3 +69,8 @@ export interface IResetPasswordFields {
   type: string;
   value:string
 }
+
+// onInputChange: (
+//   optionName: "currency" | "newPassword" | "confirmPassword" | "currentPassword" | "dateFormat" | "country", 
+//   value: string | boolean | SingleValue<IOption>
+// ) => void;  

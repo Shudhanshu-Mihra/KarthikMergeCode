@@ -147,8 +147,8 @@ export const UsersList: FC = () => {
       <ModalBox
         modalFields={
           role?.value === "admin" && !isEdit
-            ? adminInviteFormArr
-            : adminInviteFormArr
+            ? adminInviteFormArr.slice(0, 4)
+            : adminInviteFormArr.slice(0, 4)
         }
         text="Name"
         isLoading={isLoading}
@@ -159,6 +159,7 @@ export const UsersList: FC = () => {
           await onFormSubmitHandler(formik.values);
           onModalWindowCancelClickButtonHandler(); 
           setCreateSuccessUser(true);
+          await onGetAllCompanyMembersHandler();
         }}
         onEnterCreateItemClick={onEnterInsertUser}
         isModalWindowOpen={isModalWindowOpen}

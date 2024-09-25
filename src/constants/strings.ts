@@ -103,11 +103,11 @@ export const EDIT_USERS = [
 ];
 export const IS_ACTIVE = [
   {
-    value: 'true',
+    value: true,
     label: 'Active',
   },
   {
-    value: 'false',
+    value: false,
     label: 'Inactive',
   },
 ]
