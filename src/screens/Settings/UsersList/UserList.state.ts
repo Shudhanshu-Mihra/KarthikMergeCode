@@ -69,22 +69,27 @@ export const useUserListState = () => {
   const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
   const [permissionState, setPermission] = useState(userPermissionInitialState);
   const [isPAllChecked, setPAllChecked] = useToggle();
-
+  console.log("isModalWindowOpen: ",isModalWindowOpen);
   const onChangeRoleValueHandler = (
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
+
+  // const onChangeActiveValueHandler = (
+  //   newValue: IOption,
+  //   actionMeta: ActionMeta<IOption> | unknown
+  // ) => {
+  //   if (newValue.label === 'Active') {
+
+  //     onChangeStateFieldHandler('active', newValue.value === 'true');
+  //   } 
+  // };
   const onChangeActiveValueHandler = (
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => {
-    if (newValue.label === 'Active') {
-      // Handle the "Active" field change
-      onChangeStateFieldHandler('active', newValue.value === 'true');
-    } else {
-      // Handle the "Role" field change
-      onChangeStateFieldHandler('role', newValue);
-    }
+    const isActive = newValue.value; 
+    onChangeStateFieldHandler('active', isActive); 
   };
   interface IADMIN_USERS {
     fullName:string;
@@ -373,7 +378,8 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
               // role: values.role || '',
               name: values.fullName,
               email: values.email,
-              password: values.password,
+              // password: values.password,
+              active: values.active
               // isInviteCompanyMember: state.isInvitation,
             };
             console.log("payload",payload);

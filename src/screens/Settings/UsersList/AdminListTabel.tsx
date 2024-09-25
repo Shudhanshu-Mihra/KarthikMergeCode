@@ -163,7 +163,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   const [isEdit, setIsEdit] = useState(false);  
   const [aminName, setAminName] = useState('');
   const [AdminEmail, setAdminEmail] = useState('');
-  const [AminActive, setAminActive] = useState<boolean>(false);
+  const [AminActive, setAminActive] = useState<boolean>();
   // Type for select fields
   // interface ISelectField {
   //   type: 'select';
@@ -186,6 +186,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     setAminName(name);
     setAdminEmail(email);
     setAminActive(active);
+    
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);  
@@ -205,6 +206,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
       });
     }
   }, [aminName, AdminEmail, AminActive, isEdit, selectedUserEdit]);
+  // console.log(users.)
   return (
     <>
       <Styled.Head>
@@ -273,7 +275,10 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
           // onSaveButtonCLickHandler={formik.handleSubmit}
           onSaveButtonCLickHandler={async () => {
             await onFormSubmitHandlerEdit(selectedUserEdit, formik.values);
+            console.log("formik.values:", formik.values);
+            handleCloseModal();
             onModalWindowCancelClickButtonHandler(); }}
+          // onSaveButtonCLickHandler={setIsEdit(false)}
           onEnterCreateItemClick={onEnterInsertUser}
           isModalWindowOpen={isModalOpen}
           headerText={isEdit ? 'Edit User' : 'Insert User'}

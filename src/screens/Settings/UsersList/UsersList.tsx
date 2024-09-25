@@ -159,7 +159,6 @@ export const UsersList: FC = () => {
           await onFormSubmitHandler(formik.values);
           onModalWindowCancelClickButtonHandler(); 
           setCreateSuccessUser(true);
-          await onGetAllCompanyMembersHandler();
         }}
         onEnterCreateItemClick={onEnterInsertUser}
         isModalWindowOpen={isModalWindowOpen}

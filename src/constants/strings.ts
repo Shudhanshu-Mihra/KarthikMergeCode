@@ -102,15 +102,9 @@ export const EDIT_USERS = [
  
 ];
 export const IS_ACTIVE = [
-  {
-    value: true,
-    label: 'Active',
-  },
-  {
-    value: false,
-    label: 'Inactive',
-  },
-]
+  { label: 'Active', value: true },
+  { label: 'Inactive', value: false}
+];
 export const USER_ROLES = [
   {
     value: 'admin',

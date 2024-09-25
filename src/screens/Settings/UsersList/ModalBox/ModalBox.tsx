@@ -14,6 +14,7 @@ interface IUserListModalBoxProps
   onSaveButtonCLickHandler: (
     e?: React.FormEvent<HTMLFormElement> | undefined
   ) => void;
+  // onSaveButtonCLickHandler: void;
   formikMeta: (name: string) => FieldMetaProps<string>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
   modalFields: TInputFields;
