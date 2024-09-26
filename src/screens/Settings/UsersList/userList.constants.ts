@@ -22,13 +22,14 @@ export const USERS_LIST_INITIAL_STATE = {
   prevEmail: '',
   isInvitation: false,
   givePermissionsForAPI: [],
-  active:null,
+  active:false,
 };
 export const formikInitialValues = {
   name: '',
   email: '',
   password:'',
   role:'',
+  active:false,
 };
 export const getEditInputFields = (props:IgetEditInputFieldsProps) => {
   return[

@@ -103,7 +103,6 @@ export const UsersList: FC = () => {
     // Filter users based on search value
     const filterUsers = () => {
       if (!searchValue) {
-        // If no search value, show all users
         setFilteredUsers(Object.values(adminUserData));
       } else {
         const filtered = Object.values(adminUserData).filter((user: any) =>
@@ -139,8 +138,10 @@ export const UsersList: FC = () => {
   //     (!searchValue && members?.length)
   //   : (searchValue && searchedCompanies?.length) ||
   //     (!searchValue && companies?.length);
-  const isPaginationPanel = adminUserData?.length > 0;
-  
+
+
+  const isPaginationPanel = adminUserData?.length;
+
   return (
     //create user
     <Styled.Section>

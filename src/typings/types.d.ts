@@ -300,6 +300,13 @@ declare global {
     id?: string;
     [key: string]: string;
   }
+
+  interface IoptionActive {
+    value: boolean;
+    label: string;
+    id?: string;
+    [key: string]: string;
+  }
   enum Statuses {
     processing = "processing",
     review = "review",

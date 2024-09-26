@@ -136,7 +136,8 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   const handleConfirmDelete = async () => {
     if (selectedUser) {
       setIsLoading(true);
-      await deleteAdminUser(selectedUser);  
+      await deleteAdminUser(selectedUser);
+      onGetAllCompanyMembersHandler();
       setIsLoading(false);  
       handleCloseDeleteModal();
       setIsSuccessPopupOpen(true);
@@ -163,7 +164,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   const [isEdit, setIsEdit] = useState(false);  
   const [aminName, setAminName] = useState('');
   const [AdminEmail, setAdminEmail] = useState('');
-  const [AminActive, setAminActive] = useState<boolean>();
+  const [AminActive, setAminActive] = useState<boolean>(false);
   // Type for select fields
   // interface ISelectField {
   //   type: 'select';
@@ -179,14 +180,13 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   // type ImodalFieldsAdmin = IInputField;
   // type ImodalFieldsAdmin = IModalField[]
   // const modalFieldsEdit:ImodalFieldsAdmin = [
-  const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
+  const handleEditClick = (user: string, name: string, email:string, active:any) => {
     setSelectedUserEdit(user);  
     setIsEdit(true);  
     setIsModalOpen(true); 
     setAminName(name);
     setAdminEmail(email);
     setAminActive(active);
-    
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);  

@@ -43,6 +43,7 @@ import { USER_ROLES, IS_ACTIVE, EDIT_USERS} from 'constants/strings';
 import { dropdownIndicatorCSS } from 'react-select/dist/declarations/src/components/indicators';
 import { is } from 'date-fns/locale';
 import { stat } from 'fs';
+import { bool, boolean } from 'yup';
 
 export const useUserListState = () => {
   const dispatch = useDispatch();
@@ -88,8 +89,8 @@ export const useUserListState = () => {
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => {
-    const isActive = newValue.value; 
-    onChangeStateFieldHandler('active', isActive); 
+    console.log("newValue:",newValue.value)
+    onChangeStateFieldHandlerval('active', newValue.value); 
   };
   interface IADMIN_USERS {
     fullName:string;
@@ -105,11 +106,6 @@ export const useUserListState = () => {
     role:'',
     active:false,
   };
-  const EDIT_ADMIN_USER_INITIALSTATE = {
-    name:'',
-    email:'',
-    active: null,
-  }
   interface Ipayload {
     name: string;
     email:string;
@@ -165,13 +161,27 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       [optionName]: value,
     }));
   };
-  const onChangeStateFieldHandlerAdmin = (
-    optionName: keyof typeof ADMIN_USERS_initialState,
-    value: string
+  // const onChangeStateFieldHandlerval = (
+  //   optionName: keyof typeof initialState,
+  //   value: string | boolean | number | SingleValue<IOption> | IMember[]
+  // ) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [optionName]: value, 
+  //   }));
+  // };
+  const onChangeStateFieldHandlerval = (
+    optionName: keyof typeof initialState,
+    value: string | boolean | number | SingleValue<IOption> | IMember[]
   ) => {
+    const updatedValue = 
+      typeof value === 'object' && value !== null && 'value' in value 
+      ? (value as IOption).value 
+      : value;
+  
     setState((prevState) => ({
       ...prevState,
-      [optionName]: value,
+      [optionName]: updatedValue, 
     }));
   };
   const PermissionsForAPIHandler = (selectedPermission: any[]) => {
@@ -383,7 +393,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
               // isInviteCompanyMember: state.isInvitation,
             };
             console.log("payload",payload);
-            
       // const { data: updatedAcc } = await updateCompanyMember(
       //   { ...payload, active_account: active_account || '' },
       //   state.selectedItemId
@@ -494,6 +503,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
         password: values.password,
       };
       await createAdminUser(payload);
+      onGetAllCompanyMembersHandler();
     } catch (error) {
       console.error('Error creating admin user:', error);
     }
@@ -508,6 +518,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
         
       };
       await updateAdminUsers(payload, id);
+      onGetAllCompanyMembersHandler();
       console.log("Editing admin users",payload)
     } catch (error) {
       console.error('Error creating admin user:', error);
@@ -619,9 +630,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             type: 'select',
             label: 'Active',
             name: 'active',
-            value: state.active,
             options: IS_ACTIVE,
-            isDisabled: false,
             onChangeSelect: onChangeActiveValueHandler,
           },
         ];
