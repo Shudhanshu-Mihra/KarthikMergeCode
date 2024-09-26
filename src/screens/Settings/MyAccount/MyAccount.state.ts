@@ -344,9 +344,9 @@ export const useMyAccountState = () => {
     formatedCurrencies,
     dateFormats: DATE_FORMATS,
     funcArray: [
-      onChangeCurrencyValueHandler,
-      onChangeDateFormatValueHandler,
-      onChangeCountryValueHandler,
+      // onChangeCurrencyValueHandler,
+      // onChangeDateFormatValueHandler,
+      // onChangeCountryValueHandler,
       onChangeInput,
     ],
     state,

@@ -9,10 +9,13 @@ export const ModalFormStyles = {
   `,
   InputWrapper: styled.div`
     display: flex;
-    // margin-bottom: 25px;
+    // gap:15px;
+    flex-direction:column;
+    margin-top: 10px;
   `,
   selectWrapper: styled.div`
   display: flex;
+
   // margin-bottom: 25px;
-`
+`,SelectWrapper:styled.div``
 };

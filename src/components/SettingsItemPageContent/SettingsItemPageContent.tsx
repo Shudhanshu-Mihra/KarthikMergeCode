@@ -10,7 +10,7 @@ import { ISettingsItemPageContentProps } from './types/settingsItemPageContent.t
 import { ReUseActionPlaceholder } from 'ReUseComponents/reUseActionPlaceHolder/ReUseActionPlaceHolder';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
 import { ReUseSearch } from 'ReUseComponents/reUseSearch/ReUseSearch';
-import { AdminListTabel } from 'screens/Settings/UsersList/AdminListTabel';
+import { AdminListTabel } from '../AdminListTable/AdminListTabel';
 import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
 import { getAllAdminUsers } from 'screens/Settings/settings.api';
 import { setStoreAdminUserData } from 'screens/Settings/reducer/settings.reducer';

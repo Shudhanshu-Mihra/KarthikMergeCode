@@ -96,7 +96,7 @@ console.log("modalFields" , modalFields);
   //   console.log(permission);
 
   // };
-
+  console.log("fields:-  ",fields);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   // const openSecondModal = () => {

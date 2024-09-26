@@ -308,6 +308,13 @@ declare global {
     id?: string;
     [key: string]: string | undefined;
   }
+
+  interface IoptionActive {
+    value: boolean;
+    label: string;
+    id?: string;
+    [key: string]: string;
+  }
   enum Statuses {
     processing = "processing",
     review = "review",
@@ -579,6 +586,12 @@ declare global {
       id: string;
       profile_image: null | string;
     } | null;
+  }
+  interface IAdminUser{
+    name:string
+      email: string;
+      active: boolean;
+      id: string;
   }
   interface IMemberTableProps extends TableSettingsProps {
     members?: IMember[];

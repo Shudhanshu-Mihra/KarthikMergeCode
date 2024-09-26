@@ -55,6 +55,7 @@ export const ModalBox: FC<IUserListModalBoxProps> = (props) => {
     role,
   } = props;
 
+  console.log("modalFields:-   ",modalFields);
   return (
     <>
       <InsertUserModalWindow

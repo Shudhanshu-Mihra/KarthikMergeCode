@@ -1,19 +1,19 @@
 import { FC, useEffect, useState } from "react";
 import { PaginationPanel } from "components/PaginationPanel";
-import { SettingsItemPageContent } from "components/SettingsItemPageContent";
+// import { SettingsItemPageContent } from "components/SettingsItemPageContent";
 import { LoaderComponent } from "components/Loader";
 import { SuccessPopup } from "components/SuccessPopup";
 import { UserListStyles as Styled } from "./UserList.styles";
 import { useUserListState } from "./UserList.state";
 import { ModalBox } from "./ModalBox";
-import { AdminListTabel } from "./AdminListTabel";
+import { AdminListTabel } from "../../../components/AdminListTable/AdminListTabel";
 import { ReUseSearch } from 'ReUseComponents/reUseSearch/ReUseSearch';
 import { ReUseActionPlaceholder } from 'ReUseComponents/reUseActionPlaceHolder/ReUseActionPlaceHolder';
 import { ReUseActionButton } from 'ReUseComponents/reUseActionButton/ReUseActionButton';
-import { SuccessModalWindow } from "components/SuccessModalWindow";
+// import { SuccessModalWindow } from "components/SuccessModalWindow";
 import { IState } from 'services/redux/reducer';
 import { useSelector } from 'react-redux';
-import { ISettingsItemPageContentPropsUsers } from "./types/userList.types";
+// import { ISettingsItemPageContentPropsUsers } from "./types/userList.types";
 export const UsersList: FC = () => {
   const {
     isLoading,
@@ -23,7 +23,7 @@ export const UsersList: FC = () => {
     formik,
     onDeleteModalWindowToggle,
     isDeleteModalWindowOpen,
-    onDeleteIconClickHandler,
+    // onDeleteIconClickHandler,
     onEditIconClickHandler,
     onChangeSearchValueHandler,
     onEnterInsertUser,
@@ -40,22 +40,22 @@ export const UsersList: FC = () => {
     inputPaginationValue,
     pages,
     currentPage,
-    members,
+    // members,
     isEdit,
     debouncedValue,
-    isContentLoading,
-    isFocus,
-    searchedUsers,
+    // isContentLoading,
+    // isFocus,
+    // searchedUsers,
     // modalFields,
     count,
     isFetchingData,
     isDisableButton,
     isInvitation,
-    isSentSuccessPopup,
-    isResentSuccessPopup,
+    // isSentSuccessPopup,
+    // isResentSuccessPopup,
     active,
-    setIsSentSuccessPopup,
-    setIsResendSuccessPopup,
+    // setIsSentSuccessPopup,
+    // setIsResendSuccessPopup,
     onChangePage,
     onChangePagesAmount,
     onModalWindowCancelClickButtonHandler,
@@ -63,14 +63,15 @@ export const UsersList: FC = () => {
     onFocusSearchHandler,
     onBlurHandler,
     onGetAllCompanyMembersHandler,
-    onResendInvitationHandler,
+    // onResendInvitationHandler,
     isPAllChecked,
     permissionState,
-    setPermission,
+    // setPermission,
     setPAllChecked,
     onFormSubmitHandler,
     PermissionsForAPIHandler,
     role,
+    adminUserData
     // companies,
     // searchedCompanies,
     // isMemeberList
@@ -80,7 +81,7 @@ export const UsersList: FC = () => {
   useEffect(() => {
     onGetAllCompanyMembersHandler();
   }, []);
-
+  // console.log("adminUserData:-  ",adminUserData);
   useEffect(() => {
     debouncedValue &&
       onGetAllCompanyMembersHandler({
@@ -93,7 +94,6 @@ export const UsersList: FC = () => {
     onChangePagesAmount(Number(itemsPerPage.value), count);
   }, [count, itemsPerPage, active]);
   const [createSuccessUser, setCreateSuccessUser] = useState<boolean>(false);
-  const adminUserData = useSelector((state: IState) => state.settings.adminUserData);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 
   const [sortField, setSortField] = useState<string>('');
@@ -103,7 +103,6 @@ export const UsersList: FC = () => {
     // Filter users based on search value
     const filterUsers = () => {
       if (!searchValue) {
-        // If no search value, show all users
         setFilteredUsers(Object.values(adminUserData));
       } else {
         const filtered = Object.values(adminUserData).filter((user: any) =>
@@ -139,17 +138,15 @@ export const UsersList: FC = () => {
   //     (!searchValue && members?.length)
   //   : (searchValue && searchedCompanies?.length) ||
   //     (!searchValue && companies?.length);
-  const isPaginationPanel = adminUserData?.length > 0;
-  
+
+
+  const isPaginationPanel = adminUserData?.length;
+
   return (
     //create user
     <Styled.Section>
       <ModalBox
-        modalFields={
-          role?.value === "admin" && !isEdit
-            ? adminInviteFormArr.slice(0, 4)
-            : adminInviteFormArr.slice(0, 4)
-        }
+        modalFields={ adminInviteFormArr.slice(0, 4)}
         text="Name"
         isLoading={isLoading}
         isDisableButton={isDisableButton}
@@ -179,10 +176,6 @@ export const UsersList: FC = () => {
         setPAllChecked={setPAllChecked}
         PermissionsForAPIHandler={PermissionsForAPIHandler}
         role={role?.value || null}
-        // formik={{
-        //   ...formik,
-        //   handleSubmit: () => onFormSubmitHandler(formik.values), 
-        // }}
       />
       <SuccessPopup
         positionTop="0"
@@ -195,36 +188,6 @@ export const UsersList: FC = () => {
           <LoaderComponent theme="preview" />
         </Styled.LoaderWrapper>
       ) : (
-        // <SettingsItemPageContent
-        //   modalFields ={adminInviteFormArr}
-        //   onResendInvitationHandler={onResendInvitationHandler}
-        //   isFetchingData={isFetchingData}
-        //   isContentLoading={isContentLoading}
-        //   isFocus={isFocus}
-        //   searchedUsers={searchedUsers}
-        //   onFocusSearchHandler={onFocusSearchHandler}
-        //   onBlurHandler={onBlurHandler}
-        //   members={members}
-        //   isMemeberList
-        //   // userRole={userRole}
-        //   onDeleteIconClickHandler={onDeleteIconClickHandler}
-        //   onEditIconClickHandler={onEditIconClickHandler}
-        //   pages={pages}
-        //   currentPage={currentPage}
-        //   onChangePaginationInputValue={onChangePaginationInputValue}
-        //   onForwardClick={onForwardClick}
-        //   onBackwardClick={onBackwardClick}
-        //   onEnterGoToClick={onEnterGoToClick}
-        //   onChangeItemsPerPage={onChangeItemsPerPage}
-        //   itemsPerPage={itemsPerPage}
-        //   inputPaginationValue={inputPaginationValue}
-        //   onGoToClick={onGoToClick}
-        //   onChangeSearchValueHandler={onChangeSearchValueHandler}
-        //   searchValue={searchValue}
-        //   onAddClickButtonHandler={onModalWindowToggleHandler}
-        //   onChangePage={onChangePage}
-        //   isGuard
-        // />
         <Styled.ContentWrapper>
         <ReUseActionPlaceholder>
           <ReUseSearch
@@ -249,7 +212,7 @@ export const UsersList: FC = () => {
             <LoaderComponent theme="preview" />
           </Styled.LoaderWrapper>
         ) : (
-          <div>
+          <>
             <AdminListTabel
               users={filteredUsers}
               requestSort={requestSort}
@@ -273,7 +236,7 @@ export const UsersList: FC = () => {
                 />
               </Styled.paginationPosition>
              ) : null} 
-          </div>
+          </>
         )}
       </Styled.ContentWrapper>
       )}

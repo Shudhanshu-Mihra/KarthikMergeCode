@@ -231,6 +231,10 @@ export const getSelectedUser = (members: IMember[], memberId: string) => {
   return members.find((member: { id: string }) => member.id === memberId);
 };
 
+export const getSelectedAdminUser = (users: IAdminUser[], userId: string) => {
+  if (!users.length) return;
+  return users.find((user: { id: string }) => user.id === userId);
+};
 // export const getSelectedItems = (items: IInvites[], itemId: string) => {
 //   if (!items.length) return;
 //   return items?.find((el: { id: string }) => el.id === itemId);
