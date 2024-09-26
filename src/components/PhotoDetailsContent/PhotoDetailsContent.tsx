@@ -42,12 +42,6 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 	// const {changePaid} = props;
 	const {
 		state,
-	// 	selectedReciept
-	// 	inputFields,
-	// 	// receiptItem,
-	// 	statusValue,
-	// 	paymentStatus,
-		// 	// receiptid,
 		currenciesData,
 		type_date,
 		isOpen,
@@ -59,27 +53,14 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		onClickOutsideDatePickerHandler,
 		onDatePickerClickHandler,
 		status,
-	// 	// onGetAllMasterItemsHandler,
 		onForbiddenCharacterClick,
 		handleFieldChange,
 		onChangeDate,
 		recieptId,
-		// handleInputChange
-	// 	paymentStatusFromState,
-	// 	publishStatusFromState,
-	// 	onChangePaymentStatus,
-	// 	paymentStatusHandler,
-	// 	publishStatusHandler,
-		// 	onChangePublishStatus,
-		// onFieldChange
+		findLabelById
 	} = usePhotoDetailsContentState();
 	
-	// const [inputFieldsState, setInputFieldsState] = useState({
-	// 	supplier: '',
-	// 	type_date: '',
-	// 	currencyValue: '',
-	// 	// Add other fields as necessary
-	// });
+	
 
 	const [purchaseItems, setPurchaseItems] = useState<Item[]>([
 		{vatCode: 0, units: 0, price: 0, net: 0, vat: 0, total: 0 }
@@ -95,7 +76,7 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		// 	setPurchaseItems(updatedItems);
 	// };
 	
-	console.log("formattedDate:--- ",state.formattedDate);
+	// console.log("formattedDate:--- ",state.formattedDate);
 	return (
 		<Styled.ReceiptDetailContent>
 			<Styled.StatusBarWrapper>
@@ -110,6 +91,7 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 
 			<Styled.FormFieldWrapper>
 				<FieldsBox
+					findLabelById={findLabelById}
 					inputFields={state}
 					options={ currenciesData}
 					currencies={currencies}

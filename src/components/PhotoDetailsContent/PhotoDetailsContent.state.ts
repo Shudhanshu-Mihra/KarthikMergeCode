@@ -294,6 +294,12 @@ export const usePhotoDetailsContentState = () => {
     key: currency.id,
     id:currency.id
   }));
+
+  const findLabelById = (id: string) => {
+    const item = currenciesData.find(data => data.id =="id");
+    return item ? item.label : "Unknown Label"; // fallback in case id is not found
+  };
+
   const onDatePickerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     datePickerRef.current &&
@@ -399,6 +405,7 @@ export const usePhotoDetailsContentState = () => {
     onClickOutsideDatePickerHandler,
     onForbiddenCharacterClick,
     handleFieldChange,    
-    currenciesData
+    currenciesData,
+    findLabelById
   };
 };
