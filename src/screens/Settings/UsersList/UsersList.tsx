@@ -146,11 +146,7 @@ export const UsersList: FC = () => {
     //create user
     <Styled.Section>
       <ModalBox
-        modalFields={
-          role?.value === "admin" && !isEdit
-            ? adminInviteFormArr.slice(0, 4)
-            : adminInviteFormArr.slice(0, 4)
-        }
+        modalFields={adminInviteFormArr.slice(0, 4)}
         text="Name"
         isLoading={isLoading}
         isDisableButton={isDisableButton}

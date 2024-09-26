@@ -180,7 +180,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
   // type ImodalFieldsAdmin = IInputField;
   // type ImodalFieldsAdmin = IModalField[]
   // const modalFieldsEdit:ImodalFieldsAdmin = [
-  const handleEditClick = (user: string, name: string, email:string, active:any) => {
+  const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
     setSelectedUserEdit(user);  
     setIsEdit(true);  
     setIsModalOpen(true); 

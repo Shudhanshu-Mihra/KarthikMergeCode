@@ -14,7 +14,7 @@ export interface IGetInputFieldsProps {
   formatedCurrencies: { label: string; value: string; id: string }[];
   countries: IOption[];
   dateFormats: IOption[];
-
+  activeFormat:  IoptionActive[];
 }
 
 export interface IGetResetPasswordFields {

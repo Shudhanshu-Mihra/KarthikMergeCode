@@ -44,6 +44,8 @@ import { dropdownIndicatorCSS } from 'react-select/dist/declarations/src/compone
 import { is } from 'date-fns/locale';
 import { stat } from 'fs';
 import { bool, boolean } from 'yup';
+// import { isDisabled } from '@testing-library/user-event/dist/types/utils';
+// import { isDisabled } from '@testing-library/user-event/dist/types/utils';
 
 export const useUserListState = () => {
   const dispatch = useDispatch();
@@ -86,8 +88,8 @@ export const useUserListState = () => {
   //   } 
   // };
   const onChangeActiveValueHandler = (
-    newValue: IOption,
-    actionMeta: ActionMeta<IOption> | unknown
+    newValue: IoptionActive,
+    actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
     console.log("newValue:",newValue.value)
     onChangeStateFieldHandlerval('active', newValue.value); 
@@ -611,7 +613,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             type: 'select',
             label: 'Role',
             name: 'role',
-            value: state.role,
             options: USER_ROLES,
             isDisabled: false,
             onChangeSelect: onChangeRoleValueHandler,
@@ -630,6 +631,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             type: 'select',
             label: 'Active',
             name: 'active',
+            isDisabled:false,
             options: IS_ACTIVE,
             onChangeSelect: onChangeActiveValueHandler,
           },
