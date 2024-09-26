@@ -295,10 +295,10 @@ export const usePhotoDetailsContentState = () => {
     id:currency.id
   }));
 
-  const findLabelById = (id: string) => {
-    const item = currenciesData.find(data => data.id =="id");
-    return item ? item.label : "Unknown Label"; // fallback in case id is not found
-  };
+  // const findLabelById = (id: string) => {
+  //   const item = currenciesData.find(data => data.id =="id");
+  //   return item ? item.label : "Unknown Label"; // fallback in case id is not found
+  // };
 
   const onDatePickerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -406,6 +406,6 @@ export const usePhotoDetailsContentState = () => {
     onForbiddenCharacterClick,
     handleFieldChange,    
     currenciesData,
-    findLabelById
+    // findLabelById
   };
 };

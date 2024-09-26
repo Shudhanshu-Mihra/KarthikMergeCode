@@ -13,11 +13,10 @@ import { IOption, IsMulti } from './types';
 
 interface ICustomSelectProps {
   name?: string;
-  // onChangeValueHandler?: (
-  //   newValue: OnChangeValue<IOption, IsMulti> | unknown,
-  //   actionMeta: ActionMeta<IOption | unknown>
-  // ) => void;
-  onChangeValueHandler?:(newValue: OnChangeValue<IOption, false> | null, actionMeta: ActionMeta<IOption | unknown>) => void
+  onChangeValueHandler?: (
+    newValue: OnChangeValue<IOption, IsMulti> | unknown,
+    actionMeta: ActionMeta<IOption | unknown>
+  ) => void;
   marginBottom?: string;
   value?: SingleValue<IOption> | MultiValue<IOption>;
   height?: string;

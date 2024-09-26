@@ -147,8 +147,8 @@ export const UsersList: FC = () => {
       <ModalBox
         modalFields={
           role?.value === "admin" && !isEdit
-            ? adminInviteFormArr
-            : adminInviteFormArr
+            ? adminInviteFormArr.slice(0, 4)
+            : adminInviteFormArr.slice(0, 4)
         }
         text="Name"
         isLoading={isLoading}

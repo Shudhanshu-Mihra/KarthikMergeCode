@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionMeta, SingleValue } from "react-select";
 import { useFormik } from "formik";
-
+import { IOption } from "typings/types";
 import { IState } from "services/redux/reducer";
 import { getFormatedCurrencies } from "services/utils";
 import {
@@ -145,10 +145,10 @@ export const useMyAccountState = () => {
     optionName: keyof typeof MY_ACCOUNT_initialState,
     value: string | boolean | SingleValue<IOption>
   ) => {
-    //   setState((prevState) => ({
-    //     ...prevState,
-    //     [optionName]: value,
-    //   }));
+      setState((prevState) => ({
+        ...prevState,
+        [optionName]: value,
+      }));
   };
 
   const onChangeCountryValueHandler = (

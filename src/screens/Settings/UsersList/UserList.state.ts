@@ -34,6 +34,7 @@ import {
   deleteAdminUser,
   updateCompanyMember,
   createAdminUser,
+  updateAdminUsers,
 } from '../settings.api';
 import {setStoreAdminUserData } from '../reducer/settings.reducer';
 import { updateUserAccount } from '../../SignUp/reducer/signup.reducer';
@@ -68,12 +69,28 @@ export const useUserListState = () => {
   const [dataAdminUsers, setDataAdminUsers] = useState<Idata[]>([]);    
   const [permissionState, setPermission] = useState(userPermissionInitialState);
   const [isPAllChecked, setPAllChecked] = useToggle();
-
+  console.log("isModalWindowOpen: ",isModalWindowOpen);
   const onChangeRoleValueHandler = (
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
 
+  // const onChangeActiveValueHandler = (
+  //   newValue: IOption,
+  //   actionMeta: ActionMeta<IOption> | unknown
+  // ) => {
+  //   if (newValue.label === 'Active') {
+
+  //     onChangeStateFieldHandler('active', newValue.value === 'true');
+  //   } 
+  // };
+  const onChangeActiveValueHandler = (
+    newValue: IOption,
+    actionMeta: ActionMeta<IOption> | unknown
+  ) => {
+    const isActive = newValue.value; 
+    onChangeStateFieldHandler('active', isActive); 
+  };
   interface IADMIN_USERS {
     fullName:string;
     email:string;
@@ -86,6 +103,7 @@ export const useUserListState = () => {
     email:'',
     password:'',
     role:'',
+    active:false,
   };
   const EDIT_ADMIN_USER_INITIALSTATE = {
     name:'',
@@ -97,6 +115,7 @@ export const useUserListState = () => {
     email:string;
     password:string;
     role:string;
+    active:boolean;
   }
     const formik = useFormik({
       initialValues: ADMIN_USERS_initialState,
@@ -180,8 +199,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
     try {
       const response = await getAllAdminUsers(); 
-      const usersData = response.data;
-      console.log('Admin Users Response:', response.data); 
       dispatch(setStoreAdminUserData(response.data));
       // setDataAdminUsers(usersData);
       // console.log(selectedId);
@@ -361,7 +378,8 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
               // role: values.role || '',
               name: values.fullName,
               email: values.email,
-              password: values.password,
+              // password: values.password,
+              active: values.active
               // isInviteCompanyMember: state.isInvitation,
             };
             console.log("payload",payload);
@@ -394,21 +412,27 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       console.log(error);
     }
   };
+  const [aminName, setAminName] = useState('test');
+  const [AdminEmail, setAdminEmail] = useState('test@gmail.com');
   const modalFieldsNew = [
     {
       type: 'input',
       label: 'Full Name',
-      name: 'fullName',
+      name: 'name',
+      isDisabled: false,
+      value:aminName,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
     },
     {
       type: 'input',
       label: 'Email',
       name: 'email',
       // value: state.prevName,
-      value: formik.values.email,
-      options: USER_ROLES,
+      value: AdminEmail,
+      // options: USER_ROLES,
       isDisabled: false,
-      onChangeSelect: onChangeRoleValueHandler,
+      // onChangeSelect: onChangeRoleValueHandler,
+       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAdminEmail(e.target.value),
     },
     {
       type: 'select',
@@ -418,39 +442,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       options: IS_ACTIVE,
       isDisabled: false,
       onChangeSelect: onChangeRoleValueHandler,
-    },
-  ];
-  const editModalFields = [
-    {
-      type: 'input',
-      label: 'Full Name',
-      name: 'fullName',
-      value: formik.values.name,
-      onChange: formik.handleChange,
-      onBlur: formik.handleBlur,
-      error: formik.errors.fullName,
-      touched: formik.touched.fullName,
-    },
-    {
-      type: 'input',
-      label: 'Email',
-      name: 'email',
-      value: formik.values.email,
-      onChange: formik.handleChange,
-      onBlur: formik.handleBlur,
-      error: formik.errors.email,
-      touched: formik.touched.email,
-    },
-    {
-      type: 'select',
-      label: 'Role',
-      name: 'role',
-      value: state.active,
-      options: IS_ACTIVE,
-      isDisabled: false,
-      onChangeSelect: onChangeRoleValueHandler,
-      error: formik.errors.role,
-      touched: formik.touched.role,
     },
   ];
   const onInviteUserToCompanyHandler = async (
@@ -508,6 +499,21 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     }
   };
 
+  const onFormSubmitHandlerEdit = async (id: string, values:Ipayload) => {
+    try {
+      const payload = {
+        name: values.name,
+        email: values.email,
+        active: values.active,
+        
+      };
+      await updateAdminUsers(payload, id);
+      console.log("Editing admin users",payload)
+    } catch (error) {
+      console.error('Error creating admin user:', error);
+    }
+  };
+
   const onResendInvitationHandler = async (inviteId: string) => {
     try {
       await resendInvitation(inviteId);
@@ -558,6 +564,8 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   //     return { value: 'admin', label: 'Admin' };
   //   } 
   // };
+
+  
   const isDisableButton =
     isEdit && !state.isInvitation
       ? state.prevRole?.value === state.role?.value
@@ -597,13 +605,32 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             isDisabled: false,
             onChangeSelect: onChangeRoleValueHandler,
           },
+          {
+            type: 'input',
+            label: 'Name',
+            name: 'name',
+          },
+          {
+            type: 'input',
+            label: 'Email',
+            name: 'email',
+          },
+          {
+            type: 'select',
+            label: 'Active',
+            name: 'active',
+            value: state.active,
+            options: IS_ACTIVE,
+            isDisabled: false,
+            onChangeSelect: onChangeActiveValueHandler,
+          },
         ];
 
         
   return {
     ...state,
     active,
-    editModalFields,
+    // editModalFields,
     // userRole,
     isEdit,
     currentPage,
@@ -659,6 +686,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     // newmodalFields,
      modalFieldsNew,
     // searchedCompanies,
-    // isMemeberList
+    // isMemeberList,
+    onFormSubmitHandlerEdit
   };
 };

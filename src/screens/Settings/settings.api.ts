@@ -33,7 +33,6 @@ interface IUpdateCompanyMember {
 interface IAdminUsersUpdate {
   name : string;
   email: string;
-  password: string;
   active: boolean;
 }
 

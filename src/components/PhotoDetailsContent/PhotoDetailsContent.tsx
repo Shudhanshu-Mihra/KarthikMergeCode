@@ -57,11 +57,9 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		handleFieldChange,
 		onChangeDate,
 		recieptId,
-		findLabelById
+		// findLabelById
 	} = usePhotoDetailsContentState();
 	
-	
-
 	const [purchaseItems, setPurchaseItems] = useState<Item[]>([
 		{vatCode: 0, units: 0, price: 0, net: 0, vat: 0, total: 0 }
 	  ]);
@@ -91,7 +89,7 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 
 			<Styled.FormFieldWrapper>
 				<FieldsBox
-					findLabelById={findLabelById}
+					// findLabelById={findLabelById}
 					inputFields={state}
 					options={ currenciesData}
 					currencies={currencies}
