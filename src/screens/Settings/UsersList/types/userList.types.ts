@@ -15,7 +15,7 @@ export interface IuseUserListState {
   prevEmail: string;
   isInvitation: boolean;
   givePermissionsForAPI: any[];
-  // active: boolean | any;
+  prevActive: boolean | any;
   active: boolean
 }
 export interface IAdminUserEdit {

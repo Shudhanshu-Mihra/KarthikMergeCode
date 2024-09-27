@@ -61,6 +61,8 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
     
   } = props;
 
+console.log("modalFields" , modalFields);
+
   const modalStyles =
     (isEdit && isInvitation && isUserList) || modalFields.length === 3
       ? {
@@ -94,19 +96,19 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
   //   console.log(permission);
 
   // };
-
+  console.log("fields:-  ",fields);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
-  const openSecondModal = () => {
-    setIsSecondModalOpen(true);
-  };
+  // const openSecondModal = () => {
+  //   setIsSecondModalOpen(true);
+  // };
 
    const closeSecondModal = () => {
     setIsSecondModalOpen(false);
   };
 
 
-  const Role = role ? role[0].toUpperCase() + role.slice(1) : '';
+  // const Role = role ? role[0].toUpperCase() + role.slice(1) : '';
     return (
     <>
       <ReactModal

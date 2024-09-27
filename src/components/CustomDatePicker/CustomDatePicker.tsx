@@ -14,7 +14,7 @@ interface ICustomDatePicker {
 	onClickOutsideDatePickerHandler?: (event: React.MouseEvent<HTMLDivElement>) => void;
 	datePickerRef?: RefObject<HTMLButtonElement>;
 	isInputDate: boolean;
-	formattedDate: string;
+	formattedDate?: string ;
 }
 
 export const CustomDatePicker: FC<ICustomDatePicker> = (props) => {
@@ -22,6 +22,7 @@ export const CustomDatePicker: FC<ICustomDatePicker> = (props) => {
 
 	const onChangeDateHandler = (date: Date) => {
 		onChange && onChange(date);
+		// console.log("selected Date" , date);
 	};
 
 	const dateLabelCondition = !formattedDate && isInputDate ? "" : formattedDate ? `${formattedDate}` : "Choose Date";

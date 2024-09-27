@@ -6,6 +6,7 @@ import { ICurrency } from 'screens/SignUp/types/signup.types';
 import { getCompanyLogo } from 'screens/Settings/settings.api';
 
 import { ROUTES } from 'constants/routes';
+import { IReceiptInvoiceData } from 'screens/RIDATA/types/RIdata.type';
 
 interface IFormdataProps {
   active_account?: string | null;
@@ -18,7 +19,7 @@ interface IFormdataProps {
 
 interface ISortProps {
   sortValue?: string;
-  sortableItems: IReceipt[];
+  sortableItems: IReceiptInvoiceData[];
   sortField: TReceiptKeys;
   sortOrder: string;
 }
@@ -122,16 +123,16 @@ export const getCompaniesLogoHandler = async (
   }
 };
 
-export const getInitials = (name: string) => {
-  let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
+// export const getInitials = (name: string) => {
+//   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, 'gu');
 
-  let initials = [...(name.matchAll(rgx) as any)] || [];
+//   let initials = [...(name.matchAll(rgx) as any)] || [];
 
-  initials = (
-    (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
-  ).toUpperCase();
-  return initials;
-};
+//   initials = (
+//     (initials.shift()?.[1] || '') + (initials.pop()?.[1] || '')
+//   ).toUpperCase();
+//   return initials;
+// };
 
 export const getFormattedDate = (date: string | Date, dateFormat: string) => {
   const formattedDate = format(new Date(date), dateFormat);
@@ -230,6 +231,10 @@ export const getSelectedUser = (members: IMember[], memberId: string) => {
   return members.find((member: { id: string }) => member.id === memberId);
 };
 
+export const getSelectedAdminUser = (users: IAdminUser[], userId: string) => {
+  if (!users.length) return;
+  return users.find((user: { id: string }) => user.id === userId);
+};
 // export const getSelectedItems = (items: IInvites[], itemId: string) => {
 //   if (!items.length) return;
 //   return items?.find((el: { id: string }) => el.id === itemId);
@@ -276,39 +281,39 @@ export const setIsSorted = (
   columnName: string
 ) => sortField === columnName && sortOrder === 'asc';
 
-export const getSortedItems = (props: ISortProps) => {
-  const { sortField, sortOrder, sortableItems, sortValue } = props;
-  const descOrder = sortOrder === 'asc' ? 1 : -1;
-  const ascOrder = sortOrder === 'asc' ? -1 : 1;
+// export const getSortedItems = (props: ISortProps) => {
+//   const { sortField, sortOrder, sortableItems, sortValue } = props;
+//   const descOrder = sortOrder === 'asc' ? 1 : -1;
+//   const ascOrder = sortOrder === 'asc' ? -1 : 1;
 
-  const sortByDate = (a: IReceipt, b: IReceipt) => {
-    return Date.parse(a[sortField]) < Date.parse(b[sortField])
-      ? ascOrder
-      : Date.parse(a[sortField]) > Date.parse(b[sortField])
-      ? descOrder
-      : 0;
-  };
+//   const sortByDate = (a: IReceipt, b: IReceipt) => {
+//     return Date.parse(a[sortField]) < Date.parse(b[sortField])
+//       ? ascOrder
+//       : Date.parse(a[sortField]) > Date.parse(b[sortField])
+//       ? descOrder
+//       : 0;
+//   };
 
-  const sortByValue = (a: IReceipt, b: IReceipt) => {
-    return a[sortField] < b[sortField]
-      ? ascOrder
-      : a[sortField] > b[sortField]
-      ? descOrder
-      : 0;
-  };
+//   const sortByValue = (a: IReceipt, b: IReceipt) => {
+//     return a[sortField] < b[sortField]
+//       ? ascOrder
+//       : a[sortField] > b[sortField]
+//       ? descOrder
+//       : 0;
+//   };
 
-  const sortByObjValue = (a: IReceipt, b: IReceipt) => {
-    return a[sortField]?.[sortValue || ''] < b[sortField]?.[sortValue || '']
-      ? ascOrder
-      : a[sortField]?.[sortValue || ''] > b[sortField]?.[sortValue || '']
-      ? descOrder
-      : 0;
-  };
-  const sortItemsHandler = (func: (a: IReceipt, b: IReceipt) => number) =>
-    sortableItems.sort(func);
+//   const sortByObjValue = (a: IReceipt, b: IReceipt) => {
+//     return a[sortField]?.[sortValue || ''] < b[sortField]?.[sortValue || '']
+//       ? ascOrder
+//       : a[sortField]?.[sortValue || ''] > b[sortField]?.[sortValue || '']
+//       ? descOrder
+//       : 0;
+//   };
+//   const sortItemsHandler = (func: (a: IReceipt, b: IReceipt) => number) =>
+//     sortableItems.sort(func);
 
-  return { sortItemsHandler, sortByObjValue, sortByValue, sortByDate };
-};
+//   return { sortItemsHandler, sortByObjValue, sortByValue, sortByDate };
+// };
 
 
 export const getSortedInvoiceItems = (props: IInvoiceSortProps) => {

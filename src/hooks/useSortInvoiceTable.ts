@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { getSortedInvoiceItems, getSortedItems } from 'services/utils';
+// import { getSortedInvoiceItems, getSortedItems } from 'services/utils';
+import { getSortedInvoiceItems } from 'services/utils';
 
 interface IProps {
     items: IInvoice[];

@@ -16,7 +16,6 @@ export const ReUseStatusFilter: React.FC<IreUseStatusFilterProps> = (props) => {
     const statusFilterOptions = [
         { value: 'all', label: `All` },
         { value: 'processing', label: `Processing` },
-        { value: 'accepted', label: `Accepted` },
         { value: 'review', label: `Review` },
         { value: 'rejected', label: `Rejected` },
     ];

@@ -2,20 +2,20 @@ import { FC, useEffect, useState } from 'react';
 import { styled } from 'styles/theme';
 import { TableButton } from 'components/TableButton/TableButton';
 import { Icon } from 'components/Icons/Icons';
-import { useUserListState } from './UserList.state';
 import { id } from 'date-fns/locale';
-import { deleteAdminUser } from '../settings.api';
 import { DeleteModalWindow } from 'components/DeleteModalWindow';
-import { ModalBox } from './ModalBox';
 import { text } from 'stream/consumers';
-import { getAllAdminUsers } from '../settings.api';
+// import { getAllAdminUsers } from '../settings.api';
 import { SuccessPopup } from 'components/SuccessPopup';
-import { IS_ACTIVE } from 'constants/strings';
+// import { IS_ACTIVE } from 'constants/strings';
 import { ActionMeta } from 'react-select';
-import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from './userList.constants';
-import { IAdminUserEdit } from './types/userList.types';
-import { setStoreAdminUserData } from '../reducer/settings.reducer';
+import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from 'screens/Settings/UsersList/userList.constants';
+// import { setStoreAdminUserData } from '../reducer/settings.reducer';
 import { useDispatch } from 'react-redux';
+import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
+import { deleteAdminUser } from 'screens/Settings/settings.api';
+import { ModalBox } from 'screens/Settings/UsersList/ModalBox';
+import { IAdminUserEdit } from 'screens/Settings/UsersList/types/userList.types';
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -90,7 +90,12 @@ interface UsersTableProps {
   sortOrder: string;
 }
 
-export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortField, sortOrder }) => {
+export const AdminListTabel: FC<UsersTableProps> = ({
+  users,
+  requestSort,
+  sortField,
+  sortOrder
+}) => {
 
   const {
     onEditIconClickHandler,
@@ -99,7 +104,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     adminInviteFormArr,
     // editModalFields,
     // newmodalFields,
-    modalFieldsNew,
+    // modalFieldsNew,
     onEnterInsertUser,
     onDeleteModalWindowToggle,
     isDeleteModalWindowOpen,
@@ -109,10 +114,12 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
     setPAllChecked,
     PermissionsForAPIHandler,
     onFormSubmitHandlerEdit,
-    onFormSubmitHandler,
+    // onFormSubmitHandler,
+    isModalWindowOpen,
     onModalWindowCancelClickButtonHandler,
     onGetAllCompanyMembersHandler
   } = useUserListState();
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedUserEdit, setSelectedUserEdit] = useState<string>('');
@@ -234,6 +241,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({ users, requestSort, sortFi
             {/* <Styled.ActionButton onClick={() => onEditIconClickHandler(user.id)}>
                 <Icon type="edit" />
               </Styled.ActionButton> */}
+           
               <Styled.ActionButton onClick={() => handleEditClick(user.id, user.name, user.email, user.active)}>
                 <Icon type="edit" />
               </Styled.ActionButton>

@@ -48,7 +48,8 @@ export const useLoginState = () => {
   ) => {
     try {
       const { data } = await login(loginValues);
-      // dispatch(setCurrencies(data.currencies));
+      dispatch(setCurrencies(data.currencies));
+      
       dispatch(setUser(data));
       // localStorage.setItem('token',data.token);
       // localStorage.setItem('RefreshToken',data.refreshToken);

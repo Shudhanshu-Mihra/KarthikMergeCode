@@ -22,6 +22,7 @@ export const USERS_LIST_INITIAL_STATE = {
   prevEmail: '',
   isInvitation: false,
   givePermissionsForAPI: [],
+  prevActive: false,
   active:false,
 };
 export const formikInitialValues = {

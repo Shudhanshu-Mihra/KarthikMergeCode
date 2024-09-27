@@ -20,6 +20,7 @@ export const Styled = {
     font-size: ${(props) => props.theme.size.default};
     color: ${(props) => props.theme.colors.lightBlack};
     line-height:3;
+    width:30%;
   `,
   Input: styled.input<{
     isError?: boolean;
@@ -29,6 +30,7 @@ export const Styled = {
     isRemoveBoxShadow?: boolean;
     isRemoveBorder?: boolean;
   }>`
+  // min-width:248px;
     line-height: 1.3;
     font-size: ${(props) => props.theme.size.default};
     padding: 10px;
@@ -82,6 +84,7 @@ export const Styled = {
   InputWrapper: styled.div<{ isNoMargin?: boolean }>`
     width: 100%;
     position: relative;
+    display:flex;
   `,
   InputExpenseWrapper: styled.div<{ isNoMargin?: boolean }>`
   width: 100%;

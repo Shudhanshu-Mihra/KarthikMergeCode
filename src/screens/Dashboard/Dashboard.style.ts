@@ -77,6 +77,7 @@ export const DashboardStyles = {
     border: 1px solid #E0E0E0;
     border-radius: 5px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+
   `,
   ProgressContainer: styled.div`
   border: 1px solid #E0E0E0;
