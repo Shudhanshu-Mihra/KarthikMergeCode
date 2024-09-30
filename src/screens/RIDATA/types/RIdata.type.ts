@@ -5,6 +5,7 @@ export interface IRIDATA_INITIAL_STATE {
     selectedReceiptIndex: number | null;
     selectedReceiptType: string ;
     selectedReceiptPhoto: string[];
+    selectedReceiptDetails: ISelectedReceiptDetails;
 }
   
 // Interface representing the structure of each receipt invoice data item
@@ -98,3 +99,57 @@ export interface IuseInboxState {
     receiptsToSend: string[];
     excelUrl: string;
 }
+
+interface ISelectedReceiptDetails {
+    id: string;
+    created: string;
+    status: string;
+    custom_id: string;
+    receipt_date: string | null;
+    due_date: string | null;
+    vendor: string;
+    supplier: string | null;
+    vat_code: string;
+    net: number;
+    tax: number;
+    total: number;
+    description: string | null;
+    tableData: TableData;
+    publish_status: boolean;
+    active_status: boolean;
+    approved_status: boolean;
+    payment_status: boolean;
+    photos: string[];
+    currency: Currency;
+    supplier_account: string | null;
+    category: string | null;
+    payment_type: string | null;
+    company: Company;
+  }
+
+interface Currency {
+    id: string;
+    value: string;
+    country: string;
+    description: string;
+    symbol: string;
+  }
+  
+  interface Company {
+    id: string;
+    created: string;
+    name: string;
+    logo: string | null;
+    date_format: string;
+    active: boolean;
+    tpc: boolean;
+    tpc_token: string;
+    tpc_wh: string;
+    autoscan_email: string;
+  }
+  
+  interface TableData {
+    rows: string[][];
+    headers: string[];
+  }
+  

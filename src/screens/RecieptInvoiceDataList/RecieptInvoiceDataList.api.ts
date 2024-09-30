@@ -11,6 +11,15 @@ export const updateReceiptItem = (payload: IUpdateReceiptItemPayload) => {
   // return apiServices.updateData(URL, payload);
 };
 
+export const getRecieptDiscriptionDetails = (payload: IGetRecieptDiscriptionDetailsPayload) => {
+  const id = payload.id;
+  const URL = `receipt/${id}`;
+  // `${urlDirection}/get-all`
+  // const URL = `/admin/uploads/${payload.type}/${payload.id}/reviewed`;
+  return apiServices.fetchData(URL, payload);
+  // return apiServices.updateData(URL, payload);
+};
+
 export const getReceiptImage = (
   imageName: string,
   token: string,

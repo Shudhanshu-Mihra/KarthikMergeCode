@@ -36,7 +36,7 @@ interface Item {
 	total: number;
   }
 export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
-	const { changePaid, fnChangePaid, actionValue, fnGetPayStatus } = props;
+	// const { changePaid, fnChangePaid, actionValue, fnGetPayStatus } = props;
 	// const { changePublish, fnChangePublish, newPublish, getLivePublish } = props;
 	// console.log("!!!!!!!!!!!!!!!!! - RDContent child-form", actionValue);
 	// const {changePaid} = props;
@@ -57,24 +57,26 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		handleFieldChange,
 		onChangeDate,
 		recieptId,
-		// findLabelById
+		getReceiptSubItemDetail
 	} = usePhotoDetailsContentState();
 	
-	const [purchaseItems, setPurchaseItems] = useState<Item[]>([
-		{vatCode: 0, units: 0, price: 0, net: 0, vat: 0, total: 0 }
-	  ]);
+	// const [purchaseItems, setPurchaseItems] = useState<Item[]>([
+	// 	{vatCode: 0, units: 0, price: 0, net: 0, vat: 0, total: 0 }
+	//   ]);
 
 	const {
 		    user:{currencies},
 		    RIdata: { selectedReceipt }
 			
 		  } = useSelector((state: IState) => state);
-
-		//   const handlePurchaseItemsChange = (updatedItems: Item[]) => {
-		// 	setPurchaseItems(updatedItems);
-	// };
 	
-	// console.log("formattedDate:--- ",state.formattedDate);
+	useEffect(() => {
+		const receiptId = state.id;
+		if (receiptId) {
+			getReceiptSubItemDetail(receiptId);
+		}
+	  }, [state.id]);
+	  
 	return (
 		<Styled.ReceiptDetailContent>
 			<Styled.StatusBarWrapper>

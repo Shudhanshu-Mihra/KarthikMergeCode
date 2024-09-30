@@ -122,7 +122,9 @@ declare global {
     // payment_type?: string | null;
     // approve_status?: boolean;
   }
-
+  interface IGetRecieptDiscriptionDetailsPayload{
+  id:string
+}
   interface IPaginationPanelProps {
     onChangePaginationInputValue: (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

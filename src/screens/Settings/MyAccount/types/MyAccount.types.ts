@@ -38,12 +38,12 @@ export interface IGetInputFieldsProps {
   options?: IOption[];
   onChangeSelect?: (value: any) => void;
   isDisabledCountry?: boolean;
-  isDisabledSelect?: boolean;
+  isDisabledSelect: boolean;
   countries?: IOption[];
   formatedCurrencies?: IOption[];
   dateFormats?: IOption[];
-  funcArray?: ((value: any) => void) | ((event: ChangeEvent<HTMLInputElement>) => void)[];
-  // state: IuseMyAccountState;
+  funcArray?: ((value: any) => void) | ((event: ChangeEvent<HTMLInputElement>) => void)[] | ((event: React.ChangeEvent<HTMLInputElement>) => undefined) ;
+  state: IuseMyAccountState;
 }
 
 export interface IGetResetPasswordFields {

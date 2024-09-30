@@ -338,10 +338,10 @@ export const useMyAccountState = () => {
   });
 
   const accountsFields = getInputFields({
-    isDisabledCountry: true,
+    // isDisabledCountry: true,
     isDisabledSelect: !user.active ? true : false,
-    countries,
-    formatedCurrencies,
+    // countries,
+    // formatedCurrencies,
     dateFormats: DATE_FORMATS,
     funcArray: [
       // onChangeCurrencyValueHandler,
@@ -352,6 +352,69 @@ export const useMyAccountState = () => {
     state,
   });
 
+  // const preDefineOptionData: { 
+  //   UserEditFieldOptions: IOption[], 
+  //   createUserSelectOption: IOption[] 
+  // } = {
+  //   UserEditFieldOptions: [
+  //     {
+  //       type: "input",
+  //       label: 'name',
+  //       value: name
+  //     },
+  //     {
+  //       type: "input",
+  //       label: 'email',
+  //       value: email
+  //     },
+  //     {
+  //       type: "select",
+  //       label: 'status',
+  //       options: [
+  //         {
+  //           label: "Active",
+  //           value: "Active"
+  //         },
+  //         {
+  //           label: "Inactive",
+  //           value: "Inactive"
+  //         }
+  //       ]
+  //     }
+  //   ],
+  //   createUserSelectOption: [
+  //     {
+  //       type: "input",
+  //       label: 'Name',
+  //       value: ''
+  //     },
+  //     {
+  //       type: "input",
+  //       label: 'Email',
+  //       value: ''
+  //     },
+  //     {
+  //       type: "password",
+  //       label: 'Password',
+  //       value: ''
+  //     },
+  //     {
+  //       type: "select",
+  //       label: 'status',
+  //       options: [
+  //         {
+  //           label: "Active",
+  //           value: "Active"
+  //         },
+  //         {
+  //           label: "Inactive",
+  //           value: "Inactive"
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // };
+  
   const isDisableUpdateUserProfileButton =
     // state.country?.value === prevValues?.country?.value &&
     // state.currency?.value === prevValues?.currency?.value &&
@@ -489,6 +552,9 @@ export const useMyAccountState = () => {
     role,
     email,
     id,
-    password, profile_image, currencies
+    password,
+    profile_image,
+    currencies,
+    // preDefineOptionData
   };
 };

@@ -1,221 +1,8 @@
-// import { ROUTES } from 'constants/routes';
-// import React, { useEffect, useRef, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// // import { ActionMeta, SingleValue } from 'react-select';
-// import { useNavigate } from 'react-router-dom';
-// import { updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
-// import { format } from 'date-fns';
-
-// import { IState } from 'services/redux/reducer';
-// // import {
-// //   getFormatedCurrencies,
-// //   getReceiptDetailsCurrentSelectItem,
-// // } from 'services/utils';
-
-// // // import {
-// // //   getAllMasterItems,
-// // //   updateReceiptItem,
-// // // } from 'screens/ReceiptDetails/receiptDetails.api';
-// // // import {
-// // //   setIsFetchingDate,
-// // //   updateReceipt,
-// // // } from 'screens/Inbox/reducer/inbox.reducer';
-// // // import { setItemsForSelect } from 'screens/ReceiptDetails/reducer/receiptDetails.reducer';
-
-// // import {
-// //   getInputFields,
-// //   photoDetailsContentInitialState,
-// // } from './photoDetailsContent.constants';
-
-// // import { ROUTES } from 'constants/routes';
-// import { DATE_FORMATS } from 'constants/strings';
-// import { date } from 'yup';
-
-
-// export const usePhotoDetailsContentState = () => {
-
-//   const navigate = useNavigate();
-
-//   const {
-
-//     RIdata: { selectedReceipt }
-//   } = useSelector((state: IState) => state);
-
-
-// useEffect(() => {
-//   if (selectedReceipt) {
-//     setState((prevState) => ({
-//       ...prevState,
-//       dateValue: selectedReceipt?.created || null,
-//     }));
-//   }
-// }, [selectedReceipt?.id]);
-
-//   const [state, setState] = useState({
-//     currencyValue: selectedReceipt?.type_currency || '',
-//     dateValue: selectedReceipt?.created || null,
-//     formattedDate: selectedReceipt?.created
-//     ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
-//     : '',  // Provide    RIdata: []
-//   });//
-//   const [ButtonValue, setButtonValue] = useState('');
-
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const onCancelButtonClickHandler = () => navigate(-1);
-
-
-//   const onChangeRadioButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-//     setButtonValue(event.currentTarget.value);
-//   };
-
-
-// useEffect(() => {
-//   if (selectedReceipt) {
-//     setState(prevState => ({
-//       ...prevState,
-//       dateValue: selectedReceipt.created || null,
-//       formattedDate: selectedReceipt.created
-//         ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
-//         : ''
-//     }));
-//   }
-// }, [selectedReceipt?.id]);
-  
-  
-// const onChangeDate = (date: Date) => {
-//   setIsOpen(!isOpen);
-//   setState(prevState => ({
-//     ...prevState,
-//     dateValue: date,
-//     formattedDate: format(date, DATE_FORMATS[0].value)
-//   }));
-//   };
-  
-// // const onCancelButtonClickHandler = () => navigate(-1);
-
-// // const onChangeRadioButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-// //   setButtonValue(event.currentTarget.value);
-// // };
-
-// const saveReceiptHandler = async () => {
-//   try {
-//     const payload = {
-//       id: selectedReceipt?.id || '',
-//       currency: selectedReceipt?.type_currency || '',
-//       vat_code: selectedReceipt?.vat_code || ''
-//     };
-
-//     setIsLoading(true);
-//     const { data } = await updateReceiptItem(payload);
-//     setIsLoading(false);
-//     navigate(ROUTES.pendingriData);
-//   } catch (error) {
-//     console.log(error);
-//     setIsLoading(false);
-//   }
-// };
-
-// return {
-//   ...state,  // Make sure to return formattedDate
-//   isLoading,
-//   isOpen,
-//   onChangeDate,
-//   onCancelButtonClickHandler,
-//   onChangeRadioButtonHandler,
-//   saveReceiptHandler
-// };
-// };
-
-
-// import { ROUTES } from 'constants/routes';
-// import React, { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
-// import { updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
-// import { format } from 'date-fns';
-// import { IState } from 'services/redux/reducer';
-// import { DATE_FORMATS } from 'constants/strings';
-
-// export const usePhotoDetailsContentState = () => {
-//   const navigate = useNavigate();
-//   const { RIdata: { selectedReceipt } } = useSelector((state: IState) => state);
-
-//   const [state, setState] = useState({
-//     currencyValue: selectedReceipt?.type_currency || '',
-//     dateValue: selectedReceipt?.created || null,
-//     formattedDate: selectedReceipt?.created
-//       ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
-//       : ''
-//   });
-
-//   const [buttonValue, setButtonValue] = useState('');
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   useEffect(() => {
-//     if (selectedReceipt) {
-//       setState({
-//         currencyValue: selectedReceipt.type_currency || '',
-//         dateValue: selectedReceipt.created || null,
-//         formattedDate: selectedReceipt.created
-//           ? format(new Date(selectedReceipt.created), DATE_FORMATS[0].value)
-//           : ''
-//       });
-//     }
-//   }, [selectedReceipt?.id]);
-
-//   const onCancelButtonClickHandler = () => navigate(-1);
-
-//   const onChangeRadioButtonHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-//     setButtonValue(event.currentTarget.value);
-//   };
-
-//   const onChangeDate = (date: Date) => {
-//     setIsOpen(!isOpen);
-//     setState(prevState => ({
-//       ...prevState,
-//       dateValue: date,
-//       formattedDate: format(date, DATE_FORMATS[0].value)
-//     }));
-//   };
-
-//   const saveReceiptHandler = async () => {
-//     try {
-//       const payload = {
-//         id: selectedReceipt?.id || '',
-//         currency: state.currencyValue,
-//         vat_code: selectedReceipt?.vat_code || ''
-//       };
-
-//       setIsLoading(true);
-//       await updateReceiptItem(payload);
-//       navigate(ROUTES.pendingriData);
-//     } catch (error) {
-//       console.error('Error updating receipt:', error);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   return {
-//     ...state,
-//     isLoading,
-//     isOpen,
-//     onChangeDate,
-//     onCancelButtonClickHandler,
-//     onChangeRadioButtonHandler,
-//     saveReceiptHandler
-//   };
-// };
-
-
 import { ROUTES } from 'constants/routes';
 import React, { useEffect, useState ,useRef, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
+import { getRecieptDiscriptionDetails, updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
 import { format } from 'date-fns';
 import { IState } from 'services/redux/reducer';
 import { DATE_FORMATS } from 'constants/strings';
@@ -241,6 +28,7 @@ export const usePhotoDetailsContentState = () => {
     net:selectedReceipt?.net || '',
     supplier: selectedReceipt?.type_user || '',
     recieptId: selectedReceipt?.custom_id || '',
+    id:selectedReceipt?.id||'',
 
   });
 
@@ -264,7 +52,7 @@ export const usePhotoDetailsContentState = () => {
         net:selectedReceipt.net || '',
         supplier:selectedReceipt.type_user || '',
         recieptId: selectedReceipt.custom_id || '',
-
+        id:selectedReceipt.id || ''
       });
     }
   }, [selectedReceipt?.id]);
@@ -277,7 +65,6 @@ export const usePhotoDetailsContentState = () => {
     options:{
     
     },
-      // onChangeSelect: onChangeCurrencyFieldHandler,
   
     isDisabled: false
   };
@@ -294,11 +81,6 @@ export const usePhotoDetailsContentState = () => {
     key: currency.id,
     id:currency.id
   }));
-
-  // const findLabelById = (id: string) => {
-  //   const item = currenciesData.find(data => data.id =="id");
-  //   return item ? item.label : "Unknown Label"; // fallback in case id is not found
-  // };
 
   const onDatePickerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -361,6 +143,23 @@ export const usePhotoDetailsContentState = () => {
     }
   };
 
+// cmnt api (get receipt item details)
+  const getReceiptSubItemDetail = async (id:string) => {
+  
+    try {
+      const payload: IGetRecieptDiscriptionDetailsPayload = {
+        id: id || selectedReceipt?.id || state.id || ''
+      };
+      const { data } = await getRecieptDiscriptionDetails(payload);
+      console.log(data);
+     }
+    catch (error) {
+      console.error('Error updating receipt:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onClickOutsideDatePickerHandler = (
     event: React.MouseEvent<HTMLDivElement>
   ) => {
@@ -406,6 +205,6 @@ export const usePhotoDetailsContentState = () => {
     onForbiddenCharacterClick,
     handleFieldChange,    
     currenciesData,
-    // findLabelById
+    getReceiptSubItemDetail
   };
 };

@@ -58,7 +58,8 @@ export const MyAccount: FC = () => {
     // avatatSrc,
     // onMouseEnterHandler,
     // onMouseLeaveHandler,
-    name
+    name,
+    // preDefineOptionData
   } = useMyAccountState();
   const{
     onUploadProfilePhotoHandler,
@@ -125,13 +126,14 @@ export const MyAccount: FC = () => {
         <Styled.ContentWrapper isResetPassword={isResetPassword}>
           <Styled.Form onSubmit={onSubmitHandler}>
             <AccountFields
-              isResetPassword={isResetPassword}
-              // resetPasswordFields={resetPasswordFields}
-              formikProps={formik.getFieldProps}
-              formikMeta={formik.getFieldMeta}
-              resetPasswordFormikProps={resetPasswordFormik.getFieldProps}
-              resetPasswordFormikMeta={resetPasswordFormik.getFieldMeta}
-              accountsFields={accountsFields}
+                isResetPassword={isResetPassword}
+                // resetPasswordFields={resetPasswordFields}
+                formikProps={formik.getFieldProps}
+                formikMeta={formik.getFieldMeta}
+                resetPasswordFormikProps={resetPasswordFormik.getFieldProps}
+                resetPasswordFormikMeta={resetPasswordFormik.getFieldMeta}
+                accountsFields={accountsFields}
+                // preDefineOptionData={ preDefineOptionData}
               
             />
             <PasswordChangeModelWindow
