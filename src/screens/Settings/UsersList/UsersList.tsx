@@ -47,7 +47,7 @@ export const UsersList: FC = () => {
     // isFocus,
     // searchedUsers,
     // modalFields,
-    count,
+    // count,
     isFetchingData,
     isDisableButton,
     isInvitation,
@@ -71,28 +71,43 @@ export const UsersList: FC = () => {
     onFormSubmitHandler,
     PermissionsForAPIHandler,
     role,
-    adminUserData
+    adminUserData,
+    setCurrentPage,
     // companies,
     // searchedCompanies,
     // isMemeberList
     // onAddClickButtonHandler,
+    onChangePageHandler,
+    countState
+    
   } = useUserListState();
 
   useEffect(() => {
     onGetAllCompanyMembersHandler();
   }, []);
-  // console.log("adminUserData:-  ",adminUserData);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchValue]);
+  
+  useEffect(() => {
+    const start = (currentPage - 1) * itemsPerPageNumber;
+    const end = currentPage * itemsPerPageNumber;
+    const updatedPaginatedUsers = filteredUsers.slice(start, end);
+    setFilteredUsers(updatedPaginatedUsers);
+  }, [itemsPerPage, currentPage]);
+
+  useEffect(() => {
+    if (!countState) return;
+    onChangePagesAmount(Number(itemsPerPage.value), countState);
+  }, [countState, itemsPerPage]);
+  
   useEffect(() => {
     debouncedValue &&
       onGetAllCompanyMembersHandler({
         search: debouncedValue,
       });
   }, [debouncedValue, active]);
-
-  useEffect(() => {
-    if (!count) return;
-    onChangePagesAmount(Number(itemsPerPage.value), count);
-  }, [count, itemsPerPage, active]);
   const [createSuccessUser, setCreateSuccessUser] = useState<boolean>(false);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 
@@ -100,7 +115,6 @@ export const UsersList: FC = () => {
   const [sortOrder, setSortOrder] = useState<string>('');
 
   useEffect(() => {
-    // Filter users based on search value
     const filterUsers = () => {
       if (!searchValue) {
         setFilteredUsers(Object.values(adminUserData));
@@ -112,7 +126,6 @@ export const UsersList: FC = () => {
         setFilteredUsers(filtered);
       }
     };
-
     filterUsers();
   }, [searchValue, adminUserData]);
 
@@ -133,14 +146,22 @@ export const UsersList: FC = () => {
     setFilteredUsers(sortedUsers);
   };
 
+  const itemsPerPageNumber = Number(itemsPerPage.value);
+  const paginatedUsers = filteredUsers.slice(
+    (currentPage - 1) * itemsPerPageNumber,
+    currentPage * itemsPerPageNumber 
+  );
   // const isPaginationPanel = adminUserData
   //   ?(searchValue && adminUserData?.length) ||
   //     (!searchValue && members?.length)
   //   : (searchValue && searchedCompanies?.length) ||
   //     (!searchValue && companies?.length);
 
-
-  const isPaginationPanel = adminUserData?.length;
+  // const numberVal = Number(itemsPerPage.value);
+  // const paginatedUsers = filteredUsers.slice(
+  //   0,  numberVal
+  // );
+  const isPaginationPanel = filteredUsers?.length;
 
   return (
     //create user
@@ -214,7 +235,8 @@ export const UsersList: FC = () => {
         ) : (
           <>
             <AdminListTabel
-              users={filteredUsers}
+              // users={filteredUsers}
+              users={paginatedUsers}
               requestSort={requestSort}
               sortField={sortField}
               sortOrder={sortOrder}

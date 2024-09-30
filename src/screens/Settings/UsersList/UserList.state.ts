@@ -14,7 +14,7 @@ getSelectedAdminUser,
   getSelectedUser,
   getUserRole,
 } from 'services/utils';
-
+import { setMembers } from '../reducer/settings.reducer';
 import {
   getInputFields,
   USERS_LIST_INITIAL_STATE,
@@ -44,6 +44,8 @@ import { dropdownIndicatorCSS } from 'react-select/dist/declarations/src/compone
 import { is } from 'date-fns/locale';
 import { stat } from 'fs';
 import { bool, boolean } from 'yup';
+// import { isDisabled } from '@testing-library/user-event/dist/types/utils';
+// import { isDisabled } from '@testing-library/user-event/dist/types/utils';
 
 export const useUserListState = () => {
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ export const useUserListState = () => {
       adminUserData
     },
   } = useSelector((state: IState) => state);
+
   // const userRole = getUserRole(accounts || [], active_account || '');
   const initialState = USERS_LIST_INITIAL_STATE;
 
@@ -86,8 +89,8 @@ export const useUserListState = () => {
   //   } 
   // };
   const onChangeActiveValueHandler = (
-    newValue: IOption,
-    actionMeta: ActionMeta<IOption> | unknown
+    newValue: IoptionActive,
+    actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
     console.log("newValue:",newValue.value)
     onChangeStateFieldHandlerval('active', newValue.value); 
@@ -200,28 +203,13 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       console.log(error);
     }
   };
+const [countState, setNewCount] = useState<number>(0);
 
   const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
     try {
       const response = await getAllAdminUsers(); 
       dispatch(setStoreAdminUserData(response.data));
-      // setDataAdminUsers(usersData);
-      // console.log(selectedId);
-      // console.log('Fetched Admin Users3:',dataAdminUsers);
-
-      // const { data } = await getAllAdminUsers({
-      //   ...params,
-      //   // active_account: active_account || '',
-      // });
-      // state.isSearching
-      //   ? onChangeStateFieldHandler('searchedUsers', data.data)
-      //   : dispatch(setMembers({ count: data.count, members: data.data }));
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   isSearching: false,
-      //   isFetchingData: false,
-      //   isContentLoading: false,
-      // }));
+      setNewCount(response.data.length);
     } catch (error) {
       setState((prevState) => ({
         ...prevState,
@@ -234,32 +222,44 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     }
   };
 
-  const onChangeItemsPerPage = async (newValue: SingleValue<IOption>) => {
-    // setItemsPerPage(newValue as IOption);
-    onChangeStateFieldHandler('isContentLoading', true);
-    onChangeStateFieldHandler('searchValue', '');
-
-    await onGetAllCompanyMembersHandler({
-      take: Number(newValue?.value),
-    });
-
-    onChangeStateFieldHandler('isContentLoading', false);
-    setCurrentPage(0);
-    // if (!count) return;
-    // onChangePagesAmount(Number(newValue?.value), count);
+  const onChangeItemsPerPage =async  (newItemsPerPage) => {
+    setCurrentPage(1);
+    setItemsPerPage(newItemsPerPage as IOption);
+    onChangePagesAmount(Number(newItemsPerPage?.value), countState);
+    // await onGetAllCompanyMembersHandler({
+    //   // take: +newItemsPerPage,
+    //   take: Number(newItemsPerPage?.value),               
+    // });
+    await onGetAllCompanyMembersHandler();
   };
 
   const onChangePage = async ({ selected }: {selected: number}) => {
     onChangePageHandler(selected);
-    onChangeStateFieldHandler('isContentLoading', true);
-    state.searchValue && onChangeStateFieldHandler('searchValue', '');
-
-    await onGetAllCompanyMembersHandler({
-      take: +itemsPerPage.value,
-      skip: selected * +itemsPerPage.value,
-    });
+    // onChangeStateFieldHandler('isContentLoading', true);
+    // state.searchValue && onChangeStateFieldHandler('searchValue', '');
+    const startIndex = selected * +itemsPerPage.value;
+    const endIndex = startIndex + +itemsPerPage.value;
+    await onGetAllCompanyMembersHandler();
     onChangeStateFieldHandler('isContentLoading', false);
   };
+
+  const {
+    onBackwardClick,
+    onForwardClick,
+    onGoToClick,
+    onEnterGoToClick,
+    onChangePaginationInputValue,
+    onChangePagesAmount,
+    onChangePageHandler,
+    setItemsPerPage,
+    setCurrentPage,  
+    itemsPerPage, 
+    currentPage,
+    pages,
+    inputPaginationValue,
+  } = usePagination({
+    onChangePage,
+  });
   const debouncedValue = useDebounce(state.searchValue, 250);
   const onEnterInsertUser = (event: React.KeyboardEvent) => {
     if (event.key !== 'Enter') return;
@@ -275,24 +275,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       isSearching: true,
     }));
   };
-  const {
-    onBackwardClick,
-    onForwardClick,
-    onGoToClick,
-    onEnterGoToClick,
-    onChangePaginationInputValue,
-    onChangePagesAmount,
-    onChangePageHandler,
-    setItemsPerPage,
-    setCurrentPage,
-    onDeleteItem,
-    itemsPerPage,
-    currentPage,
-    pages,
-    inputPaginationValue,
-   
-  } = usePagination({ onChangePage });
-
   const onDeleteIconClickHandler = async (itemId: string) => {
     try {
       setState((prevState) => ({
@@ -589,7 +571,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             type: 'select',
             label: 'Role',
             name: 'role',
-            value: state.role,
             options: USER_ROLES,
             isDisabled: false,
             onChangeSelect: onChangeRoleValueHandler,
@@ -608,6 +589,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
             type: 'select',
             label: 'Active',
             name: 'active',
+            isDisabled:false,
             options: IS_ACTIVE,
             onChangeSelect: onChangeActiveValueHandler,
           },
@@ -624,7 +606,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     pages,
     inputPaginationValue,
     itemsPerPage,
-    count,
+    // count,
     formik,
     adminInviteFormArr,
     members,
@@ -670,11 +652,13 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     PermissionsForAPIHandler,
     createAdminUsers,
     dataAdminUsers,
+    setCurrentPage,
     // newmodalFields,
      modalFieldsNew,
     // searchedCompanies,
     // isMemeberList,
     onFormSubmitHandlerEdit,
-    adminUserData
+    adminUserData,
+    onChangePageHandler,
   };
 };

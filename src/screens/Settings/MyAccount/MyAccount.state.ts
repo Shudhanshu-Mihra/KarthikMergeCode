@@ -114,6 +114,7 @@ export const useMyAccountState = () => {
 
   const closeForgetPasswordModal = () => {
     setForgetPasswordModalOpen(false);
+    
   };
 
   const [state, setState] = useState<IuseMyAccountState>(MY_ACCOUNT_initialState);
@@ -169,16 +170,41 @@ export const useMyAccountState = () => {
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => void
     formik.handleChange(event);
 
+  // const formikResetPassword = useFormik({
+  //   initialValues: state,
+  //   validateOnBlur: true,
+  //   onSubmit: (values) => {
+  //     console.log('Collected Data:', values);
+  //     // Call the handler passed as a prop with the form values
+  //     onSaveNewPasswordHandler(values);
+  //   },
+  // });
   const formikResetPassword = useFormik({
     initialValues: state,
-    validateOnBlur: true,
+      // validateOnBlur: true,
+      // validationSchema: myAccountValidationScheme,
+      validateOnChange: true,
+      validate: (values) => {
+        const errors: { newPassword?: string; confirmPassword?: string } = {};
+    
+        if (!values.newPassword) {
+          errors.newPassword = 'New password is required';
+        }
+    
+        if (!values.confirmPassword) {
+          errors.confirmPassword = 'Confirm password is required';
+        } else if (values.newPassword !== values.confirmPassword) {
+          errors.confirmPassword = 'Passwords do not match';
+        }
+    
+        return errors;
+      },
     onSubmit: (values) => {
       console.log('Collected Data:', values);
       // Call the handler passed as a prop with the form values
       onSaveNewPasswordHandler(values);
     },
-  });
-
+    });
   const resetPasswordFormik = useFormik({
     initialValues: resetPasswordFormikInitialValues,
     onSubmit: (values) => onSaveNewPasswordHandler(values),
@@ -220,10 +246,16 @@ export const useMyAccountState = () => {
         newPassword: resetPasswordValues.confirmPassword,
       };
       const { data } = await resetPassword(payload);
+      resetPasswordFormik.resetForm();
+      resetPasswordFormik.setValues({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      });
+      closeForgetPasswordModal();
       if (data.message === "The password has been updated") {
         setIsShowSuccesPopup();
       }
-      resetPasswordFormik.resetForm();
       setIsLoading(false);
     } catch (error: any) {
       console.log(error);
@@ -437,6 +469,8 @@ export const useMyAccountState = () => {
         newPassword:newPassword,
       };
       await resetPassword(payload);
+      resetPasswordFormik.resetForm();
+      closeForgetPasswordModal();
     };
   const isEmptyResetPasswordFields =
     !resetPasswordFormik.values.confirmPassword &&
@@ -487,22 +521,15 @@ export const useMyAccountState = () => {
     return errors;
   };
 
-//  const passwordFormik = useFormik({
-//     initialValues:passFormikInitialValue,
-//     validateOnBlur:true,
-//     onSubmit: (values) => {
-//       console.log("password formik was called!")
-      
-//     },
-//   });
-
   const UpdatingPassword = async() => {
+ 
     const payload = {
       password:  resetPasswordFormik.values.currentPassword,
       newPassword: resetPasswordFormik.values.newPassword,
     };
     console.log(payload);
     resetPassword(payload);
+    closeForgetPasswordModal();
   };
 
   return {

@@ -166,7 +166,6 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);  
   const [aminName, setAminName] = useState('');
@@ -187,7 +186,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
   // type ImodalFieldsAdmin = IInputField;
   // type ImodalFieldsAdmin = IModalField[]
   // const modalFieldsEdit:ImodalFieldsAdmin = [
-  const handleEditClick = (user: string, name: string, email:string, active:any) => {
+  const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
     setSelectedUserEdit(user);  
     setIsEdit(true);  
     setIsModalOpen(true); 
