@@ -115,8 +115,34 @@ declare global {
     total: string | null;
     currency: string | null;
     publish_status: boolean;
-    active_account: string;
+    // active_account: string | null;
     payment_status: boolean;
+    payment_type:string| null;
+    vendor:string|null;
+    // custom_id?: string | null;
+    // photos?: string[];
+    // payment_type?: string | null;
+    // approve_status?: boolean;
+  }
+  interface IUpdateInvoiceItemPayload {
+    id: string;
+    description: string | null;
+    status: string | null ;
+    saleinvoice_date: Date | null | string;
+    customer :string| null;
+    // supplier: string | null;
+    customer_account: string | null;
+    category: string | null;
+    vat_code: string | null;
+    net: string|number | null;
+    tax: string | null;
+    total: string | null;
+    currency: string | null;
+    publish_status: boolean;
+    // active_account: string | null;
+    payment_status: boolean;
+    payment_type:string| null;
+    vendor:string|null;
     // custom_id?: string | null;
     // photos?: string[];
     // payment_type?: string | null;

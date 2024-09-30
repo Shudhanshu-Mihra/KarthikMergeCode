@@ -25,6 +25,9 @@ interface ChildProps {
 	fnChangePublish: () => void;
 	newPublish: boolean;
 	getLivePublish:(what: boolean | undefined) => void;
+	// rejectReceiptHandler?: () => Promise<void>;
+	rejected?: () => Promise<void>;
+	reviewed?:() => Promise<void>;
 }
 
 interface Item {
@@ -36,6 +39,7 @@ interface Item {
 	total: number;
   }
 export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
+
 	// const { changePaid, fnChangePaid, actionValue, fnGetPayStatus } = props;
 	// const { changePublish, fnChangePublish, newPublish, getLivePublish } = props;
 	// console.log("!!!!!!!!!!!!!!!!! - RDContent child-form", actionValue);
@@ -57,7 +61,10 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 		handleFieldChange,
 		onChangeDate,
 		recieptId,
-		getReceiptSubItemDetail
+		getReceiptSubItemDetail,
+		rejectReceiptHandler,
+		saveInvoiceHandler,
+		rejectInvoiceHandler
 	} = usePhotoDetailsContentState();
 	
 	// const [purchaseItems, setPurchaseItems] = useState<Item[]>([
@@ -135,9 +142,37 @@ export const PhotoDetailsContent: FC<ChildProps> = memo((props) => {
 				</Styled.Description>
 			</Styled.ReceiptStatusContainer> */}
 			<Styled.Footer>
-				<ButtonsBoxNew onRejectButtonClickHandler={onChangeRadioButtonHandler} isLoading={isLoading} />
-				<ButtonsBox saveReceiptHandler={saveReceiptHandler} onCancelButtonClickHandler={onCancelButtonClickHandler} isLoading={isLoading} onApproveButtonClickHandler={onChangeRadioButtonHandler} />
-			</Styled.Footer>
+  {state.selectedReceiptType === "receipt" ? (
+    <>
+      <ButtonsBoxNew 
+        rejected={rejectReceiptHandler} 
+        onRejectButtonClickHandler={onChangeRadioButtonHandler} 
+        isLoading={isLoading} 
+      />
+      <ButtonsBox 
+        reviewed={saveReceiptHandler} 
+        onCancelButtonClickHandler={onCancelButtonClickHandler} 
+        isLoading={isLoading} 
+        onApproveButtonClickHandler={onChangeRadioButtonHandler} 
+      />
+    </>
+  ) : (
+    <>
+      <ButtonsBoxNew 
+        rejected={rejectInvoiceHandler} 
+        onRejectButtonClickHandler={onChangeRadioButtonHandler} 
+        isLoading={isLoading} 
+      />
+      <ButtonsBox 
+        reviewed={saveInvoiceHandler} 
+        onCancelButtonClickHandler={onCancelButtonClickHandler} 
+        isLoading={isLoading} 
+        onApproveButtonClickHandler={onChangeRadioButtonHandler} 
+      />
+    </>
+  )}
+</Styled.Footer>
+
 		</Styled.ReceiptDetailContent>
 	);
 });

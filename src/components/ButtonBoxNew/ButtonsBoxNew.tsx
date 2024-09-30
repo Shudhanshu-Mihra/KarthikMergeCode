@@ -5,9 +5,10 @@ import { ButtonsBoxStyles as Styled } from "./ButtonsBoxNew.style";
 interface IButtonBoxProps {
 	onRejectButtonClickHandler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	isLoading?: boolean;
+	rejected?: () => Promise<void>;
 }
 
-export const ButtonsBoxNew: FC<IButtonBoxProps> = ({ onRejectButtonClickHandler, isLoading }) => {
+export const ButtonsBoxNew: FC<IButtonBoxProps> = ({ onRejectButtonClickHandler, rejected ,isLoading }) => {
 	const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
 	const handleButtonClick = (buttonType: string, handler?: () => void | Promise<void>, event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -48,7 +49,8 @@ export const ButtonsBoxNew: FC<IButtonBoxProps> = ({ onRejectButtonClickHandler,
 			>
 				{"Archive"}
 			</Button> */}
-			<Button onClick={handleRejectButtonClick} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}>
+			{/* <Button onClick={handleRejectButtonClick} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}> */}
+			<Button onClick={rejected} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}>
 				{"Reject"}
 			</Button>
 		</Styled.ButtonsWrapper>

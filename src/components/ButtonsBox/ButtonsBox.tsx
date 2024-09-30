@@ -4,7 +4,7 @@ import { ButtonsBoxStyles as Styled } from "./ButtonsBox.style";
 
 interface IButtonBoxProps {
 	secondButtonText?: string;
-	saveReceiptHandler?: () => Promise<void>;
+	reviewed?: () => Promise<void>;
 	onCancelButtonClickHandler?: () => void;
 	onApproveButtonClickHandler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	onRejectButtonClickHandler?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -12,7 +12,7 @@ interface IButtonBoxProps {
 	buttonValue?: string;
 }
 
-export const ButtonsBox: FC<IButtonBoxProps> = ({ saveReceiptHandler, onCancelButtonClickHandler, onApproveButtonClickHandler, isLoading, buttonValue }) => {
+export const ButtonsBox: FC<IButtonBoxProps> = ({ reviewed, onCancelButtonClickHandler, onApproveButtonClickHandler, isLoading, buttonValue }) => {
 	// console.log('!!!!!!!!!!!!!!!!! - RDContent child-buttonold');
 	const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
@@ -48,7 +48,7 @@ export const ButtonsBox: FC<IButtonBoxProps> = ({ saveReceiptHandler, onCancelBu
 			{/* <Button onClick={handleApproveButtonClick} themedButton={selectedButton === "accepted" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}>
 				{"Review & Save"}
 			</Button> */}
-			<Button onClick={saveReceiptHandler} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'save' && isLoading} isDisabled={selectedButton === 'save' && isLoading}>
+			<Button onClick={reviewed} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'save' && isLoading} isDisabled={selectedButton === 'save' && isLoading}>
 				{"Review & Save"}
 			</Button>
 			

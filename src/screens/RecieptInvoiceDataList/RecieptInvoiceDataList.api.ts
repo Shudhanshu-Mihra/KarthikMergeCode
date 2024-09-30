@@ -4,20 +4,20 @@ import { apiServices } from 'services/api-service';
 
 import { CONFIG } from 'constants/config';
 
-export const updateReceiptItem = (payload: IUpdateReceiptItemPayload) => {
-  const URL = 'receipt/update';
-  // const URL = `/admin/uploads/${payload.type}/${payload.id}/reviewed`;
+export const updateReceiptItem = (payload: IUpdateReceiptItemPayload , headerStringData:any) => {
+  const URL = `admin/uploads/${headerStringData.type}/${headerStringData.id}/${headerStringData.status}`;
   return apiServices.changeData(URL, payload);
-  // return apiServices.updateData(URL, payload);
+};
+
+export const updateInvoiceItem = (payload: IUpdateInvoiceItemPayload , headerStringData:any) => {
+  const URL = `admin/uploads/${headerStringData.type}/${headerStringData.id}/${headerStringData.status}`;
+  return apiServices.changeData(URL, payload);
 };
 
 export const getRecieptDiscriptionDetails = (payload: IGetRecieptDiscriptionDetailsPayload) => {
   const id = payload.id;
   const URL = `receipt/${id}`;
-  // `${urlDirection}/get-all`
-  // const URL = `/admin/uploads/${payload.type}/${payload.id}/reviewed`;
   return apiServices.fetchData(URL, payload);
-  // return apiServices.updateData(URL, payload);
 };
 
 export const getReceiptImage = (

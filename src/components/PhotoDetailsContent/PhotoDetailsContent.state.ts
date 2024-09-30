@@ -2,17 +2,20 @@ import { ROUTES } from 'constants/routes';
 import React, { useEffect, useState ,useRef, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getRecieptDiscriptionDetails, updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
+import { getRecieptDiscriptionDetails, updateInvoiceItem, updateReceiptItem } from 'screens/RecieptInvoiceDataList/RecieptInvoiceDataList.api';
 import { format } from 'date-fns';
 import { IState } from 'services/redux/reducer';
 import { DATE_FORMATS } from 'constants/strings';
-import { date } from 'yup';
-import { currencies } from 'screens/SignUp/SignUp.constants';
+// import { date } from 'yup';
+// import { currencies } from 'screens/SignUp/SignUp.constants';
 import { SingleValue } from 'react-select';
 import { ICurrency } from "../../screens/SignUp/types/signup.types";
+import { setSelectedReceiptSubDetails } from 'screens/RIDATA/reducer/RIdata.reducer';
 export const usePhotoDetailsContentState = () => {
   const navigate = useNavigate();
-  const {user:{currencies}, RIdata: { selectedReceipt } } = useSelector((state: IState) => state);
+  const dispatch = useDispatch();
+
+  const {user:{user:{id},currencies}, RIdata: { selectedReceipt , selectedReceiptDetails } } = useSelector((state: IState) => state);
 
   // Update state type to reflect Date values
   const [state, setState] = useState({
@@ -29,6 +32,10 @@ export const usePhotoDetailsContentState = () => {
     supplier: selectedReceipt?.type_user || '',
     recieptId: selectedReceipt?.custom_id || '',
     id:selectedReceipt?.id||'',
+    selectedReceiptSubDetails: selectedReceiptDetails || [],
+    selectedReceiptSubDetailsCategory: selectedReceiptDetails.category || null ,
+    selectedReceiptSubDetailsPayment_type: selectedReceiptDetails.payment_type || null ,
+    selectedReceiptType:selectedReceipt?.type || '',
 
   });
 
@@ -52,22 +59,16 @@ export const usePhotoDetailsContentState = () => {
         net:selectedReceipt.net || '',
         supplier:selectedReceipt.type_user || '',
         recieptId: selectedReceipt.custom_id || '',
-        id:selectedReceipt.id || ''
+        id:selectedReceipt.id || '',
+    selectedReceiptSubDetails: selectedReceiptDetails || [],
+    selectedReceiptSubDetailsCategory:selectedReceiptDetails.category||null ,
+    selectedReceiptSubDetailsPayment_type: selectedReceiptDetails.payment_type || null ,
+selectedReceiptType:selectedReceipt.type || '',
       });
     }
   }, [selectedReceipt?.id]);
 
   const onCancelButtonClickHandler = () => navigate(-1);
-
-  const item = {
-    value: 
-      { value: selectedReceipt?.type_currency, label:selectedReceipt?.type_currency, id: '1' } as SingleValue<IOption>, // Multiple selections
-    options:{
-    
-    },
-  
-    isDisabled: false
-  };
 
   interface ICurrenciesData{
     value: string,
@@ -112,17 +113,25 @@ export const usePhotoDetailsContentState = () => {
       event.preventDefault();
     }
   };
-
-  const saveReceiptHandler = async () => {
+  const rejectInvoiceHandler = async () => {
     try {
-      const payload: IUpdateReceiptItemPayload = {
-        id: selectedReceipt?.id ?? '', 
+     const headerStringData:any ={
+      id: selectedReceipt?.id ?? '', 
+      type:selectedReceipt?.type || null,
+      status: 'rejected'
+
+     }
+      const payload: IUpdateInvoiceItemPayload = {
+        id: selectedReceipt?.id ||  '', 
         description: selectedReceipt?.description || null, 
-        status: 'review', 
-        receipt_date: state.type_date || selectedReceipt?.type_date || null,
-        supplier: state.supplier || selectedReceipt?.type_user || null, 
-        supplier_account: null, 
-        category: null,
+        status: 'rejected', 
+        saleinvoice_date: state.type_date || selectedReceipt?.type_date || null,
+        customer:state.supplier || selectedReceipt?.type_user || null,
+
+        // supplier: state.supplier || selectedReceipt?.type_user || null, 
+        customer_account: null, 
+        payment_type:state?.selectedReceiptSubDetailsPayment_type || selectedReceiptDetails.payment_type || null,
+        category: state?.selectedReceiptSubDetailsCategory || selectedReceiptDetails.category || null,
         vat_code: state.vat || selectedReceipt?.vat_code || null, 
         net: state.net || selectedReceipt?.net || null, 
         tax: state.tax || selectedReceipt?.tax || null, 
@@ -130,11 +139,129 @@ export const usePhotoDetailsContentState = () => {
         currency: state.currencyValue || selectedReceipt?.type_currency || null, 
         publish_status: selectedReceipt?.publish_status ?? false, 
         payment_status: selectedReceipt?.payment_status ?? false, 
-        active_account: '', 
+        // active_account: null, 
+        vendor:state.supplier || selectedReceipt?.type_user || null
+        // payment_type: '', 
       };
-
+console.log("payload:-  ",payload);
       setIsLoading(true);
-      await updateReceiptItem(payload);
+      await updateInvoiceItem(payload ,headerStringData);
+      navigate(ROUTES.pendingriData);
+    } catch (error) {
+      console.error('Error updating receipt:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+const saveInvoiceHandler = async () => {
+    try {
+     const headerStringData:any ={
+      id: selectedReceipt?.id ?? '', 
+      type:selectedReceipt?.type || null,
+      status: 'reviewed'
+
+     }
+      const payload: IUpdateInvoiceItemPayload = {
+        id: selectedReceipt?.id ||  '', 
+        description: selectedReceipt?.description || null, 
+        status: 'reviewed', 
+        saleinvoice_date: state.type_date || selectedReceipt?.type_date || null,
+        // supplier: state.supplier || selectedReceipt?.type_user || null, 
+        customer:state.supplier || selectedReceipt?.type_user || null,
+        customer_account: null, 
+        payment_type:state?.selectedReceiptSubDetailsPayment_type || selectedReceiptDetails.payment_type || null,
+        category: state?.selectedReceiptSubDetailsCategory || selectedReceiptDetails.category || null,
+        vat_code: state.vat || selectedReceipt?.vat_code || null, 
+        net: state.net || selectedReceipt?.net || null, 
+        tax: state.tax || selectedReceipt?.tax || null, 
+        total: state.total || selectedReceipt?.total || null, 
+        currency: state.currencyValue || selectedReceipt?.type_currency || null, 
+        publish_status: selectedReceipt?.publish_status ?? false, 
+        payment_status: selectedReceipt?.payment_status ?? false, 
+        // active_account: null, 
+        vendor:state.supplier || selectedReceipt?.type_user || null
+        // payment_type: '', 
+      };
+console.log("payload:-  ",payload);
+      setIsLoading(true);
+      await updateInvoiceItem(payload ,headerStringData);
+      navigate(ROUTES.pendingriData);
+    } catch (error) {
+      console.error('Error updating receipt:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const rejectReceiptHandler = async () => {
+    try {
+     const headerStringData:any ={
+      id: selectedReceipt?.id ?? '', 
+      type:selectedReceipt?.type || null,
+      status: 'rejected'
+
+     }
+      const payload: IUpdateReceiptItemPayload = {
+        id: selectedReceipt?.id ||  '', 
+        description: selectedReceipt?.description || null, 
+        status: 'rejected', 
+        receipt_date: state.type_date || selectedReceipt?.type_date || null,
+        supplier: state.supplier || selectedReceipt?.type_user || null, 
+        supplier_account: null, 
+        payment_type:state?.selectedReceiptSubDetailsPayment_type || selectedReceiptDetails.payment_type || null,
+        category: state?.selectedReceiptSubDetailsCategory || selectedReceiptDetails.category || null,
+        vat_code: state.vat || selectedReceipt?.vat_code || null, 
+        net: state.net || selectedReceipt?.net || null, 
+        tax: state.tax || selectedReceipt?.tax || null, 
+        total: state.total || selectedReceipt?.total || null, 
+        currency: state.currencyValue || selectedReceipt?.type_currency || null, 
+        publish_status: selectedReceipt?.publish_status ?? false, 
+        payment_status: selectedReceipt?.payment_status ?? false, 
+        // active_account: null, 
+        vendor:state.supplier || selectedReceipt?.type_user || null
+        // payment_type: '', 
+      };
+console.log("payload:-  ",payload);
+      setIsLoading(true);
+      await updateReceiptItem(payload ,headerStringData);
+      navigate(ROUTES.pendingriData);
+    } catch (error) {
+      console.error('Error updating receipt:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const saveReceiptHandler = async () => {
+    try {
+     const headerStringData:any ={
+      id: selectedReceipt?.id ?? '', 
+      type:selectedReceipt?.type || null,
+      status: 'reviewed'
+
+     }
+      const payload: IUpdateReceiptItemPayload = {
+        id: selectedReceipt?.id ||  '', 
+        description: selectedReceipt?.description || null, 
+        status: 'reviewed', 
+        receipt_date: state.type_date || selectedReceipt?.type_date || null,
+        supplier: state.supplier || selectedReceipt?.type_user || null, 
+        supplier_account: null, 
+        payment_type:state?.selectedReceiptSubDetailsPayment_type || selectedReceiptDetails.payment_type || null,
+        category: state?.selectedReceiptSubDetailsCategory || selectedReceiptDetails.category || null,
+        vat_code: state.vat || selectedReceipt?.vat_code || null, 
+        net: state.net || selectedReceipt?.net || null, 
+        tax: state.tax || selectedReceipt?.tax || null, 
+        total: state.total || selectedReceipt?.total || null, 
+        currency: state.currencyValue || selectedReceipt?.type_currency || null, 
+        publish_status: selectedReceipt?.publish_status ?? false, 
+        payment_status: selectedReceipt?.payment_status ?? false, 
+        // active_account: null, 
+        vendor:state.supplier || selectedReceipt?.type_user || null
+        // payment_type: '', 
+      };
+console.log("payload:-  ",payload);
+      setIsLoading(true);
+      await updateReceiptItem(payload ,headerStringData);
       navigate(ROUTES.pendingriData);
     } catch (error) {
       console.error('Error updating receipt:', error);
@@ -151,6 +278,7 @@ export const usePhotoDetailsContentState = () => {
         id: id || selectedReceipt?.id || state.id || ''
       };
       const { data } = await getRecieptDiscriptionDetails(payload);
+      dispatch(setSelectedReceiptSubDetails(data));
       console.log(data);
      }
     catch (error) {
@@ -205,6 +333,9 @@ export const usePhotoDetailsContentState = () => {
     onForbiddenCharacterClick,
     handleFieldChange,    
     currenciesData,
-    getReceiptSubItemDetail
+    getReceiptSubItemDetail,
+    rejectReceiptHandler,
+    saveInvoiceHandler,
+    rejectInvoiceHandler
   };
 };

@@ -30,22 +30,23 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
   selectedReceiptIndex:null,
   selectedReceiptType:"",
   selectedReceiptPhoto:[],
-  selectedReceiptDetails: [{
-    "id": "004470c2-6779-4fa2-9bc4-d18483c4151c",
-    "created": "2024-09-24T04:48:45.472Z",
-    "status": "processing",
-    "custom_id": "RC002178",
-    "receipt_date": null,
-    "due_date": null,
-    "vendor": "P&H Plumbing",
-    "supplier": null,
-    "vat_code": "0",
-    "net": 7000,
-    "tax": 0,
-    "total": 7000,
-    "description": null,
-    "tableData": {
-        "rows": [
+  selectedReceiptDetails: [
+    {
+    id: "004470c2-6779-4fa2-9bc4-d18483c4151c",
+    created: "2024-09-24T04:48:45.472Z",
+    status: "processing",
+    custom_id: "RC002178",
+    receipt_date: null,
+    due_date: null,
+    vendor: "P&H Plumbing",
+    supplier: null,
+    vat_code: "0",
+    net: 7000,
+    tax: 0,
+    total: 7000,
+    description: null,
+    tableData: {
+        rows: [
             [
                 "Sample service\nSample plumbing service",
                 "1",
@@ -54,7 +55,7 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
                 "Sample service 1 70,00 70,00\nSample plumbing service"
             ]
         ],
-        "headers": [
+        headers: [
             "ITEM",
             "QUANTITY",
             "UNIT_PRICE",
@@ -62,10 +63,10 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
             "EXPENSE_ROW"
         ]
     },
-    "publish_status": false,
-    "active_status": false,
-    "approved_status": false,
-    "payment_status": true,
+    publish_status: false,
+    active_status: false,
+    approved_status: false,
+    payment_status: true,
     photos: [
         "development/capium/receipts/Screenshot 3_20240924044801.png"
     ],
@@ -91,7 +92,8 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
         tpc_wh: "https://abc.com/webhooks/xyz",
         autoscan_email: "capiumreceipt@receipthub.com"
     }
-  }],
+  }
+],
 };
 
 const initialState = RIDATA_INITIAL_STATE;
@@ -132,9 +134,18 @@ export const RIdataSlice = createSlice({
           state.selectedReceiptPhoto = action.payload;
         }
       },
+      setSelectedReceiptSubDetails: (
+        state: IRIDATA_INITIAL_STATE,
+        action: PayloadAction<IRIDATA_INITIAL_STATE['selectedReceiptDetails']>
+      ) => {
+        if (state.selectedReceipt) {
+          
+          state.selectedReceiptDetails = action.payload;
+        }
+      },
     },
   });
   
-  export const { setreceiptInvoiceData ,selectReceipt ,selectRecieptType ,selectRecieptPhoto } = RIdataSlice.actions;
+  export const { setreceiptInvoiceData ,selectReceipt ,selectRecieptType ,selectRecieptPhoto ,setSelectedReceiptSubDetails} = RIdataSlice.actions;
   
   export const RIdataReducer = RIdataSlice.reducer;

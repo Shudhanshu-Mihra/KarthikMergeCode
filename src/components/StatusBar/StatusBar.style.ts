@@ -42,7 +42,7 @@ export const StatusBarStyles = {
     width: 100%;
     color: ${({ theme }) => theme.colors.white};
     font-size: ${({ theme }) => theme.size.default};
-    ${({ status }) => (status ? COLORS[status] : COLORS.review)};
+    ${({ status }) => (status ? COLORS[status] : COLORS.processing)};
     display: flex;
     align-items: center;
   `,

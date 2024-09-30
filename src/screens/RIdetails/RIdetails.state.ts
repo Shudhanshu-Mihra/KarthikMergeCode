@@ -83,26 +83,6 @@ if (Number(selectedReceiptIndex) + 1 >= receiptInvoiceData.length) return;
     }
   }, [selectedReceipt]);
 
-//   const onGetReceiptImageHandler = async () => {
-//     try {
-//       setImageLoading(true);
-//       selectedReceipt?.photos[0].match(/.pdf/g) ? setIsPDF(true) : setIsPDF(false);
-//         // console.warn('----', selectedReceipt);
-//       const { data } = await getReceiptImage(
-//         selectedReceipt?.photos[0] || '',
-//         token,
-//         active_account || ''
-//       );
-//       // console.warn('receipt view -------', data);
-//       setImageSrc(URL.createObjectURL(data) || '');
-//       setImageLoading(false);
-//     } catch (error) {
-//       console.log(error);
-//       setImageLoading(false);
-//     } finally {
-//       setImageLoading(false);
-//     }
-//   };
 
   return {
       selectedReceiptIndex,
