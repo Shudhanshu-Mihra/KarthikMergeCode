@@ -308,6 +308,10 @@ declare global {
     id?: string;
     [key: string]: string | undefined;
   }
+  interface IoptionNew {
+    value: number;
+    label: string;
+  }
 
   interface IoptionActive {
     value: boolean;
@@ -604,6 +608,7 @@ declare global {
     take?: number;
     skip?: number;
     active_account?: string | null;
+    searchValue?: string;
   }
 interface IallUsers {
     id?: string;

@@ -166,7 +166,6 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);  
   const [aminName, setAminName] = useState('');
