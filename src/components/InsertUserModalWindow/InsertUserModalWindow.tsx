@@ -27,6 +27,7 @@ interface InsertUserModalWindowProps
   ) => void;
   formikMeta: (name: string) => FieldMetaProps<string>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  // modalFields: TInputFields;
   modalFields: TInputFields;
   isEdit: boolean;
   isUserList: boolean;

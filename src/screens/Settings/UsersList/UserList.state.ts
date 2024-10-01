@@ -79,15 +79,6 @@ export const useUserListState = () => {
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
 
-  // const onChangeActiveValueHandler = (
-  //   newValue: IOption,
-  //   actionMeta: ActionMeta<IOption> | unknown
-  // ) => {
-  //   if (newValue.label === 'Active') {
-
-  //     onChangeStateFieldHandler('active', newValue.value === 'true');
-  //   } 
-  // };
   const onChangeActiveValueHandler = (
     newValue: IoptionActive,
     actionMeta: ActionMeta<IoptionActive> | unknown
@@ -222,7 +213,7 @@ const [countState, setNewCount] = useState<number>(0);
     }
   };
 
-  const onChangeItemsPerPage =async  (newItemsPerPage) => {
+  const onChangeItemsPerPage =async  (newItemsPerPage:any) => {
     setCurrentPage(1);
     setItemsPerPage(newItemsPerPage as IOption);
     onChangePagesAmount(Number(newItemsPerPage?.value), countState);
@@ -327,7 +318,7 @@ const [countState, setNewCount] = useState<number>(0);
       //   active_account || ''
       // );
       await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
-      onDeleteItem(count, isLastElementOnPage);
+      // onDeleteItem(count, isLastElementOnPage);
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('isFetchingData', false);
       onDeleteModalWindowToggle();
@@ -550,8 +541,9 @@ const [countState, setNewCount] = useState<number>(0);
       : !formik.isValid ||
         !formik.dirty ||
         !state.role?.value ||
-        !state.companies?.length;
-        const adminInviteFormArr = [
+          !state.companies?.length;
+  
+        const adminInviteFormArr  = [
           {
             type: 'input',
             label: 'Name',
@@ -660,5 +652,6 @@ const [countState, setNewCount] = useState<number>(0);
     onFormSubmitHandlerEdit,
     adminUserData,
     onChangePageHandler,
+    countState
   };
 };

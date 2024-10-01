@@ -92,7 +92,7 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
         tpc_wh: "https://abc.com/webhooks/xyz",
         autoscan_email: "capiumreceipt@receipthub.com"
     }
-  }
+  },
 ],
 };
 

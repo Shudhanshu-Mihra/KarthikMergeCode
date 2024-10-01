@@ -4,7 +4,7 @@ import { FieldInputProps, FieldMetaProps } from 'formik';
 import { DeleteModalWindow } from 'components/DeleteModalWindow';
 import { InsertUserModalWindow } from 'components/InsertUserModalWindow';
 import {PermissionProps} from '../../../../components/InsertUserModalWindow/InsertUserModalWindow.type';
-import { TInputFields } from '../../MyAccount/types/MyAccount.types';
+import {IAdminInviteFormField, TInputFields } from '../../MyAccount/types/MyAccount.types';
 
 interface IUserListModalBoxProps
   extends PermissionProps, Omit<
@@ -17,7 +17,8 @@ interface IUserListModalBoxProps
   // onSaveButtonCLickHandler: void;
   formikMeta: (name: string) => FieldMetaProps<string>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
-  modalFields: TInputFields;
+  // modalFields: TInputFields;
+  modalFields: IAdminInviteFormField[];
   isEdit: boolean;
   isInvitation: boolean;
   isUserList: boolean;

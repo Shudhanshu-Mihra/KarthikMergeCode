@@ -1,4 +1,4 @@
-import { SingleValue } from 'react-select';
+import { ActionMeta, SingleValue } from 'react-select';
 import { getInputFields } from '../MyAccount.constants';
 import { ChangeEvent } from 'react';
 
@@ -100,6 +100,22 @@ export interface IResetPasswordFields {
 }
 
 // onInputChange: (
-//   optionName: "currency" | "newPassword" | "confirmPassword" | "currentPassword" | "dateFormat" | "country", 
+//   optionName: "currency" | "newPassword" | "confirmPassword" | "currentPassword" | "dateFormat" | "country",
 //   value: string | boolean | SingleValue<IOption>
-// ) => void;  
+// ) => void;
+interface IIOption {
+  value: string | boolean;
+  label: string;
+}
+//for removing error define new type
+export interface IAdminInviteFormField {
+  type: string;
+  label: string;
+  name: string;
+  options?: IIOption[]; // Only present for 'select' type
+  isDisabled?: boolean; // Optional, present for 'select' type
+  onChangeSelect?: (
+    newValue: IoptionActive | IOption,  // Union type for both option types
+    actionMeta: ActionMeta<IIOption> | ActionMeta<IIOption>  // Union type for both action meta types
+  ) => void; // Optional, function for select fields
+}
