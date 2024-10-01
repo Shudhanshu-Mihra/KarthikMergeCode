@@ -102,12 +102,13 @@ export const UsersList: FC = () => {
     onChangePagesAmount(Number(itemsPerPage.value), countState);
   }, [countState, itemsPerPage]);
   
-  useEffect(() => {
-    debouncedValue &&
-      onGetAllCompanyMembersHandler({
-        search: debouncedValue,
-      });
-  }, [debouncedValue, active]);
+  // useEffect(() => {
+  //   debouncedValue &&
+  //     onGetAllCompanyMembersHandler({
+  //       search: debouncedValue,
+  //     });
+  // }, [debouncedValue, active]);
+  
   const [createSuccessUser, setCreateSuccessUser] = useState<boolean>(false);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 

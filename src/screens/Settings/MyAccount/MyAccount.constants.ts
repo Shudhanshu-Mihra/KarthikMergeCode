@@ -15,7 +15,7 @@ export const getInputFields = (props: IGetInputFieldsProps) => {
     dateFormats,
     // formatedCurrencies,
     funcArray,
-    state,
+    // state,
     isDisabledSelect,
     // isDisabledCountry,
   } = props;
@@ -35,11 +35,10 @@ export const getInputFields = (props: IGetInputFieldsProps) => {
       name: 'dateFormat',
       label: 'Date Format',
       isDisabled: isDisabledSelect,
-      value: state.dateFormat,
+      // value: state.dateFormat,
       options: dateFormats,
-      // onChangeSelect: funcArray[0],
-      onChangeSelect:funcArray && Array.isArray(funcArray) && funcArray[0] ? funcArray[0] : undefined,
-    }
+      // onChangeSelect: funcArray[1],
+    },
   ];
 };
 

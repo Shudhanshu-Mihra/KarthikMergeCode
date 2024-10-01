@@ -13,7 +13,8 @@ interface IAccountFieldsProps {
   formikMeta: (name: string) => FieldMetaProps<string>;
   resetPasswordFormikProps: (nameOrOptions: string) => FieldInputProps<string>;
   resetPasswordFormikMeta: (name: string) => FieldMetaProps<string>;
-  accountsFields: TInputFields;
+  // accountsFields: TInputFields;
+  accountsFields: any[];
 }
 export const AccountFields: FC<IAccountFieldsProps> = (props) => {
   const {

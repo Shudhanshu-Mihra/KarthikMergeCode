@@ -18,7 +18,7 @@ interface IUserListModalBoxProps
   formikMeta: (name: string) => FieldMetaProps<string>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
   // modalFields: TInputFields;
-  modalFields: IAdminInviteFormField[];
+  modalFields: any[];
   isEdit: boolean;
   isInvitation: boolean;
   isUserList: boolean;
