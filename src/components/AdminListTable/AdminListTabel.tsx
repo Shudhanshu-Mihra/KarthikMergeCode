@@ -140,14 +140,23 @@ export const AdminListTabel: FC<UsersTableProps> = ({
   };
   //new
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+  const [isDeleteUser, setIsDeleteUser] = useState(false);
   const handleConfirmDelete = async () => {
     if (selectedUser) {
       setIsLoading(true);
-      await deleteAdminUser(selectedUser);
+      const response = await deleteAdminUser(selectedUser);
       onGetAllCompanyMembersHandler();
       setIsLoading(false);  
       handleCloseDeleteModal();
-      setIsSuccessPopupOpen(true);
+      if(response.data.success === true){
+        setIsSuccessPopupOpen(true);
+        setIsDeleteUser(true);
+      }
+      else{
+        setIsSuccessPopupOpen(true);
+        setIsDeleteUser(false);
+      }
+
     }
   };
   const initialState = EDIT_USER_INITIAL_STATE;
@@ -266,10 +275,12 @@ export const AdminListTabel: FC<UsersTableProps> = ({
       )}
       {isSuccessPopupOpen && (
         <SuccessPopup
-        positionTop="0"
+        positionTop="20px"
         isShowPopup={isSuccessPopupOpen}
         closePopupFc={()=> setIsSuccessPopupOpen(false)}
-        titleText="User was successfully deleted"
+        // titleText="User was successfully deleted"
+        titleText={!isDeleteUser ? "User deletion failed":"User was successfully deleted"}
+        alertColor={!isDeleteUser ? "red" :undefined}
       />)}
       {isModalOpen && (
         //edit user

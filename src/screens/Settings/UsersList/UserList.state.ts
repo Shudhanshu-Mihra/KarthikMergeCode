@@ -25,8 +25,6 @@ import { IuseUserListState, Idata} from './types/userList.types';
 import {
   createCompanyMember,
   deleteCompanyMember,
-  // deleteAdminUser,
-  // getCompanyMembers,
   getAllAdminUsers,
   getManyCompanies,
   resendInvitation,
@@ -205,9 +203,25 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
   };
 const [countState, setNewCount] = useState<number>(0);
 
-  const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
+  // const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
+  //   try {
+  //     const response = await getAllAdminUsers(); 
+  //     dispatch(setStoreAdminUserData(response.data));
+  //     setNewCount(response.data.length);
+  //   } catch (error) {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       isSearching: false,
+  //       searchedUsers: [],
+  //       isFetchingData: false,
+  //       isContentLoading: false,
+  //     }));
+  //     console.log(error);
+  //   }
+  // };
+  const onGetAllCompanyMembersHandler = async (params?: { queryString: string }) => {
     try {
-      const response = await getAllAdminUsers(); 
+      const response = await getAllAdminUsers(params?.queryString); 
       dispatch(setStoreAdminUserData(response.data));
       setNewCount(response.data.length);
     } catch (error) {
@@ -221,28 +235,45 @@ const [countState, setNewCount] = useState<number>(0);
       console.log(error);
     }
   };
-
-  const onChangeItemsPerPage =async  (newItemsPerPage) => {
-    setCurrentPage(1);
-    setItemsPerPage(newItemsPerPage as IOption);
+  // const onChangeItemsPerPage =async  (newItemsPerPage) => {
+  //   setCurrentPage(1);
+  //   setItemsPerPage(newItemsPerPage as IOption);
+  //   onChangePagesAmount(Number(newItemsPerPage?.value), countState);
+  //   // await onGetAllCompanyMembersHandler({
+  //   //   // take: +newItemsPerPage,
+  //   //   take: Number(newItemsPerPage?.value),               
+  //   // });
+  //   await onGetAllCompanyMembersHandler();
+  // };
+  const onChangeItemsPerPage = async (newItemsPerPage: IOption) => {
+    const take = Number(newItemsPerPage?.value); 
+    const skip = 0; 
+  
+    const queryString = `take=${take}&skip=${skip}`; 
+  
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1); // reset to first page
     onChangePagesAmount(Number(newItemsPerPage?.value), countState);
-    // await onGetAllCompanyMembersHandler({
-    //   // take: +newItemsPerPage,
-    //   take: Number(newItemsPerPage?.value),               
-    // });
-    await onGetAllCompanyMembersHandler();
+    await onGetAllCompanyMembersHandler({ queryString });
   };
-
-  const onChangePage = async ({ selected }: {selected: number}) => {
-    onChangePageHandler(selected);
-    // onChangeStateFieldHandler('isContentLoading', true);
-    // state.searchValue && onChangeStateFieldHandler('searchValue', '');
-    const startIndex = selected * +itemsPerPage.value;
-    const endIndex = startIndex + +itemsPerPage.value;
-    await onGetAllCompanyMembersHandler();
+  // const onChangePage = async ({ selected }: {selected: number}) => {
+  //   onChangePageHandler(selected);
+  //   // onChangeStateFieldHandler('isContentLoading', true);
+  //   // state.searchValue && onChangeStateFieldHandler('searchValue', '');
+  //   const startIndex = selected * +itemsPerPage.value;
+  //   const endIndex = startIndex + +itemsPerPage.value;
+  //   await onGetAllCompanyMembersHandler();
+  //   onChangeStateFieldHandler('isContentLoading', false);
+  // };
+  
+  const onChangePage = async ({ selected }: { selected: number }) => {
+    const take = +itemsPerPage.value; 
+    const skip = selected * take; 
+    const queryString = `take=${take}&skip=${skip}`; 
+    await onGetAllCompanyMembersHandler({ queryString });
     onChangeStateFieldHandler('isContentLoading', false);
   };
-
+  
   const {
     onBackwardClick,
     onForwardClick,
@@ -326,8 +357,8 @@ const [countState, setNewCount] = useState<number>(0);
       //   state.selectedItemId || '',
       //   active_account || ''
       // );
-      await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
-      onDeleteItem(count, isLastElementOnPage);
+      // await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
+      // onDeleteItem(count, isLastElementOnPage);
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('isFetchingData', false);
       onDeleteModalWindowToggle();
@@ -659,6 +690,7 @@ const [countState, setNewCount] = useState<number>(0);
     // isMemeberList,
     onFormSubmitHandlerEdit,
     adminUserData,
+    countState,
     onChangePageHandler,
   };
 };

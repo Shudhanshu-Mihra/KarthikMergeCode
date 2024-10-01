@@ -8,9 +8,10 @@ interface ISuccessPopupProps {
   closePopupFc: () => void;
   isShowPopup: boolean;
   titleText: string;
+  alertColor?: string;
 }
 export const SuccessPopup: FC<ISuccessPopupProps> = (props) => {
-  const { titleText, delay, isShowPopup, positionTop, closePopupFc } = props;
+  const { titleText, delay, isShowPopup, positionTop, closePopupFc, alertColor } = props;
 
   useEffect(() => {
     isShowPopup && setTimeout(closePopupFc, delay || 3000);
@@ -19,7 +20,7 @@ export const SuccessPopup: FC<ISuccessPopupProps> = (props) => {
   return (
     <>
       {isShowPopup ? (
-        <Styled.Wrapper positionTop={positionTop}>
+        <Styled.Wrapper positionTop={positionTop} alertColor={alertColor}>
           <Styled.Title>{titleText}</Styled.Title>
         </Styled.Wrapper>
       ) : null}

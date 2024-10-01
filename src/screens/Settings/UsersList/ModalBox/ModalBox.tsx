@@ -17,7 +17,8 @@ interface IUserListModalBoxProps
   // onSaveButtonCLickHandler: void;
   formikMeta: (name: string) => FieldMetaProps<string>;
   formikProps: (nameOrOptions: string) => FieldInputProps<string>;
-  modalFields: TInputFields;
+  // modalFields: TInputFields;
+  modalFields: any[];
   isEdit: boolean;
   isInvitation: boolean;
   isUserList: boolean;

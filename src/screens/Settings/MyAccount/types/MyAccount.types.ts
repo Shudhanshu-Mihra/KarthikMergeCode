@@ -16,11 +16,11 @@ export type TInputFields = ReturnType<typeof getInputFields>;
 //   countries: IOption[];
 //   dateFormats: IOption[];
 // }
-export interface IOption {
-  id?: string;
-  label: string;
-  value: any;
-}
+// export interface IOption {
+//   id?: string;
+//   label: string;
+//   value: any;
+// }
 interface IuseMyAccountState {
   currentPassword: string;
   newPassword: string;
@@ -90,7 +90,7 @@ export type IAdminInputFields = {
 // }
 export interface IResetPasswordFields {
   ShowPasswordHandler: () => void;
-  onInputChange: (optionName: "currency" | "newPassword" | "confirmPassword" | "currentPassword" | "dateFormat", value: string | boolean | SingleValue<IOption>) => void;
+  onInputChange: (optionName:"currency" | "newPassword" | "confirmPassword" | "currentPassword" | "dateFormat" | "country", value: string | boolean | SingleValue<IOption>) => void;
   onToggleVisibility: () => void;
   isShowPassword: boolean;
   label: string;

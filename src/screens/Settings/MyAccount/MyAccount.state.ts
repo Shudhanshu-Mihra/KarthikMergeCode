@@ -369,20 +369,59 @@ export const useMyAccountState = () => {
     ],
   });
 
-  const accountsFields = getInputFields({
-    isDisabledCountry: true,
-    isDisabledSelect: !user.active ? true : false,
-    countries,
-    formatedCurrencies,
-    dateFormats: DATE_FORMATS,
-    funcArray: [
-      // onChangeCurrencyValueHandler,
-      // onChangeDateFormatValueHandler,
-      // onChangeCountryValueHandler,
-      onChangeInput,
-    ],
-    state,
-  });
+  // const accountsFields = getInputFields({
+  //   isDisabledCountry: true,
+  //   isDisabledSelect: !user.active ? true : false,
+  //   countries,
+  //   formatedCurrencies,
+  //   dateFormats: DATE_FORMATS,
+  //   funcArray: [
+  //     // onChangeCurrencyValueHandler,
+  //     // onChangeDateFormatValueHandler,
+  //     // onChangeCountryValueHandler,
+  //     onChangeInput,
+  //   ],
+  //   state,
+  // });
+  const accountsFields = [
+    {
+      type: 'input',
+      label: 'Full Name',
+      name: 'name',
+    },
+    {
+      type: 'input',
+      label: 'Email',
+      name: 'email',
+    },
+    // {
+    //   type: 'select',
+    //   name: 'country',
+    //   label: 'Country',
+    //   isDisabled: isDisabledCountry,
+    //   value: state.country,
+    //   // options: countries,
+    //   onChangeSelect: funcArray[2],
+    // },
+    // {
+    //   type: 'select',
+    //   name: 'currency',
+    //   label: 'Currency',
+    //   isDisabled: isDisabledSelect,
+    //   value: state.currency,
+    //   options: formatedCurrencies,
+    //   // onChangeSelect: funcArray[0],
+    // },
+    {
+      type: 'select',
+      name: 'dateFormat',
+      label: 'Date Format',
+      isDisabled: !user.active,
+      value: state.dateFormat,
+      options: DATE_FORMATS,
+      onChangeSelect: onChangeDateFormatValueHandler,
+    },
+  ];
 
   const isDisableUpdateUserProfileButton =
     // state.country?.value === prevValues?.country?.value &&
