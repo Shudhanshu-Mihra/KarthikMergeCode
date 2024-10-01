@@ -5,7 +5,7 @@ export interface IRIDATA_INITIAL_STATE {
     selectedReceiptIndex: number | null;
     selectedReceiptType: string ;
     selectedReceiptPhoto: string[];
-    selectedReceiptDetails: ISelectedReceiptDetails[];
+    selectedReceiptDetails: ISelectedReceiptDetails;
 }
   
 // Interface representing the structure of each receipt invoice data item

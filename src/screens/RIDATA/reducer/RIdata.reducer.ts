@@ -30,7 +30,7 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
   selectedReceiptIndex:null,
   selectedReceiptType:"",
   selectedReceiptPhoto:[],
-  selectedReceiptDetails: [
+  selectedReceiptDetails: 
     {
     id: "004470c2-6779-4fa2-9bc4-d18483c4151c",
     created: "2024-09-24T04:48:45.472Z",
@@ -93,7 +93,7 @@ export const RIDATA_INITIAL_STATE: IRIDATA_INITIAL_STATE = {
         autoscan_email: "capiumreceipt@receipthub.com"
     }
   },
-],
+
 };
 
 const initialState = RIDATA_INITIAL_STATE;

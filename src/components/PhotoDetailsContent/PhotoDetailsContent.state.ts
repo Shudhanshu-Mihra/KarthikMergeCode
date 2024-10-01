@@ -6,15 +6,15 @@ import { getRecieptDiscriptionDetails, updateInvoiceItem, updateReceiptItem } fr
 import { format } from 'date-fns';
 import { IState } from 'services/redux/reducer';
 import { DATE_FORMATS } from 'constants/strings';
-// import { date } from 'yup';
-// import { currencies } from 'screens/SignUp/SignUp.constants';
-import { SingleValue } from 'react-select';
+// import { SingleValue } from 'react-select';
 import { ICurrency } from "../../screens/SignUp/types/signup.types";
+import { ISelectedReceiptDetails } from 'screens/RIDATA/types/RIdata.type';
 import { setSelectedReceiptSubDetails } from 'screens/RIDATA/reducer/RIdata.reducer';
 export const usePhotoDetailsContentState = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  
   const {user:{user:{id},currencies}, RIdata: { selectedReceipt , selectedReceiptDetails } } = useSelector((state: IState) => state);
 
   // Update state type to reflect Date values
@@ -36,9 +36,8 @@ export const usePhotoDetailsContentState = () => {
     selectedReceiptSubDetailsCategory: selectedReceiptDetails.category || null ,
     selectedReceiptSubDetailsPayment_type: selectedReceiptDetails.payment_type || null ,
     selectedReceiptType:selectedReceipt?.type || '',
-
   });
-
+  console.log('selectedReceiptDetails:-',selectedReceiptDetails);
   const [buttonValue, setButtonValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
