@@ -87,7 +87,7 @@ export const UsersList: FC = () => {
   }, []);
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(0);
   }, [searchValue]);
   
   useEffect(() => {
