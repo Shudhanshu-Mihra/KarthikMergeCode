@@ -278,7 +278,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     onChangeStateFieldHandler('isContentLoading', false);
   };
 
-  
   const {
     onBackwardClick,
     onForwardClick,
@@ -485,7 +484,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
         password: values.password,
       };
       await createAdminUser(payload);
-      onGetAllCompanyMembersHandler();
+      onGetAllCompanyMembersHandler({take:15});
     } catch (error) {
       console.error('Error creating admin user:', error);
     }
@@ -500,7 +499,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
         
       };
       await updateAdminUsers(payload, id);
-      onGetAllCompanyMembersHandler();
+      onGetAllCompanyMembersHandler({take:countUsers});
       console.log("Editing admin users",payload)
     } catch (error) {
       console.error('Error creating admin user:', error);
@@ -682,6 +681,7 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     onFormSubmitHandlerEdit,
     adminUserData,
     onChangePageHandler,
-    countUsers
+    countUsers,
+    
   };
 };
