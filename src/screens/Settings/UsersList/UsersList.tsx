@@ -78,7 +78,7 @@ export const UsersList: FC = () => {
     // isMemeberList
     // onAddClickButtonHandler,
     onChangePageHandler,
-    countState
+    countUsers
     
   } = useUserListState();
 
@@ -98,9 +98,9 @@ export const UsersList: FC = () => {
   }, [itemsPerPage, currentPage]);
 
   useEffect(() => {
-    if (!countState) return;
-    onChangePagesAmount(Number(itemsPerPage.value), countState);
-  }, [countState, itemsPerPage]);
+    if (!countUsers) return;
+    onChangePagesAmount(Number(itemsPerPage.value), countUsers);
+  }, [countUsers, itemsPerPage]);
   
   // useEffect(() => {
   //   debouncedValue &&
@@ -162,7 +162,9 @@ export const UsersList: FC = () => {
   // const paginatedUsers = filteredUsers.slice(
   //   0,  numberVal
   // );
-  const isPaginationPanel = filteredUsers?.length;
+  // const isPaginationPanel = filteredUsers?.length;
+  // const isPaginationPanel = adminUserData?.length;
+  const isPaginationPanel = countUsers>0;
 
   return (
     //create user
@@ -236,8 +238,9 @@ export const UsersList: FC = () => {
         ) : (
           <>
             <AdminListTabel
-              // users={filteredUsers}
-              users={paginatedUsers}
+            // users={adminUserData}
+              users={filteredUsers}
+              // users={paginatedUsers}
               requestSort={requestSort}
               sortField={sortField}
               sortOrder={sortOrder}

@@ -157,15 +157,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       [optionName]: value,
     }));
   };
-  // const onChangeStateFieldHandlerval = (
-  //   optionName: keyof typeof initialState,
-  //   value: string | boolean | number | SingleValue<IOption> | IMember[]
-  // ) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [optionName]: value, 
-  //   }));
-  // };
   const onChangeStateFieldHandlerval = (
     optionName: keyof typeof initialState,
     value: string | boolean | number | SingleValue<IOption> | IMember[]
@@ -201,11 +192,27 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       console.log(error);
     }
   };
-const [countState, setNewCount] = useState<number>(0);
-
-  // const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
+  const [countUsers, setCountUsers] = useState(0)
+  const onGetAllCompanyMembersHandler = async (params?: ISearchParams) => {
+    try {
+      const response = await getAllAdminUsers({ ...params}); 
+      console.log("response.data", response.data)
+      dispatch(setStoreAdminUserData(response.data.data));
+      setCountUsers(response.data.count)
+    } catch (error) {
+      // setState((prevState) => ({
+      //   ...prevState,
+      //   isSearching: false,
+      //   searchedUsers: [],
+      //   isFetchingData: false,
+      //   isContentLoading: false,
+      // }));
+      console.log(error);
+    }
+  };
+  // const onGetAllCompanyMembersHandler = async (params?: { queryString: string }) => {
   //   try {
-  //     const response = await getAllAdminUsers(); 
+  //     const response = await getAllAdminUsers(params?.queryString); 
   //     dispatch(setStoreAdminUserData(response.data));
   //     setNewCount(response.data.length);
   //   } catch (error) {
@@ -219,22 +226,6 @@ const [countState, setNewCount] = useState<number>(0);
   //     console.log(error);
   //   }
   // };
-  const onGetAllCompanyMembersHandler = async (params?: { queryString: string }) => {
-    try {
-      const response = await getAllAdminUsers(params?.queryString); 
-      dispatch(setStoreAdminUserData(response.data));
-      setNewCount(response.data.length);
-    } catch (error) {
-      setState((prevState) => ({
-        ...prevState,
-        isSearching: false,
-        searchedUsers: [],
-        isFetchingData: false,
-        isContentLoading: false,
-      }));
-      console.log(error);
-    }
-  };
   // const onChangeItemsPerPage =async  (newItemsPerPage) => {
   //   setCurrentPage(1);
   //   setItemsPerPage(newItemsPerPage as IOption);
@@ -245,16 +236,19 @@ const [countState, setNewCount] = useState<number>(0);
   //   // });
   //   await onGetAllCompanyMembersHandler();
   // };
-  const onChangeItemsPerPage = async (newItemsPerPage: IOption) => {
-    const take = Number(newItemsPerPage?.value); 
-    const skip = 0; 
-  
-    const queryString = `take=${take}&skip=${skip}`; 
-  
-    setItemsPerPage(newItemsPerPage);
-    setCurrentPage(1); // reset to first page
-    onChangePagesAmount(Number(newItemsPerPage?.value), countState);
-    await onGetAllCompanyMembersHandler({ queryString });
+  const onChangeItemsPerPage = async (newValue: SingleValue<IOption>) => {
+    setItemsPerPage(newValue as IOption);
+    onChangeStateFieldHandler('isContentLoading', true);
+    onChangeStateFieldHandler('searchValue', '');
+
+    await onGetAllCompanyMembersHandler({
+      take: Number(newValue?.value),
+    });
+
+    onChangeStateFieldHandler('isContentLoading', false);
+    setCurrentPage(0);
+    if (!countUsers) return;
+    onChangePagesAmount(Number(newValue?.value), countUsers);
   };
   // const onChangePage = async ({ selected }: {selected: number}) => {
   //   onChangePageHandler(selected);
@@ -266,13 +260,24 @@ const [countState, setNewCount] = useState<number>(0);
   //   onChangeStateFieldHandler('isContentLoading', false);
   // };
   
-  const onChangePage = async ({ selected }: { selected: number }) => {
-    const take = +itemsPerPage.value; 
-    const skip = selected * take; 
-    const queryString = `take=${take}&skip=${skip}`; 
-    await onGetAllCompanyMembersHandler({ queryString });
+  // const onChangePage = async ({ selected }: { selected: number }) => {
+  //   const take = +itemsPerPage.value; 
+  //   const skip = selected * take; 
+  //   const queryString = `take=${take}&skip=${skip}`; 
+  //   await onGetAllCompanyMembersHandler({ queryString });
+  //   onChangeStateFieldHandler('isContentLoading', false);
+  // };
+  const onChangePage = async ({ selected }: {selected: number}) => {
+    onChangePageHandler(selected);
+    onChangeStateFieldHandler('isContentLoading', true);
+    // state.searchValue && onChangeStateFieldHandler('searchValue', '');
+    await onGetAllCompanyMembersHandler({
+      take: +itemsPerPage.value,
+      skip: selected * +itemsPerPage.value,
+    });
     onChangeStateFieldHandler('isContentLoading', false);
   };
+
   
   const {
     onBackwardClick,
@@ -319,7 +324,6 @@ const [countState, setNewCount] = useState<number>(0);
       console.log(error);
     }
   };
-
   const onEditIconClickHandler = (itemId: string) => {
     onModalWindowToggle();
 
@@ -333,13 +337,7 @@ const [countState, setNewCount] = useState<number>(0);
       prevEmail: selectedUser?.email || '',
       prevActive: selectedUser?.active,
       selectedItemId: itemId,
-      // selectedUserName: selectedUser?.name || '',
     }));
-    // onModalWindowToggle();
-    // console.log(state?.prevName);
-    // console.log(state?.prevEmail);
-    // console.log(state?.prevActive);
-    // console.log(state?.selectedItemId);
   };
   const onClickDeleteUserButton = async () => {
     try {
@@ -352,13 +350,6 @@ const [countState, setNewCount] = useState<number>(0);
           : isLastElementOnPage && count !== 1
           ? (currentPage - 1) * +itemsPerPage.value
           : currentPage * +itemsPerPage.value;
-
-      // await deleteCompanyMember(
-      //   state.selectedItemId || '',
-      //   active_account || ''
-      // );
-      // await onGetAllCompanyMembersHandler({ skip, take: +itemsPerPage.value });
-      // onDeleteItem(count, isLastElementOnPage);
       onChangeStateFieldHandler('isLoading', false);
       onChangeStateFieldHandler('isFetchingData', false);
       onDeleteModalWindowToggle();
@@ -412,38 +403,38 @@ const [countState, setNewCount] = useState<number>(0);
       console.log(error);
     }
   };
-  const [aminName, setAminName] = useState('test');
-  const [AdminEmail, setAdminEmail] = useState('test@gmail.com');
-  const modalFieldsNew = [
-    {
-      type: 'input',
-      label: 'Full Name',
-      name: 'name',
-      isDisabled: false,
-      value:aminName,
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
-    },
-    {
-      type: 'input',
-      label: 'Email',
-      name: 'email',
-      // value: state.prevName,
-      value: AdminEmail,
-      // options: USER_ROLES,
-      isDisabled: false,
-      // onChangeSelect: onChangeRoleValueHandler,
-       onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAdminEmail(e.target.value),
-    },
-    {
-      type: 'select',
-      name: 'select',
-      label: 'Active',
-      value: state.role,
-      options: IS_ACTIVE,
-      isDisabled: false,
-      onChangeSelect: onChangeRoleValueHandler,
-    },
-  ];
+  // const [aminName, setAminName] = useState('test');
+  // const [AdminEmail, setAdminEmail] = useState('test@gmail.com');
+  // const modalFieldsNew = [
+  //   {
+  //     type: 'input',
+  //     label: 'Full Name',
+  //     name: 'name',
+  //     isDisabled: false,
+  //     value:aminName,
+  //     onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAminName(e.target.value),
+  //   },
+  //   {
+  //     type: 'input',
+  //     label: 'Email',
+  //     name: 'email',
+  //     // value: state.prevName,
+  //     value: AdminEmail,
+  //     // options: USER_ROLES,
+  //     isDisabled: false,
+  //     // onChangeSelect: onChangeRoleValueHandler,
+  //      onChange: (e: React.ChangeEvent<HTMLInputElement>) => setAdminEmail(e.target.value),
+  //   },
+  //   {
+  //     type: 'select',
+  //     name: 'select',
+  //     label: 'Active',
+  //     value: state.role,
+  //     options: IS_ACTIVE,
+  //     isDisabled: false,
+  //     onChangeSelect: onChangeRoleValueHandler,
+  //   },
+  // ];
   const onInviteUserToCompanyHandler = async (
     values: typeof ADMIN_USERS_initialState
   ) => {
@@ -685,12 +676,12 @@ const [countState, setNewCount] = useState<number>(0);
     dataAdminUsers,
     setCurrentPage,
     // newmodalFields,
-     modalFieldsNew,
+    //  modalFieldsNew,
     // searchedCompanies,
     // isMemeberList,
     onFormSubmitHandlerEdit,
     adminUserData,
-    countState,
     onChangePageHandler,
+    countUsers
   };
 };

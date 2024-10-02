@@ -45,14 +45,14 @@ export const getCompanyMembers = (params?: ISearchParams) => {
   const URL = 'company/get-members';
   return apiServices.fetchData(URL, params);
 };
-// export const getAllAdminUsers = () => {
-//   const URL = 'admin/users';
+export const getAllAdminUsers = (params?: ISearchParams) => {
+  const URL = 'admin/users';
+  return apiServices.fetchData(URL, params);
+};  
+// export const getAllAdminUsers = (queryString?: string) => {
+//   const URL = queryString ? `admin/users?${queryString}` : 'admin/users';
 //   return apiServices.fetchData(URL);
-// };  
-export const getAllAdminUsers = (queryString?: string) => {
-  const URL = queryString ? `admin/users?${queryString}` : 'admin/users';
-  return apiServices.fetchData(URL);
-};
+// };
 export const createAdminUser = (payload: IcreateUser) => {
   const URL = `admin/users`;
   return apiServices.postData(URL, payload);

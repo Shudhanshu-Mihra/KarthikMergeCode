@@ -604,11 +604,8 @@ declare global {
     searchValue: string;
   }
   interface ISearchParams {
-    search?: string;
     take?: number;
     skip?: number;
-    active_account?: string | null;
-    searchValue?: string;
   }
 interface IallUsers {
     id?: string;
