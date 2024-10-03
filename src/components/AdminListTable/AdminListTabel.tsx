@@ -46,7 +46,7 @@ const Styled = {
   Text: styled.div<{ alignRight?: boolean }>`
     color: ${({ theme }) => theme.colors.lightBlack};
     // font-size: ${({ theme }) => theme.size.default};
-    font-size:110%;
+    font-size:100%;
     text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
     white-space: nowrap;
     overflow: hidden;

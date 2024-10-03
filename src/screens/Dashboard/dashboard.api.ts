@@ -24,3 +24,7 @@ export const getUserExist = (payload?: {
     active_account: payload?.active_account,
   });
 };
+export const adminDashboard = (params?:IDateFilter) => {
+  const URL = 'admin/dashboard';
+  return apiServices.fetchData(URL, params);
+}

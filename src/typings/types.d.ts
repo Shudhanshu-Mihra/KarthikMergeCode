@@ -607,6 +607,11 @@ declare global {
     take?: number;
     skip?: number;
   }
+  interface IDateFilter{
+    date_start?: string;
+    date_end?: string;
+    support_member_id?: string
+  }
 interface IallUsers {
     id?: string;
     name?: string;

@@ -200,13 +200,6 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
       dispatch(setStoreAdminUserData(response.data.data));
       setCountUsers(response.data.count)
     } catch (error) {
-      // setState((prevState) => ({
-      //   ...prevState,
-      //   isSearching: false,
-      //   searchedUsers: [],
-      //   isFetchingData: false,
-      //   isContentLoading: false,
-      // }));
       console.log(error);
     }
   };
@@ -682,6 +675,5 @@ const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
     adminUserData,
     onChangePageHandler,
     countUsers,
-    
   };
 };

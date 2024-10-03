@@ -100,7 +100,6 @@ export const deleteCompanyMember = (
   const URL = `company-member/delete/${memberId}`;
   return apiServices.deleteData(URL, { active_account });
 };
-
 export const getAllCompanies = () => {
   const URL = `company/get-all`;
   return apiServices.fetchData(URL);
