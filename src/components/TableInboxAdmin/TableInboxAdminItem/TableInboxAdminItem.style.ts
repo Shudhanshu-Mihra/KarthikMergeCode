@@ -56,4 +56,21 @@ export const TableInboxAdminItemStyles = {
     text-overflow: ellipsis;
     width: 100%;
   `,
+  ImageIcon: styled.div`
+    cursor: pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`,
+CloseIconWrapper: styled.div`
+// position: absolute;
+// top: 20px;
+// right: 30px;
+text-align:end;
+cursor: pointer;
+`,
+  mainImageModel: styled.div`
+padding:10px;
+width:100%;`,
+  
 };

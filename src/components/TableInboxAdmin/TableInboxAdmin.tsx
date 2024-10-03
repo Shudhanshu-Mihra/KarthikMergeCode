@@ -111,6 +111,7 @@ export const TableInboxAdmin: FC<TableInboxAdminProps> = memo((props) => {
   return (
     <>
       <Styled.Head>
+        <Styled.Text>Icon</Styled.Text>
         <Styled.Text>ID</Styled.Text>
         {TABLE_COLUMN_NAMES.map((item) => {
           const isSorted = setIsSorted(sortField, sortOrder, item.id);

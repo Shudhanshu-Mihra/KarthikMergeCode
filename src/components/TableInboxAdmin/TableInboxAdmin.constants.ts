@@ -1,5 +1,5 @@
 export const TABLE_GRID_MARKUP = `
-minmax(100px, max-content) minmax(100px, max-content) minmax(150px, max-content) minmax(150px, auto)
+minmax(50px, max-content) minmax(100px, max-content) minmax(100px, max-content) minmax(150px, max-content) minmax(150px, auto)
 minmax(100px, 150px) minmax(145px, 150px) minmax(100px, 130px)
 minmax(94px, 106px) minmax(60px, 75px) minmax(60px, 75px)
 `;
@@ -54,6 +54,10 @@ export const TABLE_COLUMN_NAMES = [
   {
     id: 'total',
     name: 'Total',
+  },
+  {
+    id: 'status',
+    name: 'Status',
   },
  
 ];

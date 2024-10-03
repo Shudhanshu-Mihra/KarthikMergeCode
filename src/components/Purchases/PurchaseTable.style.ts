@@ -41,11 +41,16 @@ export const InvoiceTableStyles = {
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-      justify-content: space-between;
+      justify-content: end;
+      width:300px;
+      gap:24px;
+
     `,
     Label: styled.div`
       font-size: ${({ theme }) => theme.size.xnormal};
       font-weight: 600;
+      text-align:right;
+      // width:max-content;
     `,
     Input: styled.input`
       width: 100%;

@@ -44,6 +44,7 @@ import { ReactComponent as googleIcon } from 'assets/icons/google-icon.svg';
 import { ReactComponent as approvedMark } from 'assets/icons/approved-mark.svg';
 import { ReactComponent as loderIcon } from 'assets/icons/loderIcon.svg';
 import { ReactComponent as addSign } from 'assets/icons/add-sign.svg';
+import { ReactComponent as downloadIcon } from 'assets/icons/downloadIcon.svg';
 
 
 import { string } from 'yup/lib/locale';
@@ -64,6 +65,8 @@ import { ReactComponent as privecy } from 'assets/icons/privecy.svg';
 import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
 import { ReactComponent as Inflow } from '../../assets/icons/green-inflow.svg';
 import { ReactComponent as Outflow } from 'assets/icons/outflow-red.svg';
+import { ReactComponent as Image } from 'assets/icons/image.svg';
+import { useToggle } from 'hooks/useToggle';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -125,7 +128,8 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   loderIcon,
   Inflow,
   Outflow,
-
+  Image,
+  downloadIcon
 };
 
 export const Icon = (props: {
@@ -140,11 +144,16 @@ export const Icon = (props: {
   key?: string;
   id?: string;
   type: string;
+  // const onModalWindowToggleHandler = () => {
+  //   // onGetCompaniesHandler();
+  //   onModalWindowToggle();
+  // };
 }) => {
   const NewIcon = ICONS[props.type];
   if (!NewIcon) {
     return null;
   }
+
 
   return (
     <NewIcon

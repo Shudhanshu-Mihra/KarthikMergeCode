@@ -663,9 +663,9 @@ const PurchaseTable: FC<IFieldsBox> = (props) => {
 
   // State for inputFieldsArray
   const [inputFieldsArray, setInputFieldsArray] = useState([
-    { label: "Net", value: inputFields?.net || "", inputType: "text" },
-    { label: "Tax", value: inputFields?.tax || "", inputType: "text" },
-    { label: "Total", value: inputFields?.total || "", inputType: "text" },
+    { label: "Net Amount", value: inputFields?.net || "", inputType: "text" },
+    { label: "Tax/Vat Amount", value: inputFields?.tax || "", inputType: "text" },
+    { label: "Total Amount", value: inputFields?.total || "", inputType: "text" },
   ]);
 
   // Handle changes in table items

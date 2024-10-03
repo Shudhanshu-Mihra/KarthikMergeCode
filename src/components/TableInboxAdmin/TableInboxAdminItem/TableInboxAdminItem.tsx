@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { format } from 'date-fns';
-
+import { ReactComponent as Close } from 'assets/icons/close.svg';
+import { ReactComponent as Download } from 'assets/icons/downloadIcon.svg';
 import { getCorrectCustomId } from 'services/utils';
 
 // import { CheckboxItem } from 'components/Checkbox/Checkbox';
@@ -8,6 +9,11 @@ import { StatusLabel } from 'components/StatusLabel/StatusLabel';
 
 import { TableInboxAdminItemStyles as Styled } from './TableInboxAdminItem.style';
 import { useTableInboxAdminItemState } from './TableInboxAdminItem.state';
+import { Icon } from 'components/Icons';
+import { ModalBox } from 'screens/Settings/UsersList/ModalBox';
+import { ReUseModal } from '../ReUseableModelBox/ReUseModal';
+import { PhotoPreview } from 'components/PhotoPreview';
+import { ImageViewer } from '../ImageViewer/ImageViewer';
 
 interface TableInboxAdminProps {
   isVisited?: boolean;
@@ -72,17 +78,49 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     // onCheckedPublishMockFuncHandler,
   } = props;
 
-  const { onReceiptDetailsClickHandler } = useTableInboxAdminItemState({
+  const { onReceiptDetailsClickHandler
+    , onModalWindowToggleHandler,
+    isModalWindowOpen,
+    onModalWindowCancelClickButtonHandler,
+    onFetchReceiptImageHandler,
+    selectedReceipt,
+    downloadImage,
+    imageUrl } = useTableInboxAdminItemState({
     receiptId,
     selectedReceiptIndex,
     photos,
-    type,
+      type,
+    
   });
-  // console.log("date :-  ",date);
-  // console.log("dateFormat  :- ",dateFormat);
+
+  console.log("selectedReceiptIndex:- ",selectedReceiptIndex);
   return (
     <Styled.Item>
-     
+      <ReUseModal isModalWindowOpen={isModalWindowOpen} onCloseModalWindowHandler={ onModalWindowCancelClickButtonHandler}>
+        {/* <Styled.mainImageModel>
+          
+        <Styled.CloseIconWrapper>
+        <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
+            <Download width={20} onClick={downloadImage} />
+            
+          </Styled.CloseIconWrapper>
+          <img src={imageUrl} alt="reciept" width={"100%"}/>
+          <PhotoPreview imageSrc={imageUrl} isImageLoading={false} isPDF={false} />
+      </Styled.mainImageModel> */}
+          
+        <Styled.mainImageModel>
+        <Styled.CloseIconWrapper>
+        <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
+            {/* <Download width={20} onClick={downloadImage} /> */}
+            
+          </Styled.CloseIconWrapper>
+        <ImageViewer imageUrl={imageUrl} />
+        </Styled.mainImageModel>
+      </ReUseModal>
+
+      <Styled.ImageIcon  onClick={onModalWindowToggleHandler}>
+        <Icon type="Image" width="18px"/>
+      </Styled.ImageIcon>
       <Styled.View id={receiptId} onClick={onReceiptDetailsClickHandler}>
       {/* <Styled.View id={receiptId} onClick={() => { console.log("clickk is working"); }}> */}
         <Styled.Link>{getCorrectCustomId(customId)}</Styled.Link>
