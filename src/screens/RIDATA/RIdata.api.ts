@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { apiServices } from 'services/api-service';
 import { removeEmptyField } from 'services/utils';
 
-import { IGetReceiptsInvoiceParams, IImageView, IPostEmail  } from './types/RIdata.type';
+import { IFlagPayload, IGetReceiptsInvoiceParams, IImageView, IPostEmail  } from './types/RIdata.type';
 
 // import { CONFIG } from 'constants/config';
 
@@ -22,6 +22,11 @@ export const getReceipts = (params?: IGetReceiptsInvoiceParams) => {
 export const getImageUrlFromAws = (ImageKey:IImageView) => {
   const URL = '/aws/presiged';
   return apiServices.postData(URL, ImageKey);
+};
+
+export const sendFlagData = (payload:IFlagPayload) => {
+  const URL = `common/flag-update/${payload.entity}/${payload.id}`;
+  return apiServices.updateData(URL,payload);
 };
 // export const downloadCSV = (receiptsIds: IReceiptsIds) => {
 //   const URL = '/receipt/download-csv';

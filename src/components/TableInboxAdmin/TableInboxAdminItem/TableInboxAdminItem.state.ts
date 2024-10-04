@@ -7,8 +7,8 @@ import { selectReceipt , selectRecieptType,selectRecieptPhoto} from 'screens/RID
 
 import { ROUTES } from 'constants/routes';
 import { useToggle } from 'hooks/useToggle';
-import { useCallback, useState } from 'react';
-import { getImageUrlFromAws } from 'screens/RIDATA/RIdata.api';
+import { useCallback, useEffect, useState } from 'react';
+import { getImageUrlFromAws, sendFlagData } from 'screens/RIDATA/RIdata.api';
 
 interface IuseTableInboxAdminItemState {
   receiptId: string;
@@ -29,14 +29,33 @@ export const useTableInboxAdminItemState = (
       selectedReceiptPhoto,
     }
     } = useSelector((state: IState) => state);
-  console.log("photos:-",selectedReceiptPhoto);
 
-  // console.log("receiptIndex  :-- ",receiptIndex);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState('');
+  const [isRed, setIsRed] = useState(false);
 
   const user = useSelector((state: IState) => state.user);
+  const [state, setState] = useState({
+    id:selectedReceipt?.id||'',
+    selectedReceiptType:selectedReceipt?.type || '',
+  });
+  useEffect(() => {
+    if (selectedReceipt) {
+      setState({
+        id:selectedReceipt.id || '',
+selectedReceiptType:selectedReceipt.type || '',
+      });
+    }
+  }, [selectedReceipt?.id]);
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setIsRed((prev) => !prev);
+    console.log(selectedReceiptIndex);
+    console.log("flag active:", !isRed);  
+    dispatch(selectReceipt(selectedReceiptIndex));   
+  };
+
 
   const onReceiptDetailsClickHandler = (
     event:React.MouseEvent<HTMLDivElement>
@@ -61,7 +80,6 @@ export const useTableInboxAdminItemState = (
   };
 
   function downloadImage() {
-    console.log("imageUrl");
 
     fetch(imageUrl)
         .then(response => {
@@ -88,10 +106,8 @@ export const useTableInboxAdminItemState = (
   // Usage
   
   const onFetchReceiptImageHandler = useCallback(async () => {
-    // console.log(photos);
     try {
       const payload = { keys: [photos|| ''] };
-      console.log(payload);
       const { data } = await getImageUrlFromAws(payload);
           // dispatch(selectRecieptPhoto(data.url))
           // dispatch(selectRecieptPhoto(data.key))
@@ -101,7 +117,42 @@ export const useTableInboxAdminItemState = (
       console.error('Failed to fetch receipts:', error);
     }
   }, [selectedReceipt]);
-  console.log("imageUrl:-" ,imageUrl);
+
+  // const updateFlagValue = ((selectedReceipt:any) => {
+  //  if (selectedReceipt) {
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       id: selectedReceipt?.id || '',
+  //       selectedReceiptType: selectedReceipt.type || ''
+  //     }));
+  //   }
+  
+  //   // The state updates asynchronously, so log updated state after the click
+  //   console.log("Updated state (old value):", state);
+  //   const payload = {
+  //     id: state.id|| selectedReceipt.id || '',
+  //     type: state.selectedReceiptType || selectedReceipt.type || ''
+  //    }
+  //   sendFlagData(payload)
+  // },[isRed]);
+
+  useEffect(() => {
+    const updateFlagValue = () => {
+      if (selectedReceipt) {
+      
+        const payload = {
+          id: selectedReceipt?.id || '',
+          entity: selectedReceipt?.type || ''
+        }
+        sendFlagData(payload);
+      }
+    };
+    updateFlagValue();
+  }, [!isRed]);
+  
+    // Do not attempt to log or use the updated state immediately here, since it will still have the old value.
+  //   console.log("Selected receipt:", selectedReceipt);
+  // };
   return {
     ...user.userInfo,
     onReceiptDetailsClickHandler,
@@ -113,5 +164,8 @@ export const useTableInboxAdminItemState = (
     imageUrl,
     downloadImage,
     selectedReceiptPhoto,
+    handleClick,
+    isRed,
+    setIsRed
   };
 };

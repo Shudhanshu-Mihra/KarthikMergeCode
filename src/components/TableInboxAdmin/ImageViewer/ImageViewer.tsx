@@ -179,6 +179,7 @@
 //     </ImageWrapper>
 //   );
 // };
+import { Icon } from "components/Icons";
 import React, { useState, useRef, useEffect } from "react";
 import { ReUseActionButton } from "ReUseComponents/reUseActionButton/ReUseActionButton";
 import { getImageUrlFromAws } from "screens/RIDATA/RIdata.api";
@@ -189,7 +190,7 @@ const ImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px;
+  // margin: 20px;
 `;
 
 const CoverDiv = styled.div`
@@ -205,7 +206,8 @@ const Controls = styled.div`
     bottom: 40px;
   margin: 20px;
   display: flex;
-  justify-content: space-around;
+  // justify-content: space-around;
+  justify-content:center;
   width: 500px;
 
   button {
@@ -285,10 +287,10 @@ export const ImageViewer: React.FC<ImageViewerProps> = ({ imageUrl, download }) 
 
       <Controls>
       {/* <ReUseActionButton buttonType='actionButton' displayText='Rotate' onClick={() => rotateImage(90)} widthType='roundedBig' margin='0 0 0 auto' themedButton='roundedWhite' displayIconType="processing"/> */}
-        <button onClick={() => rotateImage(90)}>Rotate 90°</button>
-        <button onClick={() => zoomImage(0.1)}>Zoom In</button>
-        <button onClick={() => zoomImage(-0.1)}>Zoom Out</button>
-        <button onClick={handleDownloadClick}>Download</button>
+        <button onClick={() => rotateImage(90)}><Icon type="RotateIcon"/></button>
+        <button onClick={() => zoomImage(0.1)}><Icon type="ZoomInIcon"/></button>
+        <button onClick={() => zoomImage(-0.1)}><Icon type="ZoomOutIcon"/></button>
+        <button onClick={handleDownloadClick}><Icon type="downloadIcon"/></button>
       </Controls>
     </ImageWrapper>
   );

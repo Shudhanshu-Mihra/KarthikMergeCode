@@ -44,7 +44,10 @@ import { ReactComponent as googleIcon } from 'assets/icons/google-icon.svg';
 import { ReactComponent as approvedMark } from 'assets/icons/approved-mark.svg';
 import { ReactComponent as loderIcon } from 'assets/icons/loderIcon.svg';
 import { ReactComponent as addSign } from 'assets/icons/add-sign.svg';
-import { ReactComponent as downloadIcon } from 'assets/icons/downloadIcon.svg';
+import { ReactComponent as downloadIcon } from 'assets/icons/Download.svg';
+import { ReactComponent as RotateIcon } from 'assets/icons/Rotate.svg';
+import { ReactComponent as ZoomInIcon } from 'assets/icons/ZoomIn.svg';
+import { ReactComponent as ZoomOutIcon } from 'assets/icons/ZoomOut.svg';
 
 
 import { string } from 'yup/lib/locale';
@@ -66,6 +69,7 @@ import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
 import { ReactComponent as Inflow } from '../../assets/icons/green-inflow.svg';
 import { ReactComponent as Outflow } from 'assets/icons/outflow-red.svg';
 import { ReactComponent as Image } from 'assets/icons/image.svg';
+import { ReactComponent as FlagIcon } from 'assets/icons/Flag.svg';
 import { useToggle } from 'hooks/useToggle';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
@@ -129,7 +133,11 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   Inflow,
   Outflow,
   Image,
-  downloadIcon
+  downloadIcon,
+  RotateIcon,
+  ZoomOutIcon,
+  ZoomInIcon,
+  FlagIcon
 };
 
 export const Icon = (props: {
@@ -144,6 +152,7 @@ export const Icon = (props: {
   key?: string;
   id?: string;
   type: string;
+  stroke?: string;
   // const onModalWindowToggleHandler = () => {
   //   // onGetCompaniesHandler();
   //   onModalWindowToggle();
@@ -162,6 +171,7 @@ export const Icon = (props: {
         borderRadius: props.borderRadius,
         fill: props.fill,
         width: props.width,
+        stroke:props.stroke,
         height: props.height,
         maxWidth: props.maxWidth,
         maxHeight: props.maxHeight,

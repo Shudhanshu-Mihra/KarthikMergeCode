@@ -63,11 +63,12 @@ export const TableInboxAdminItemStyles = {
     align-items:center;
 `,
 CloseIconWrapper: styled.div`
-// position: absolute;
-// top: 20px;
-// right: 30px;
+position: absolute;
+top: 20px;
+right: 30px;
 text-align:end;
 cursor: pointer;
+z-Index:99;
 `,
   mainImageModel: styled.div`
 padding:10px;

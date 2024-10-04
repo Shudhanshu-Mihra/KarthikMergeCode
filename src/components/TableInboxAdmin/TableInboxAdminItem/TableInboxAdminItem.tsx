@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { ReactComponent as Close } from 'assets/icons/close.svg';
 import { ReactComponent as Download } from 'assets/icons/downloadIcon.svg';
@@ -30,7 +30,7 @@ interface TableInboxAdminProps {
   isChecked?: boolean;
   tax: string | null;
   // date: string | null;
-  date: string ;
+  date: string;
   supplier?: string | null;
   supplierAccount?: string | null;
   category?: string | null;
@@ -48,6 +48,7 @@ interface TableInboxAdminProps {
   dateFormat: string;
   type: string;
   photos: string;
+  is_flagged: boolean;
 }
 
 export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
@@ -69,6 +70,7 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     // paymentStatus,
     // approveStatus,
     // publishStatus,
+    is_flagged,
     dateFormat,
     type,
     photos,
@@ -87,58 +89,56 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     // downloadImage,
     imageUrl,
     selectedReceiptPhoto,
-   } = useTableInboxAdminItemState({
+    handleClick,
+    setIsRed,
+    isRed
+  } = useTableInboxAdminItemState({
     receiptId,
     selectedReceiptIndex,
     photos,
-      type,    
+    type,
   });
 
-  console.log("selectedReceiptIndex:- ",selectedReceiptPhoto);
+  // setIsRed(is_flagged);
+
   return (
     <Styled.Item>
-      <ReUseModal isModalWindowOpen={isModalWindowOpen} onCloseModalWindowHandler={ onModalWindowCancelClickButtonHandler}>
-        {/* <Styled.mainImageModel>
-          
-        <Styled.CloseIconWrapper>
-        <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
-            <Download width={20} onClick={downloadImage} />
-            
-          </Styled.CloseIconWrapper>
-          <img src={imageUrl} alt="reciept" width={"100%"}/>
-          <PhotoPreview imageSrc={imageUrl} isImageLoading={false} isPDF={false} />
-      </Styled.mainImageModel> */}
-          
+      <ReUseModal isModalWindowOpen={isModalWindowOpen} onCloseModalWindowHandler={onModalWindowCancelClickButtonHandler}>
         <Styled.mainImageModel>
-        <Styled.CloseIconWrapper>
-        <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
-            {/* <Download width={20} onClick={downloadImage} /> */}
-            
+          <Styled.CloseIconWrapper>
+            <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
           </Styled.CloseIconWrapper>
-        <ImageViewer download={photos} imageUrl={imageUrl} />
+          <ImageViewer download={photos} imageUrl={imageUrl} />
         </Styled.mainImageModel>
       </ReUseModal>
 
-      <Styled.ImageIcon  onClick={onModalWindowToggleHandler}>
-        <Icon type="Image" width="18px"/>
+      <Styled.ImageIcon id={receiptId} onClick={onModalWindowToggleHandler}>
+        <Icon type="Image" width="18px" />
       </Styled.ImageIcon>
+
+      <Styled.ImageIcon  onClick={handleClick}>
+        <Icon
+          className='FlagIcon'
+          fill={is_flagged || isRed ? 'red' : 'gray'} // Change to red when clicked
+          stroke={is_flagged || isRed ? 'red' : 'gray'} // Also apply stroke color
+          type="FlagIcon"
+          width="18px"
+        />
+      </Styled.ImageIcon>
+
       <Styled.View id={receiptId} onClick={onReceiptDetailsClickHandler}>
-      {/* <Styled.View id={receiptId} onClick={() => { console.log("clickk is working"); }}> */}
         <Styled.Link>{getCorrectCustomId(customId)}</Styled.Link>
       </Styled.View>
-      {/* <Styled.Selector>
-        {!!date && dateFormat ? format(new Date(date),dateFormat) : '---'}
-      </Styled.Selector> */}
-     < Styled.Selector>
+      < Styled.Selector>
         {date || '---'}
       </Styled.Selector>
       <Styled.Selector>
-        <Styled.ValueWrapper>{type && type==='receipt' ? 'receipt' : 'invoice' || '---'}</Styled.ValueWrapper>
+        <Styled.ValueWrapper>{type && type === 'receipt' ? 'receipt' : 'invoice'}</Styled.ValueWrapper>
       </Styled.Selector>
       <Styled.Selector>
         <Styled.ValueWrapper>{supplier || '---'}</Styled.ValueWrapper>
       </Styled.Selector>
-     
+
       <Styled.Selector >
         <Styled.ValueWrapper >{vatCode || '---'}</Styled.ValueWrapper>
       </Styled.Selector>

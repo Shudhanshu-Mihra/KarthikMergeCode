@@ -31,6 +31,7 @@ export interface IReceiptInvoiceData {
     type_user: string | null;
     type: string;
     type_currency: string;
+    is_flagged: boolean;
 }
   
 // Interface representing a selectable item (e.g., for dropdowns or lists)
@@ -64,7 +65,11 @@ export interface IGetReceiptsInvoiceParams {
 // }
 export interface IImageView {
     keys: string[];
-   };
+};
+export interface IFlagPayload {
+  entity: string;
+  id: string;
+   }
 // Interface representing the structure of a POST email request
 export interface IPostEmail {
     active_account: string;

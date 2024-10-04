@@ -19,7 +19,7 @@ export const useRIdataState = () => {
   // const [state, setState] = useState<I>(INITIAL_STATE);
   const dispatch = useDispatch();
   const debouncedValue = useDebounce(state.searchValue, 800);
-  console.log(debouncedValue);
+  // console.log(debouncedValue);
   // const receiptInvoiceData = useSelector(
   //   (state: IState) => state.RIdata.receiptInvoiceData
   // );
@@ -80,7 +80,7 @@ export const useRIdataState = () => {
       searchValue: event.target.value,
     }));
   };
-  console.log("searchValue :- " ,state.searchValue);
+  // console.log("searchValue :- " ,state.searchValue);
 
   const onChangePage = async ({ selected }: { selected: number }) => {
     await onFetchReceiptsHandler({

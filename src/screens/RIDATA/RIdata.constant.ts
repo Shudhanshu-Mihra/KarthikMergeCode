@@ -81,6 +81,7 @@ type_user: "Your Company Name",
 updated: "2024-08-30T08:33:36.379Z",
       vat_code: "NaN",
       type_currency: '',
+      is_flagged:false
     }]
   };
   

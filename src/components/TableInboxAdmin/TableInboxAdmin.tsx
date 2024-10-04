@@ -112,6 +112,7 @@ export const TableInboxAdmin: FC<TableInboxAdminProps> = memo((props) => {
     <>
       <Styled.Head>
         <Styled.Text>Icon</Styled.Text>
+        <Styled.Text>Flag</Styled.Text>
         <Styled.Text>ID</Styled.Text>
         {TABLE_COLUMN_NAMES.map((item) => {
           const isSorted = setIsSorted(sortField, sortOrder, item.id);
@@ -159,6 +160,7 @@ export const TableInboxAdmin: FC<TableInboxAdminProps> = memo((props) => {
               onCheckedPublishMockFuncHandler={onCheckedPublishMockFuncHandler}
               onCheckedItemHandler={onCheckedItemHandler}
               dateFormat={dateFormat}
+              is_flagged={receipt.is_flagged}
             />
           );
         })
