@@ -21,7 +21,6 @@ export const useTableInboxAdminItemState = (
   props: IuseTableInboxAdminItemState
 ) => {
   const { selectedReceiptIndex, type, photos } = props;
-  
   const {
     RIdata: {
       selectedReceipt,
@@ -30,6 +29,8 @@ export const useTableInboxAdminItemState = (
       selectedReceiptPhoto,
     }
     } = useSelector((state: IState) => state);
+  console.log("photos:-",selectedReceiptPhoto);
+
   // console.log("receiptIndex  :-- ",receiptIndex);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -87,7 +88,7 @@ export const useTableInboxAdminItemState = (
   // Usage
   
   const onFetchReceiptImageHandler = useCallback(async () => {
-    console.log(photos);
+    // console.log(photos);
     try {
       const payload = { keys: [photos|| ''] };
       console.log(payload);
@@ -110,6 +111,7 @@ export const useTableInboxAdminItemState = (
     onFetchReceiptImageHandler,
     selectedReceipt,
     imageUrl,
-    downloadImage
+    downloadImage,
+    selectedReceiptPhoto,
   };
 };

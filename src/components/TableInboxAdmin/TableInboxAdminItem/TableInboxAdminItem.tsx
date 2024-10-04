@@ -82,18 +82,19 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     , onModalWindowToggleHandler,
     isModalWindowOpen,
     onModalWindowCancelClickButtonHandler,
-    onFetchReceiptImageHandler,
-    selectedReceipt,
-    downloadImage,
-    imageUrl } = useTableInboxAdminItemState({
+    // onFetchReceiptImageHandler,
+    // selectedReceipt,
+    // downloadImage,
+    imageUrl,
+    selectedReceiptPhoto,
+   } = useTableInboxAdminItemState({
     receiptId,
     selectedReceiptIndex,
     photos,
-      type,
-    
+      type,    
   });
 
-  console.log("selectedReceiptIndex:- ",selectedReceiptIndex);
+  console.log("selectedReceiptIndex:- ",selectedReceiptPhoto);
   return (
     <Styled.Item>
       <ReUseModal isModalWindowOpen={isModalWindowOpen} onCloseModalWindowHandler={ onModalWindowCancelClickButtonHandler}>
@@ -114,7 +115,7 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
             {/* <Download width={20} onClick={downloadImage} /> */}
             
           </Styled.CloseIconWrapper>
-        <ImageViewer imageUrl={imageUrl} />
+        <ImageViewer download={photos} imageUrl={imageUrl} />
         </Styled.mainImageModel>
       </ReUseModal>
 
