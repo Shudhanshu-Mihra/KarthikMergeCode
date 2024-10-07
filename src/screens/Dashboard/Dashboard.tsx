@@ -61,10 +61,12 @@ useEffect(()=>{
 
   const userFilterOptions: IOption[] = [
     { value: 'all', label: `All` }, 
-    ...allAdminusers.map((user) => ({
-      value: user.id,
-      label: user.name,
-    })),
+    ...allAdminusers
+      .filter(user => user.role === 'support-admin') 
+      .map(user => ({
+        value: user.id,
+        label: user.name,
+      })),
   ];
   return (
     <Styled.LayoutWrapper>

@@ -42,4 +42,5 @@ export interface IUserInfoData {
 export interface IAdminUserDropdown{
   id: string; 
   name: string;
+  role:string;
 }

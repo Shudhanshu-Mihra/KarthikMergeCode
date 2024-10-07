@@ -65,6 +65,12 @@ export const useDashboardState = () => {
   const [endDate, setEndDate] = useState('');
   const [userIdFinal, setUserId] = useState('');
 
+  useEffect(() => {
+    setStartDate('');
+    setEndDate('');
+    setUserId('');
+  }, []);
+
   const timeFilterOptions = getTimeFilterOptions();
 
   interface Task {
@@ -84,6 +90,7 @@ export const useDashboardState = () => {
         date_start: dateStart,
         date_end: dateEnd,
         support_member_id: support_Id
+        
       };
       if (role === 'support-admin') {
         params.support_member_id = id;
@@ -105,18 +112,16 @@ export const useDashboardState = () => {
         if (task.source === 'sale-invoice') {
           if (task.status === 'pending') {
             dashboardMetrics.sales.inflow += count; 
-            dashboardMetrics.sales.outflow = 0;
-          } else {
-            dashboardMetrics.sales.inflow = 0;
+          
+          }else if(task.status === 'completed'){
             dashboardMetrics.sales.outflow += count;
           }
         } else if (task.source === 'receipt') {
           if (task.status === 'pending') {
             dashboardMetrics.receipt.inflow += count;
-            dashboardMetrics.receipt.outflow = 0;
-          } else {
-            dashboardMetrics.receipt.outflow += count; 
-            dashboardMetrics.receipt.inflow =0
+            
+          }else if(task.status === 'completed'){
+            dashboardMetrics.sales.outflow += count;
           }
         }
       });
@@ -136,6 +141,10 @@ export const useDashboardState = () => {
   useEffect(() => {
     if (role === 'support-admin') {
       dashboardDataHandler('', '', id);
+      console.log("use Effect was called");
+    }
+    else{
+      dashboardDataHandler('', '', '');
     }
   }, []);
   const onChangeStatusValueHandler = async (
@@ -150,21 +159,43 @@ export const useDashboardState = () => {
       },
     }));
   };
+  // const onChangeUserValueHandler = async (
+  //   newValue: any,
+  //   actionMeta: ActionMeta<unknown>
+  // ) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     userValue: {
+  //       value: newValue.value === 'All' || 'all' ? '' : newValue.value,
+  //       label: `User - ${newValue.label}`,
+  //     },
+  //   }));
+  //     const userId = newValue.value; 
+  //     setUserId(userId);
+  //   await dashboardDataHandler(startDate, endDate, userId);
+  // };
+
   const onChangeUserValueHandler = async (
     newValue: any,
     actionMeta: ActionMeta<unknown>
-  ) => {
+) => {
+    const selectedUserValue = newValue.value;
+    console.log("ROLE OF CURRENT USER: ", role);
     setState((prevState) => ({
-      ...prevState,
-      userValue: {
-        value: newValue.value,
-        label: `User - ${newValue.label}`,
-      },
+        ...prevState,
+        userValue: {
+            value: selectedUserValue === 'All' || selectedUserValue === 'all' ? '' : selectedUserValue,
+            label: `User - ${newValue.label}`,
+        },
     }));
-      const userId = newValue.value; 
-      setUserId(userId);
+
+    const userId = selectedUserValue === 'All' || selectedUserValue === 'all' ? '' : selectedUserValue;
+    setUserId(userId);
+
+    // Call dashboardDataHandler without userId if the value is 'All'
     await dashboardDataHandler(startDate, endDate, userId);
-  };
+};
+
   const onSelectFiles = useSelectFiles();
   const navigateToInvites = () => navigate(ROUTES.invites, { replace: true });
   const onSelectFilesHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
