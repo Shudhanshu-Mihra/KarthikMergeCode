@@ -115,6 +115,29 @@ export const RIdataSlice = createSlice({
       ) => {
         state.selectedReceiptIndex = action.payload;
         state.selectedReceipt = state.receiptInvoiceData.find((item, index) => index === action.payload) || null
+      
+      },
+      // setFlagDataUpdate: (
+      //   state: IRIDATA_INITIAL_STATE,
+      //   action: PayloadAction<boolean>
+      // ) => {
+      //     state.selectedReceipt = {
+      //       ...state.selectedReceipt,
+      //       is_flagged: action.payload,
+      //     };
+      // },
+      setFlagDataUpdate: (state: IRIDATA_INITIAL_STATE, action: PayloadAction<{ id: string, is_flagged: boolean }>) => {
+        const { id, is_flagged } = action.payload;
+        
+        // Find the receipt in receiptInvoiceData by its ID
+        const receiptToUpdate = state.receiptInvoiceData.find(receipt => receipt.id === id);
+        
+        if (receiptToUpdate) {
+          // Update the is_flagged property directly
+          receiptToUpdate.is_flagged = is_flagged;
+        } else {
+          console.error(`Receipt with ID ${id} not found.`);
+        }
       },
       selectRecieptType: (
         state: IRIDATA_INITIAL_STATE,
@@ -147,6 +170,6 @@ export const RIdataSlice = createSlice({
     },
   });
   
-  export const { setreceiptInvoiceData ,selectReceipt ,selectRecieptType ,selectRecieptPhoto ,setSelectedReceiptSubDetails} = RIdataSlice.actions;
+  export const { setreceiptInvoiceData ,setFlagDataUpdate,selectReceipt ,selectRecieptType ,selectRecieptPhoto ,setSelectedReceiptSubDetails} = RIdataSlice.actions;
   
   export const RIdataReducer = RIdataSlice.reducer;

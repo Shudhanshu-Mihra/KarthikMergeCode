@@ -136,7 +136,6 @@ export const TableInboxAdmin: FC<TableInboxAdminProps> = memo((props) => {
           const formattedDate = receipt.created
             ? format(new Date(receipt.created), dateFormat || 'MMM dd, yyyy')
             : '---';
-
           return (
             <TableInboxAdminItem
               key={receipt.id}

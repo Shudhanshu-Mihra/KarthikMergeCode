@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { IState } from 'services/redux/reducer';
 
-import { selectReceipt , selectRecieptType,selectRecieptPhoto} from 'screens/RIDATA/reducer/RIdata.reducer';
+import { selectReceipt , selectRecieptType,selectRecieptPhoto, setFlagDataUpdate} from 'screens/RIDATA/reducer/RIdata.reducer';
 
 import { ROUTES } from 'constants/routes';
 import { useToggle } from 'hooks/useToggle';
@@ -33,29 +33,45 @@ export const useTableInboxAdminItemState = (
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState('');
+  // const [isRed, setIsRed] = useToggle(false);
   const [isRed, setIsRed] = useState(false);
 
   const user = useSelector((state: IState) => state.user);
   const [state, setState] = useState({
+    is_flagged:selectedReceipt?.is_flagged|| '',
     id:selectedReceipt?.id||'',
     selectedReceiptType:selectedReceipt?.type || '',
   });
   useEffect(() => {
     if (selectedReceipt) {
       setState({
+        is_flagged:selectedReceipt.is_flagged|| '',
         id:selectedReceipt.id || '',
 selectedReceiptType:selectedReceipt.type || '',
       });
     }
   }, [selectedReceipt?.id]);
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsRed((prev) => !prev);
-    console.log(selectedReceiptIndex);
-    console.log("flag active:", !isRed);  
-    dispatch(selectReceipt(selectedReceiptIndex));   
-  };
+  const handleClick = (Id: string , type:string) => {
 
+    const payload = {
+          id: Id || '',
+          entity: type || ''
+        }
+        const sendPayload = async () => {
+          try {
+            const response = await sendFlagData(payload);
+            console.log("response.data.is_flagged :- ", response.data.is_flagged);
+            const data = response.data.is_flagged;
+           dispatch(setFlagDataUpdate({ id: Id, is_flagged: data })) ;
+            setIsRed(data)
+          } catch (error) {
+            console.error("Error sending flag data:", error);
+          }
+        };
+        
+        sendPayload();
+  };
 
   const onReceiptDetailsClickHandler = (
     event:React.MouseEvent<HTMLDivElement>
@@ -118,41 +134,7 @@ selectedReceiptType:selectedReceipt.type || '',
     }
   }, [selectedReceipt]);
 
-  // const updateFlagValue = ((selectedReceipt:any) => {
-  //  if (selectedReceipt) {
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       id: selectedReceipt?.id || '',
-  //       selectedReceiptType: selectedReceipt.type || ''
-  //     }));
-  //   }
   
-  //   // The state updates asynchronously, so log updated state after the click
-  //   console.log("Updated state (old value):", state);
-  //   const payload = {
-  //     id: state.id|| selectedReceipt.id || '',
-  //     type: state.selectedReceiptType || selectedReceipt.type || ''
-  //    }
-  //   sendFlagData(payload)
-  // },[isRed]);
-
-  useEffect(() => {
-    const updateFlagValue = () => {
-      if (selectedReceipt) {
-      
-        const payload = {
-          id: selectedReceipt?.id || '',
-          entity: selectedReceipt?.type || ''
-        }
-        sendFlagData(payload);
-      }
-    };
-    updateFlagValue();
-  }, [!isRed]);
-  
-    // Do not attempt to log or use the updated state immediately here, since it will still have the old value.
-  //   console.log("Selected receipt:", selectedReceipt);
-  // };
   return {
     ...user.userInfo,
     onReceiptDetailsClickHandler,

@@ -99,10 +99,8 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
     type,
   });
 
-  // setIsRed(is_flagged);
-
-  return (
-    <Styled.Item>
+    return (
+      <Styled.Item>
       <ReUseModal isModalWindowOpen={isModalWindowOpen} onCloseModalWindowHandler={onModalWindowCancelClickButtonHandler}>
         <Styled.mainImageModel>
           <Styled.CloseIconWrapper>
@@ -116,11 +114,11 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
         <Icon type="Image" width="18px" />
       </Styled.ImageIcon>
 
-      <Styled.ImageIcon  onClick={handleClick}>
+      <Styled.ImageIcon   onClick={() => handleClick(receiptId,type)}>
         <Icon
           className='FlagIcon'
-          fill={is_flagged || isRed ? 'red' : 'gray'} // Change to red when clicked
-          stroke={is_flagged || isRed ? 'red' : 'gray'} // Also apply stroke color
+          fill={isRed || is_flagged  ? 'red' : 'gray'} // Change to red when clicked
+          stroke={isRed || is_flagged ? 'red' : 'gray'} // Also apply stroke color
           type="FlagIcon"
           width="18px"
         />
