@@ -38,3 +38,8 @@ export interface IUserInfoData {
   active_account: string;
   account: IAccount;
 }
+
+export interface IAdminUserDropdown{
+  id: string; 
+  name: string;
+}

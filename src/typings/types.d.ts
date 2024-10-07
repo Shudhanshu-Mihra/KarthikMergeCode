@@ -632,11 +632,13 @@ declare global {
     searchValue: string;
   }
   interface ISearchParams {
-    search?: string;
     take?: number;
     skip?: number;
-    active_account?: string | null;
-    searchValue?: string;
+  }
+  interface IDateFilter{
+    date_start?: string;
+    date_end?: string;
+    support_member_id?: string
   }
 interface IallUsers {
     id?: string;

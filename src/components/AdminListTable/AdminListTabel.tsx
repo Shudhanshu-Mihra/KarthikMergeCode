@@ -26,32 +26,31 @@ const TABLE_COLUMN_NAMES = [
 ];
 const Styled = {
   Container: styled.div`
-    width: 100%;
-    
+   width:100%;
+   height:100%;
   `,
   Head: styled.div`
     display: grid;
     grid-template-columns: 0.5fr 1.5fr 2fr 1fr 1fr 1fr;
     border-top: solid 1px ${({ theme }) => theme.colors.borderWhite};
     border-bottom: solid 1px ${({ theme }) => theme.colors.lightBlack};
-    height: 50px;
-    width: 100%;
+    height: 6%;
     padding-left: 10px;
     padding-right: 10px;
   `,
   Row: styled.div`
     display: grid;
     grid-template-columns: 0.5fr 1.5fr 2fr 1fr 1fr 1fr;
-    padding: 10px;
     border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
   `,
   Text: styled.div<{ alignRight?: boolean }>`
     color: ${({ theme }) => theme.colors.lightBlack};
-    font-size: ${({ theme }) => theme.size.default};
+    // font-size: ${({ theme }) => theme.size.default};
+    font-size:100%;
     text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    padding-top:3%;
   `,
   EmptyContentWrapper: styled.div`
     display: flex;
@@ -117,7 +116,9 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     // onFormSubmitHandler,
     isModalWindowOpen,
     onModalWindowCancelClickButtonHandler,
-    onGetAllCompanyMembersHandler
+    onGetAllCompanyMembersHandler,
+    countUsers
+    // itemsPerPageCss
   } = useUserListState();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
@@ -131,7 +132,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     setUserNameAdmin(' '+userName);
     console.log("userName: ", userName);
     setIsDeleteModalOpen(true);
-    onGetAllCompanyMembersHandler();
+    onGetAllCompanyMembersHandler({take:countUsers});
   };
 
   const handleCloseDeleteModal = () => {
@@ -145,7 +146,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     if (selectedUser) {
       setIsLoading(true);
       const response = await deleteAdminUser(selectedUser);
-      onGetAllCompanyMembersHandler();
+      onGetAllCompanyMembersHandler({take:countUsers});
       setIsLoading(false);  
       handleCloseDeleteModal();
       if(response.data.success === true){
@@ -224,6 +225,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
   // console.log(users.)
   return (
     <>
+    <Styled.Container>
       <Styled.Head>
         {TABLE_COLUMN_NAMES.map((item) => {
           const isSorted = sortField === item.id && sortOrder !== '';
@@ -262,7 +264,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
         ))
       ) : (
         <Styled.EmptyContentWrapper>No users found</Styled.EmptyContentWrapper>
-      )}
+      )}</Styled.Container>
       {isDeleteModalOpen && selectedUser && (
         <DeleteModalWindow
           onCloseDeleteModalWindowHandler={handleCloseDeleteModal}

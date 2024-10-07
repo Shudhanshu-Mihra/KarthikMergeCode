@@ -187,7 +187,41 @@ export const getLastMonthDateRange = () => {
   date.setMonth(date.getMonth() - 1);
   return returnDateRange(date, 'months', 1);
 };
+export const getThisMonthDateRange = () => {
+  const today = new Date();
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  return returnDateRange(startOfMonth, 'months', 1);
+};
 
+export const getThisYearDateRange = () => {
+  const today = new Date();
+  const startOfYear = new Date(today.getFullYear(), 0, 1);
+  return returnDateRange(startOfYear, 'months', 12);
+};
+export const getLastYearDateRange = () => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 1);
+  date.setMonth(0);
+  date.setDate(1);
+  return returnDateRange(date, 'months', 12);
+};
+
+export const getThisWeekDateRange = () => {
+  const today = new Date();
+  const day = today.getDay();
+  const startOfWeek = new Date(today);
+  const diffToMonday = (day === 0 ? 6 : day - 1); 
+  startOfWeek.setDate(today.getDate() - diffToMonday);
+  return returnDateRange(startOfWeek, 'days', 7);
+};
+export const getLastWeekDateRange = () => {
+  const today = new Date();
+  const day = today.getDay();
+  const startOfLastWeek = new Date(today);
+  const diffToMonday = (day === 0 ? 6 : day - 1); 
+  startOfLastWeek.setDate(today.getDate() - diffToMonday - 7); 
+  return returnDateRange(startOfLastWeek, 'days', 7);
+};
 export const getFirstLetterUppercase = (text: string) =>
   text?.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
 

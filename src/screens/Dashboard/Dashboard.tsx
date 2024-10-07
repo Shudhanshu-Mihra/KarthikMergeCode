@@ -10,6 +10,8 @@ import { theme } from 'styles/theme';
 import { getAdminLinks } from 'constants/header-links';
 import { useMyAccountState } from 'screens/Settings/MyAccount/MyAccount.state';
 import ProgressImage from '../../assets/temp-image/progress.png';
+import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
+import { getAllAdminUsers } from 'screens/Settings/settings.api';
 export const Dashboard: FC = () => {
   const {
     navigateToInvites,
@@ -26,42 +28,50 @@ export const Dashboard: FC = () => {
     onClickOutsideDatePickerHandler,
     onChangeStatusValueHandler,
     statusValue,
+    dashboardDataHandler,
     onChangeUserValueHandler,
     userValue,
+    dashboardMetrics,
+    allAdminusers,
+  saveAllAdminUsers
+ 
   } = useDashboardState();
+// const{
+//   allAdminusers,
+//   saveAllAdminUsers
+// } = useUserListState();
 
-  // const {
-  //   role
-  // } = useMyAccountState();
+useEffect(()=>{
+  saveAllAdminUsers();
+ },[])
   // getAdminLinks(role);
   const [selectedUser, setSelectedUser] = useState<string>('Users');
   const [selectedStatus, setSelectedStatus] = useState<string>('Status');
-  // const { onChangeStatusValueHandler, statusValue } = useDashboardState();
-  useEffect(() => {
-    if (!user.active) {
-      navigateToInvites();
-      return;
-    }
-    // getReceiptsStatisticHandler();
-  }, [user.active]);
 
+  // const { onChangeStatusValueHandler, statusValue } = useDashboardState();
+  // useEffect(() => {
+  //   if (!user.active) {
+  //     navigateToInvites();
+  //     return;
+  //   }
+  // }, [user.active]);
   const {
 		role
 	} = useMyAccountState();
-  const userFilterOptions = [
-    { value: 'all', label: `All` },
-    { value: 'user-1', label: `User 1` },
-    { value: 'user-2', label: `User 2` },
-    { value: 'user-3', label: `User 3` },
-    { value: 'user-4', label: `User 4` },
-];
 
+  const userFilterOptions: IOption[] = [
+    { value: 'all', label: `All` }, 
+    ...allAdminusers.map((user) => ({
+      value: user.id,
+      label: user.name,
+    })),
+  ];
   return (
     <Styled.LayoutWrapper>
       
         <Styled.MainWrapper>
           <Styled.TopSection>
-          {role === 'superadmin' && (
+          {role !== 'support-admin'&& (
             <Styled.Dropdown>
               <CustomSelect
                 onChangeValueHandler={onChangeUserValueHandler}
@@ -99,7 +109,7 @@ export const Dashboard: FC = () => {
                 <h3>Inflow</h3>
               </Styled.IconWithText>
               <Styled.DataNumber>
-                {1000}
+                {dashboardMetrics.receipt.inflow}
                 </Styled.DataNumber>
               </Styled.Metric>
               <Styled.Metric>
@@ -107,7 +117,7 @@ export const Dashboard: FC = () => {
               <Icon type='Outflow' width={30} />
                 <h3>Outflow</h3>
               </Styled.IconWithText>
-              <Styled.DataNumber>{300}</Styled.DataNumber>
+              <Styled.DataNumber>{dashboardMetrics.receipt.outflow}</Styled.DataNumber>
                 
               </Styled.Metric>
             </Styled.PurchasesMetrics>
@@ -122,7 +132,7 @@ export const Dashboard: FC = () => {
                 <h3>Inflow</h3>
               </Styled.IconWithText>
               <Styled.DataNumber>
-                {1000}
+                {dashboardMetrics.sales.inflow}
                 </Styled.DataNumber>
               </Styled.Metric>
               <Styled.Metric>
@@ -130,17 +140,12 @@ export const Dashboard: FC = () => {
               <Icon type='Outflow' width={30}/>
                 <h3>Outflow</h3>
               </Styled.IconWithText>
-              <Styled.DataNumber>{300}</Styled.DataNumber>
+              <Styled.DataNumber>{dashboardMetrics.sales.outflow}</Styled.DataNumber>
               </Styled.Metric>
             </Styled.PurchasesMetrics>
           </Styled.PurchasesContainer>
-            {/* Sales Summary Components */}
           </Styled.SalesWrapper>
-          {/* <Styled.ProgressContainer>
-          <img src={ProgressImage} alt="Progress Chart"/>
-          </Styled.ProgressContainer> */}
         </Styled.MainWrapper>
-      {/* </Styled.Wrapper> */}
     </Styled.LayoutWrapper>
   );
 };
