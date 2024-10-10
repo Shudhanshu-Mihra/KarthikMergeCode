@@ -106,7 +106,11 @@ export const TableInboxAdminItem: React.FC<TableInboxAdminProps> = (props) => {
           <Styled.CloseIconWrapper>
             <Close width={20} onClick={onModalWindowCancelClickButtonHandler} />
           </Styled.CloseIconWrapper>
-          <ImageViewer download={photos} imageUrl={imageUrl} />
+          {photos ? (
+      <ImageViewer download={photos} imageUrl={imageUrl} />
+    ) : (
+      <Styled.NoImageMessage>No image is there</Styled.NoImageMessage>
+    )}
         </Styled.mainImageModel>
       </ReUseModal>
 

@@ -73,5 +73,6 @@ z-Index:99;
   mainImageModel: styled.div`
 padding:10px;
 width:100%;`,
+NoImageMessage:styled.h4``
   
 };
