@@ -1,21 +1,21 @@
 import { FC, useEffect, useState } from 'react';
-import { styled } from 'styles/theme';
 import { TableButton } from 'components/TableButton/TableButton';
 import { Icon } from 'components/Icons/Icons';
+import { Navigate, useNavigate } from 'react-router-dom'; 
 import { id } from 'date-fns/locale';
 import { DeleteModalWindow } from 'components/DeleteModalWindow';
 import { text } from 'stream/consumers';
-// import { getAllAdminUsers } from '../settings.api';
+import {TableStyles as Styled} from './AdminList.style';
 import { SuccessPopup } from 'components/SuccessPopup';
-// import { IS_ACTIVE } from 'constants/strings';
 import { ActionMeta } from 'react-select';
 import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from 'screens/Settings/UsersList/userList.constants';
-// import { setStoreAdminUserData } from '../reducer/settings.reducer';
 import { useDispatch } from 'react-redux';
 import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
 import { deleteAdminUser } from 'screens/Settings/settings.api';
 import { ModalBox } from 'screens/Settings/UsersList/ModalBox';
 import { IAdminUserEdit } from 'screens/Settings/UsersList/types/userList.types';
+import { ROUTES } from 'constants/routes';
+import { useAdminListTable } from './AdminList.state';
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -24,56 +24,7 @@ const TABLE_COLUMN_NAMES = [
   { id: 'active', name: 'Active Status' },
   { id: 'actions', name: 'Actions' }
 ];
-const Styled = {
-  Container: styled.div`
-   width:100%;
-   height:100%;
-  `,
-  Head: styled.div`
-    display: grid;
-    grid-template-columns: 0.5fr 1.5fr 2fr 1fr 1fr 1fr;
-    border-top: solid 1px ${({ theme }) => theme.colors.borderWhite};
-    border-bottom: solid 1px ${({ theme }) => theme.colors.lightBlack};
-    height: 6%;
-    padding-left: 10px;
-    padding-right: 10px;
-  `,
-  Row: styled.div`
-    display: grid;
-    grid-template-columns: 0.5fr 1.5fr 2fr 1fr 1fr 1fr;
-    border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
-  `,
-  Text: styled.div<{ alignRight?: boolean }>`
-    color: ${({ theme }) => theme.colors.lightBlack};
-    // font-size: ${({ theme }) => theme.size.default};
-    font-size:100%;
-    text-align: ${({ alignRight }) => (alignRight ? 'right' : 'left')};
-    white-space: nowrap;
-    overflow: hidden;
-    padding-top:3%;
-  `,
-  EmptyContentWrapper: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50px;
-    background-color: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.lightBlack};
-    border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
-  `,
-  ActionWrapper: styled.div`
-    display: flex;
-  `,
-  ActionButton: styled.button`
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-  `,
-};
+
 interface User {
   id: string;
   name: string;
@@ -101,9 +52,6 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     onClickDeleteUserButton,
     formik,
     adminInviteFormArr,
-    // editModalFields,
-    // newmodalFields,
-    // modalFieldsNew,
     onEnterInsertUser,
     onDeleteModalWindowToggle,
     isDeleteModalWindowOpen,
@@ -113,116 +61,30 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     setPAllChecked,
     PermissionsForAPIHandler,
     onFormSubmitHandlerEdit,
-    // onFormSubmitHandler,
     isModalWindowOpen,
     onModalWindowCancelClickButtonHandler,
     onGetAllCompanyMembersHandler,
-    countUsers
-    // itemsPerPageCss
-  } = useUserListState();
-
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
-  const [selectedUserEdit, setSelectedUserEdit] = useState<string>('');
-  const [userNameAdmin, setUserNameAdmin] = useState<string | undefined>('');
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-  const handleDeleteClick = (user: string, userName: string) => {
-    setSelectedUser(user); 
-    setUserNameAdmin(' '+userName);
-    console.log("userName: ", userName);
-    setIsDeleteModalOpen(true);
-    onGetAllCompanyMembersHandler({take:countUsers});
-  };
-
-  const handleCloseDeleteModal = () => {
-    setIsDeleteModalOpen(false); 
-    setSelectedUser(null); 
-  };
-  //new
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
-  const [isDeleteUser, setIsDeleteUser] = useState(false);
-  const handleConfirmDelete = async () => {
-    if (selectedUser) {
-      setIsLoading(true);
-      const response = await deleteAdminUser(selectedUser);
-      onGetAllCompanyMembersHandler({take:countUsers});
-      setIsLoading(false);  
-      handleCloseDeleteModal();
-      if(response.data.success === true){
-        setIsSuccessPopupOpen(true);
-        setIsDeleteUser(true);
-      }
-      else{
-        setIsSuccessPopupOpen(true);
-        setIsDeleteUser(false);
-      }
-
-    }
-  };
-  const initialState = EDIT_USER_INITIAL_STATE;
-   type SingleValue<Option> = Option | null;
-  const [state, setState] = useState<IAdminUserEdit>(initialState);
-  const onChangeStateFieldHandler = (
-    optionName: keyof typeof USERS_LIST_INITIAL_STATE,
-    value: string | boolean | number | SingleValue<IOption> | IEditAdminUser[]
-  ) => {
-    setState((prevState) => ({
-      ...prevState,
-      [optionName]: value,
-    }));
-  };
-  const onChangeRoleValueHandler = (
-    newValue: IOption,
-    actionMeta: ActionMeta<IOption> | unknown
-  ) => onChangeStateFieldHandler('role', newValue);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);  
-  const [aminName, setAminName] = useState('');
-  const [AdminEmail, setAdminEmail] = useState('');
-  const [AminActive, setAminActive] = useState<boolean>(false);
-  // Type for select fields
-  // interface ISelectField {
-  //   type: 'select';
-  //   label: string;
-  //   name: string;
-  //   value: string | boolean;
-  //   isDisabled: boolean;
-  //   options: IOption[];
-  //   onChangeSelect: (newValue: IOption, actionMeta: unknown) => void;
-  // }
-  
-  // Union type that includes both input and select field types
-  // type ImodalFieldsAdmin = IInputField;
-  // type ImodalFieldsAdmin = IModalField[]
-  // const modalFieldsEdit:ImodalFieldsAdmin = [
-  const handleEditClick = (user: string, name: string, email:string, active:boolean) => {
-    setSelectedUserEdit(user);  
-    setIsEdit(true);  
-    setIsModalOpen(true); 
-    setAminName(name);
-    setAdminEmail(email);
-    setAminActive(active);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);  
-    setSelectedUser(null); 
-    setIsEdit(false);  
-  };
-
-  useEffect(() => {
-    if (isEdit && selectedUserEdit) {
-      formik.setValues({
-        fullName:'',
-        name: aminName,
-        email: AdminEmail,
-        active: AminActive,
-        password:'',
-        role:''
-      });
-    }
-  }, [aminName, AdminEmail, AminActive, isEdit, selectedUserEdit]);
-  // console.log(users.)
+    countUsers,
+    handleDeleteClick,
+    handleCloseDeleteModal,
+    handleConfirmDelete,
+    userNameAdmin,
+    isDeleteModalOpen,
+    selectedUser,
+    handleEditClick,
+    handleCloseModal,
+    isLoading,
+    selectedUserEdit,
+    isSuccessPopupOpen,
+    isDeleteUser,
+    initialState,
+    setIsSuccessPopupOpen,
+    onChangeStateFieldHandler,
+    isModalOpen,
+    isEdit,
+    handleReassignClick
+  } = useAdminListTable();
+  const navigate = useNavigate(); 
   return (
     <>
     <Styled.Container>
@@ -238,7 +100,6 @@ export const AdminListTabel: FC<UsersTableProps> = ({
           );
         })}
       </Styled.Head>
-
       {users.length  ? (
         users.map((user, index) => (
           <Styled.Row key={user.id}>
@@ -248,15 +109,14 @@ export const AdminListTabel: FC<UsersTableProps> = ({
             <Styled.Text>{user.role}</Styled.Text>
             <Styled.Text>{user.active ? 'Active' : 'Inactive'}</Styled.Text>
             <Styled.ActionWrapper>
-            {/* <Styled.ActionButton onClick={() => onEditIconClickHandler(user.id)}>
-                <Icon type="edit" />
-              </Styled.ActionButton> */}
-           
               <Styled.ActionButton onClick={() => handleEditClick(user.id, user.name, user.email, user.active)}>
                 <Icon type="edit" />
               </Styled.ActionButton>
               <Styled.ActionButton onClick={() => handleDeleteClick(user.id, user.name)}>
                 <Icon type="remove" />
+              </Styled.ActionButton>
+              <Styled.ActionButton onClick={() => handleReassignClick(user.id, user.name)}>
+                <Icon type="Reassign" />
               </Styled.ActionButton>
             </Styled.ActionWrapper>
              
@@ -280,7 +140,6 @@ export const AdminListTabel: FC<UsersTableProps> = ({
         positionTop="20px"
         isShowPopup={isSuccessPopupOpen}
         closePopupFc={()=> setIsSuccessPopupOpen(false)}
-        // titleText="User was successfully deleted"
         titleText={!isDeleteUser ? "User deletion failed":"User was successfully deleted"}
         alertColor={!isDeleteUser ? "red" :undefined}
       />)}
@@ -292,13 +151,11 @@ export const AdminListTabel: FC<UsersTableProps> = ({
           isLoading={false}
           isDisableButton={false}
           onCloseModalWindowHandler={handleCloseModal}
-          // onSaveButtonCLickHandler={formik.handleSubmit}
           onSaveButtonCLickHandler={async () => {
             await onFormSubmitHandlerEdit(selectedUserEdit, formik.values);
             console.log("formik.values:", formik.values);
             handleCloseModal();
             onModalWindowCancelClickButtonHandler(); }}
-          // onSaveButtonCLickHandler={setIsEdit(false)}
           onEnterCreateItemClick={onEnterInsertUser}
           isModalWindowOpen={isModalOpen}
           headerText={isEdit ? 'Edit User' : 'Insert User'}

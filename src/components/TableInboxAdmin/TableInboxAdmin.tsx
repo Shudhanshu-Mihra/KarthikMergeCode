@@ -145,7 +145,7 @@ export const TableInboxAdmin: FC<TableInboxAdminProps> = memo((props) => {
               customId={receipt.custom_id}
               receiptId={receipt.id}
               photos={receipt.photos}
-              currency={'120'} // Use default if not provided
+              currency={'120'} 
               date={formattedDate}
               net={receipt.net}
               total={receipt.total}

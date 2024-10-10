@@ -64,6 +64,8 @@ import { ReactComponent as privecy } from 'assets/icons/privecy.svg';
 import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
 import { ReactComponent as Inflow } from '../../assets/icons/green-inflow.svg';
 import { ReactComponent as Outflow } from 'assets/icons/outflow-red.svg';
+import { ReactComponent as Reassign } from 'assets/icons/re-assign.svg';
+import { ReactComponent as Delete } from 'assets/icons/delete.svg';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -125,6 +127,8 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   loderIcon,
   Inflow,
   Outflow,
+  Reassign,
+  Delete
 
 };
 

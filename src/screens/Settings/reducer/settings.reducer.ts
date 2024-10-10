@@ -11,7 +11,12 @@ export const SETTINGS_INITIAL_STATE: ISETTINGS_INITIAL_STATE = {
   isFetchingData: false,
   isSwitchCompany: false,
   isLinkedSocAcc: false,
-  adminUserData : [],
+  // adminUserData :[],
+  adminUserData : [ {id:'1',
+    name:'test name',
+    email:'test@gmail.com',
+    role: 'test',
+    active: false}],
 };
 const initialState = SETTINGS_INITIAL_STATE;
 export const SettingsSlice = createSlice({
