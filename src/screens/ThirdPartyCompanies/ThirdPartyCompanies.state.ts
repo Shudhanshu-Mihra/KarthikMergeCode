@@ -40,6 +40,8 @@ const [state, setState] = useState<IcreateCompany>(initialState);
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>('');
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const[isConformRefreshOpen, setConformRefreshOpen] = useState(false);
+  const[isRevokemodalBox, RevokemodalBox] = useState(false);
   const [createSuccessCompany, setCreateSuccessCompany] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -87,17 +89,20 @@ const [state, setState] = useState<IcreateCompany>(initialState);
   };
   const handleEditCompany = (companyName: string) => {
     setIsEdit(true);
+    setIsModalOpen(true);
   };
 
   const handleRemoveToken = (companyName: string) => {
     handleConfirmDelete();
   };
   
-  const handleRefreshToken = (companyName: string) => {
-    setIsEdit(true);
+  const handleRefreshToken = () => {
+    handleConfirmRefresh()
   };
+
   const handleRevoke = (companyName: string) => {
-    
+    //
+    handleConfirmRevoke();
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -127,6 +132,22 @@ const [state, setState] = useState<IcreateCompany>(initialState);
     setIsDeleteModalOpen(false); 
     // setSelectedUser(null); 
   };
+
+  const handleConfirmRevoke = async () => {
+    RevokemodalBox(true);
+  };
+  const handleCloseConfirmRevoke = () => {
+    RevokemodalBox(false); 
+    // setSelectedUser(null); 
+  };
+  
+  const handleConfirmRefresh = async () => {
+    setConformRefreshOpen(true);
+  };
+  const handleCloseConfirmRefresh = () => {
+    setConformRefreshOpen(false); 
+    // setSelectedUser(null); 
+  };
   const AddCompany = [
     {
       type: 'input',
@@ -135,7 +156,7 @@ const [state, setState] = useState<IcreateCompany>(initialState);
     },
     {
         type: 'select',
-        label: 'Active',
+        label: 'Status',
         name: 'active',
         isDisabled:false,
         options: IS_ACTIVE,
@@ -192,5 +213,13 @@ const [state, setState] = useState<IcreateCompany>(initialState);
     handleCloseDeleteModal,
     fetchThirdPartyCompaniesData,
     ThirdPartyCompanyAllData,
+    isConformRefreshOpen,
+    setConformRefreshOpen,
+    handleCloseConfirmRefresh,
+    handleConfirmRefresh,
+    isRevokemodalBox,
+    handleConfirmRevoke,
+    handleCloseConfirmRevoke,
+    
   };
 };
