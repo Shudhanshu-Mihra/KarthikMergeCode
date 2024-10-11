@@ -24,6 +24,7 @@ export enum ROUTES {
   pendingriData = '/pending-ridata',
   ridetails = '/ri-details',
   reassignData = '/reassign',
+  thirdPartyCompanies = '/thirdPartyCompanies',
   // purchaseInvoices = '/purchase-invoices',
   // receiptDetails = 'receipt-details',
   // salesInvoices = '/sales-invoices',

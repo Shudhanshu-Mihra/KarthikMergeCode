@@ -42,6 +42,7 @@ import { IState } from '../services/redux/reducer';
 import { RIdata } from 'screens/RIDATA/RIdata';
 import { RIdetails } from 'screens/RIdetails';
 import { ReAssignData } from 'screens/ReAssignData/ReAssignData'; 
+import { ThirdPartyCompanies } from 'screens/ThirdPartyCompanies/ThirdPartyCompanies';
 // import { ReceiptDetails } from 'components/ReceiptDetails/ReceiptDetails';
 // import { ExpenseReport } from 'screens/ExpenseReport';
 // import { ExpenseDetails } from 'screens/ExpenseDetails';
@@ -121,7 +122,7 @@ export const AppRouter: FC = () => {
             {/* </Route> */}
             <Route path={ROUTES.ridetails} element={<RIdetails />} />
             <Route path={ROUTES.reassignData} element={<ReAssignData />} />
-             
+            <Route path={ROUTES.thirdPartyCompanies} element={<ThirdPartyCompanies />} />
             {/* <Route path={ROUTES.ridetails} element={<ReceiptDetails />} /> */}
             <Route
               path={ROUTES.profile}
@@ -130,6 +131,7 @@ export const AppRouter: FC = () => {
             <Route path={ROUTES.settings} element={<Settings />}>
               {/* <Route index element={<MyAccount />} /> */}
               <Route path={ROUTES.usersList} element={<UsersList />} />
+              
               {/* <Route path={ROUTES.companiesList} element={<CompanyList />} /> */}
               {/* <Route
                 path={ROUTES.termsOfService}

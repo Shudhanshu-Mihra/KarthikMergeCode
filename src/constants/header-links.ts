@@ -17,6 +17,7 @@ export const ADMIN_LINKS = [
   // { title: 'MANAGE', route: ROUTES.manage, tabs: MASTER_TABS, iconName: 'manageIcon' },
   { title: 'DATA', route: ROUTES.pendingriData, iconName: 'salesIcon' },
   {title:'USERS',route: ROUTES.usersList, iconName: 'invitesIcon'},
+  {title:'COMPANIES', route:ROUTES.thirdPartyCompanies, iconName:'expReportIcon'}
   //  { title: 'USERS', route: ROUTES.settings, iconName: 'settingsIcon', isLast: true },
   // { title: 'HELP & SUPPORT', route: ROUTES.support, isLast: true },
 ];
