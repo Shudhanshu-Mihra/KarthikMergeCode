@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { ThirdPartyCompaniesStyles as Styled } from "./ThirdPartyCompanies.style";
 import { SuccessPopup } from "components/SuccessPopup";
 import { ReUseSearch } from "ReUseComponents/reUseSearch/ReUseSearch";
@@ -28,13 +28,19 @@ export const ThirdPartyCompanies: FC = () => {
     isEdit,
     selectedCompanyName,
     setIsModalOpen,
-    isDeleteModalOpen} = useThirdPartyCompaniesState();
+    isDeleteModalOpen,
+    fetchThirdPartyCompaniesData,
+    ThirdPartyCompanyAllData
+  } = useThirdPartyCompaniesState();
   
-  const thirdParties = [
-    { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
-    { name: "Company B", status: "Inactive", token: "efgh5678", webHook: "https://webhook.companyB.com" },
-  ];
+  // const thirdParties = [
+  //   { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
+  //   { name: "Company B", status: "Inactive", token: "efgh5678", webHook: "https://webhook.companyB.com" },
+  // ];
 
+  useEffect(() => {
+    fetchThirdPartyCompaniesData()
+  },[])
   return (
     <Styled.Section>
       <h1>Third-Party Companies</h1>
@@ -64,12 +70,12 @@ export const ThirdPartyCompanies: FC = () => {
           <div>Action</div>
         </Styled.GridHeader>
 
-        {thirdParties.map((company, index) => (
+        {ThirdPartyCompanyAllData.map((company, index) => (
           <Styled.GridRow key={index}>
             <div>{company.name}</div>
-            <div>{company.status}</div>
-            <div>{company.token}</div>
-            <div>{company.webHook}</div>
+            <div>{company.active}</div>
+            <div>{company.tpc_token}</div>
+            <div>{company.tpc_wh}</div>
             <div>
               <Styled.ActionButton onClick={() => handleEditCompany(company.name)}>
                 <Icon type="edit" />

@@ -3,6 +3,10 @@ import { THIRD_PARTY_COMPANIES_INITIAL_STATE } from "./ThirdPartyCompanies.const
 import {IS_ACTIVE} from 'constants/strings';
 import { ActionMeta, SingleValue} from 'react-select';
 import { Formik, useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { IState } from "services/redux/reducer";
+import { getThirdPartyAllData } from "./ThirdPartyCompanies.api";
+import { setThirdPartyCompanyData } from "./reducer/ThirdPartyCompanies.reducer";
 interface Company {
   id: number;
   name: string;
@@ -38,6 +42,14 @@ const [state, setState] = useState<IcreateCompany>(initialState);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [createSuccessCompany, setCreateSuccessCompany] = useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
+  const { 
+    ThirdPartyCompanyData: { ThirdPartyCompanyAllData }
+  } = useSelector((state: IState) => state);
+  
+  console.log("ThirdPartyCompanyAllData:- ",ThirdPartyCompanyAllData);
+
   const onModalWindowToggleHandler = () => {
     setIsModalWindowOpen(!isModalWindowOpen);
   };
@@ -66,6 +78,7 @@ const [state, setState] = useState<IcreateCompany>(initialState);
       setIsLoading(false);
     }, 1000);
   };
+
   const onChangeActiveValueHandler = (
     newValue: IoptionActive,
     actionMeta: ActionMeta<IoptionActive> | unknown
@@ -136,9 +149,17 @@ const [state, setState] = useState<IcreateCompany>(initialState);
     
   ];
   useEffect(() => {
-    // Optionally perform actions when searchValue changes
+   
   }, [searchValue]);
 
+  //calling api to getting data
+
+    const fetchThirdPartyCompaniesData  = async () => {
+      console.log("test");
+      const { data } = await getThirdPartyAllData();
+      const DATA = data.data;
+      dispatch(setThirdPartyCompanyData(DATA))
+    }
   return {
     isLoading,
     isModalWindowOpen,
@@ -168,6 +189,8 @@ const [state, setState] = useState<IcreateCompany>(initialState);
     isEdit,
     selectedCompanyName,
     isDeleteModalOpen,
-    handleCloseDeleteModal
+    handleCloseDeleteModal,
+    fetchThirdPartyCompaniesData,
+    ThirdPartyCompanyAllData,
   };
 };

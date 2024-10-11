@@ -606,6 +606,8 @@ declare global {
   interface ISearchParams {
     take?: number;
     skip?: number;
+    search?: string;
+    active_account?: string;
   }
   interface IDateFilter{
     date_start?: string;
