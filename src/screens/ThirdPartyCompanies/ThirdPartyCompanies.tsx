@@ -4,10 +4,12 @@ import { SuccessPopup } from "components/SuccessPopup";
 import { ReUseSearch } from "ReUseComponents/reUseSearch/ReUseSearch";
 import { ReUseActionButton } from "ReUseComponents/reUseActionButton/ReUseActionButton";
 import { Icon } from 'components/Icons/Icons';
-import { ModalBox } from 'screens/Settings/UsersList/ModalBox'; // Import ModalBox
-import { useFormik } from 'formik'; // Assuming formik is being used
+import { ModalBox } from 'screens/Settings/UsersList/ModalBox';
+import { useFormik } from 'formik';
 import { useThirdPartyCompaniesState } from "./ThirdPartyCompanies.state";
 import { DeleteModalWindow } from "components/DeleteModalWindow";
+import { ConformRefreshWindow } from "components/ConformRefresh/ConformRefreshWindow";
+import { RevokeModalWindow } from "components/RevokeModalWindow";
 
 export const ThirdPartyCompanies: FC = () => {
 
@@ -25,10 +27,17 @@ export const ThirdPartyCompanies: FC = () => {
     onChangeActiveValueHandler, 
     handleCloseDeleteModal,
     handleConfirmDelete,
+    setConformRefreshOpen,
+    handleCloseConfirmRefresh,
+    handleConfirmRefresh,
     isEdit,
     selectedCompanyName,
     setIsModalOpen,
-    isDeleteModalOpen} = useThirdPartyCompaniesState();
+    isConformRefreshOpen,
+    isDeleteModalOpen,
+    isRevokemodalBox,
+    handleConfirmRevoke,
+    handleCloseConfirmRevoke,} = useThirdPartyCompaniesState();
   
   const thirdParties = [
     { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
@@ -77,7 +86,7 @@ export const ThirdPartyCompanies: FC = () => {
               <Styled.ActionButton onClick={() => handleRemoveToken(company.name)}>
                 <Icon type="remove" />
               </Styled.ActionButton>
-              <Styled.ActionButton onClick={() => handleRefreshToken(company.name)}>
+              <Styled.ActionButton onClick={() => handleRefreshToken()}>
                 <Icon type="Reassign" />
               </Styled.ActionButton>
               <button onClick={() => handleRevoke(company.name)}>Revoke</button>
@@ -85,7 +94,6 @@ export const ThirdPartyCompanies: FC = () => {
           </Styled.GridRow>
         ))}
       </Styled.GridWrapper>
-
       {isModalOpen && (
         <ModalBox
           modalFields={AddCompany}
@@ -123,6 +131,26 @@ export const ThirdPartyCompanies: FC = () => {
           isLoading={false}  
           categoryName="user"  
         />
+      )}
+        {isConformRefreshOpen && (
+            <ConformRefreshWindow
+            onCloseDeleteModalWindowHandler={handleCloseConfirmRefresh}
+            onDeleteButtonClickHandler={handleConfirmRefresh}
+            isDeleteModalWindowOpen={isConformRefreshOpen}
+            deleteItemName={' current Company'}  
+            isLoading={false}  
+            categoryName="user"  
+          />
+      )}
+      {isRevokemodalBox && (
+            <RevokeModalWindow
+            onCloseDeleteModalWindowHandler={handleCloseConfirmRevoke}
+            onDeleteButtonClickHandler={handleConfirmRevoke}
+            isDeleteModalWindowOpen={isRevokemodalBox}
+            deleteItemName={' current Company'}  
+            isLoading={false}  
+            categoryName="user"  
+          />
       )}
     </Styled.Section>
   );
