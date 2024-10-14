@@ -57,8 +57,6 @@
     },[])
     return (
       <Styled.Section>
-        <h1>Third-Party Companies</h1>
-        <br />
         <Styled.HeaderActions>
           <ReUseSearch
             searchValue={''}
@@ -87,7 +85,7 @@
           {ThirdPartyCompanyAllData.map((company, index) => (
             <Styled.GridRow key={index}>
               <div>{company.name}</div>
-              <div>{company.active}</div>
+              <div>{company.active ? 'Active' : 'Inactive' }</div>
               <Styled.TokenField>
             <span>{visibleToken === company.tpc_token ? company.tpc_token : "******"}</span>
             <Styled.TokenIcons>
@@ -99,19 +97,23 @@
               </Styled.ActionButton>
             </Styled.TokenIcons>
             </Styled.TokenField>
-              {/* <div>{company.tpc_token}</div> */}
-              <div>{company.tpc_wh}</div>
+            <Styled.WebHook>
+              <div className="webhook">{company.tpc_wh}</div>
+            </Styled.WebHook>
               <div>
                 <Styled.ActionButton onClick={() => handleEditCompany(company.id)}>
                   <Icon type="edit" />
                 </Styled.ActionButton>
-                <Styled.ActionButton onClick={() => handleRemoveToken(company.id)}>
-                  <Icon type="remove" />
-                </Styled.ActionButton>
                 <Styled.ActionButton onClick={() => handleRefreshToken(company.id)}>
                   <Icon type="Reassign" />
                 </Styled.ActionButton>
-                <button onClick={() => handleRevoke(company.id)}>Revoke</button>
+                {/* {!company.tpc_token.startsWith("Revoked") && (
+                <Styled.ActionButton onClick={() => handleRevoke(company.id)}>
+                  <Icon type="remove" />
+                </Styled.ActionButton>
+              )} */}
+              <Styled.RevokeButton onClick={() => handleRevoke(company.id)}>Revoke</Styled.RevokeButton>
+                {/* <button >Revoke</button> */}
               </div>
             </Styled.GridRow>
           ))}

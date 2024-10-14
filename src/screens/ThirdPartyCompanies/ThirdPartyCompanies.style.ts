@@ -64,7 +64,6 @@ GridRow: styled.div`
   position: relative;
   display: flex;
   align-items: center;
-
   span {
     margin-right: 8px; 
   }
@@ -81,11 +80,30 @@ GridRow: styled.div`
     background: none;
     border: none;
     cursor: pointer;
-    margin-right: 8px; /* Add spacing between icons */
+    margin-right: 8px; 
   }
 
   button:last-child {
-    margin-right: 0; /* No margin on the last icon */
+    margin-right: 0;
+  }
+`,
+WebHook:styled.div`
+  overflow-wrap: break-word; 
+  word-wrap: break-word; 
+  white-space: normal; 
+  overflow: hidden; 
+  max-width: 100%; 
+`,
+RevokeButton: styled.button`
+  margin-left:2px;
+  background: none;
+  border: 2px solid #404A5F;
+  border-radius: 2px; 
+  cursor: pointer;
+  color: #404A5F; 
+  &:hover {
+    color: ${({ theme }) => theme.colors.red};
+    border-color: ${({ theme }) => theme.colors.red};
   }
 `,
 };
