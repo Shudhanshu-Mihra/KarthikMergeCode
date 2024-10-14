@@ -37,7 +37,11 @@ export const ThirdPartyCompanies: FC = () => {
     isDeleteModalOpen,
     isRevokemodalBox,
     handleConfirmRevoke,
-    handleCloseConfirmRevoke,} = useThirdPartyCompaniesState();
+    handleCloseConfirmRevoke,
+    handleCopyToken,
+    handleViewToken,
+    visibleToken
+  } = useThirdPartyCompaniesState();
   
   const thirdParties = [
     { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
@@ -46,8 +50,6 @@ export const ThirdPartyCompanies: FC = () => {
 
   return (
     <Styled.Section>
-      <h1>Third-Party Companies</h1>
-      <br />
       <Styled.HeaderActions>
         <ReUseSearch
           searchValue={''}
@@ -61,6 +63,7 @@ export const ThirdPartyCompanies: FC = () => {
             setIsEdit(false);
             setIsModalOpen(true);
           }}
+          widthType="primary"
           displayIconType="addPlus"
         />
       </Styled.HeaderActions>
@@ -77,7 +80,18 @@ export const ThirdPartyCompanies: FC = () => {
           <Styled.GridRow key={index}>
             <div>{company.name}</div>
             <div>{company.status}</div>
-            <div>{company.token}</div>
+            {/* <div>{company.token}</div> */}
+            <Styled.TokenField>
+            <span>{visibleToken === company.token ? company.token : "******"}</span>
+            <Styled.TokenIcons>
+            <Styled.ActionButton onClick={() => handleViewToken(company.token)}>
+                <Icon type="View" />
+              </Styled.ActionButton>
+              <Styled.ActionButton onClick={() => handleCopyToken(company.token)}>
+                <Icon type="Copy" />
+              </Styled.ActionButton>
+            </Styled.TokenIcons>
+            </Styled.TokenField>
             <div>{company.webHook}</div>
             <div>
               <Styled.ActionButton onClick={() => handleEditCompany(company.name)}>
@@ -89,7 +103,9 @@ export const ThirdPartyCompanies: FC = () => {
               <Styled.ActionButton onClick={() => handleRefreshToken()}>
                 <Icon type="Reassign" />
               </Styled.ActionButton>
+              <Styled.ActionButton >
               <button onClick={() => handleRevoke(company.name)}>Revoke</button>
+              </Styled.ActionButton>
             </div>
           </Styled.GridRow>
         ))}
