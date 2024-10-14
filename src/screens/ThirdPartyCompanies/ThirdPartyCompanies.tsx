@@ -42,7 +42,10 @@
       isRevokemodalBox,
       handleConfirmRevoke,
       handleYesConfirmRevoke,
-      handleCloseConfirmRevoke,} = useThirdPartyCompaniesState();
+      handleCloseConfirmRevoke,
+      handleCopyToken,
+      handleViewToken,
+      visibleToken} = useThirdPartyCompaniesState();
     
     // const thirdParties = [
     //   { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
@@ -85,7 +88,18 @@
             <Styled.GridRow key={index}>
               <div>{company.name}</div>
               <div>{company.active}</div>
-              <div>{company.tpc_token}</div>
+              <Styled.TokenField>
+            <span>{visibleToken === company.tpc_token ? company.tpc_token : "******"}</span>
+            <Styled.TokenIcons>
+            <Styled.ActionButton onClick={() => handleViewToken(company.tpc_token)}>
+                <Icon type="View" />
+              </Styled.ActionButton>
+              <Styled.ActionButton onClick={() => handleCopyToken(company.tpc_token)}>
+                <Icon type="Copy" />
+              </Styled.ActionButton>
+            </Styled.TokenIcons>
+            </Styled.TokenField>
+              {/* <div>{company.tpc_token}</div> */}
               <div>{company.tpc_wh}</div>
               <div>
                 <Styled.ActionButton onClick={() => handleEditCompany(company.id)}>
@@ -140,7 +154,17 @@
             onCloseDeleteModalWindowHandler={handleCloseDeleteModal}
             onDeleteButtonClickHandler={handleConfirmDelete}
             isDeleteModalWindowOpen={isDeleteModalOpen}
-            deleteItemName={'current Company'}  
+            deleteItemName={'current Company'}
+          isLoading={false}  
+          categoryName="user"  
+        />
+      )}
+        {isConformRefreshOpen && (
+            <ConformRefreshWindow
+            onCloseDeleteModalWindowHandler={handleCloseConfirmRefresh}
+            onDeleteButtonClickHandler={handleConfirmRefresh}
+            isDeleteModalWindowOpen={isConformRefreshOpen}
+            deleteItemName={' current Company'}  
             isLoading={false}  
             categoryName="user"  
           />

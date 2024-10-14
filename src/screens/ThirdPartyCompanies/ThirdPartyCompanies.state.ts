@@ -35,9 +35,7 @@ export const useThirdPartyCompaniesState = () => {
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [countCompanies, setCountCompanies] = useState<number>(0);
-  const [showConfirmPopup, setShowConfirmPopup] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
-  const [selectedCompany, setSelectedCompany] = useState<string>("");
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>('');
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -77,6 +75,7 @@ export const useThirdPartyCompaniesState = () => {
   // console.log("SelectedThirdPartyCompanyData:- ",SelectedThirdPartyCompanyData);
   // console.log("ThirdPartyCompanyAllData:- ",ThirdPartyCompanyAllData);
 
+  const [visibleToken, setVisibleToken] = useState<string | null>(null);
   const onModalWindowToggleHandler = () => {
     setIsModalWindowOpen(!isModalWindowOpen);
   };
@@ -248,6 +247,14 @@ console.log(state)
     
   // ];
 
+  const handleViewToken = (token: string) => {
+    setVisibleToken(token === visibleToken ? null : token); 
+  };
+
+  const handleCopyToken = (token: string) => {
+    navigator.clipboard.writeText(token); 
+    alert("Token copied to clipboard!");
+  };
   const AddCompany = [
     {
       type: 'input',
@@ -337,6 +344,9 @@ console.log(state)
     handleConfirmRevoke,
     handleYesConfirmRevoke,
     handleCloseConfirmRevoke,
+    handleCopyToken,
+    handleViewToken,
+    visibleToken,
     
   };
 };

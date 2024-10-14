@@ -44,7 +44,10 @@ export const SUPPORT_CENTER_ROUTE = 'https://support.google.com/';
 //new
 export const getAdminLinks = (userRole: string) => {
   if (userRole === 'support-admin') {
-    return ADMIN_LINKS.filter(link => link.title !== 'USERS');
+    return ADMIN_LINKS.filter(link => link.title !== 'USERS' && link.title !== 'COMPANIES');
+  }
+  else if(userRole !== 'superadmin'){
+    return ADMIN_LINKS.filter(link => link.title !== 'COMPANIES');
   }
   return ADMIN_LINKS;
 };
