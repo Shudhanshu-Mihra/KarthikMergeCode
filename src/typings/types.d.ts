@@ -520,7 +520,7 @@ declare global {
   interface IDeleteModalWindowProps {
     isLoading?: boolean;
     onCloseDeleteModalWindowHandler?: () => void;
-    onDeleteButtonClickHandler?: () => Promise<void>;
+    onDeleteButtonClickHandler?: () => void;
     isDeleteModalWindowOpen: boolean;
     deleteItemName?: string;
     categoryName?: string;

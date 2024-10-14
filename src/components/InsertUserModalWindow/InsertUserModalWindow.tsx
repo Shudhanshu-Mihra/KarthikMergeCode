@@ -61,7 +61,7 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
     
   } = props;
 
-console.log("modalFields" , modalFields);
+// console.log("modalFields" , modalFields);
 
   const modalStyles =
     (isEdit && isInvitation && isUserList) || modalFields.length === 3
@@ -96,7 +96,7 @@ console.log("modalFields" , modalFields);
   //   console.log(permission);
 
   // };
-  console.log("fields:-  ",fields);
+  // console.log("fields:-  ",fields);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   // const openSecondModal = () => {
@@ -127,6 +127,7 @@ console.log("modalFields" , modalFields);
                   label={input.label}
                   CustomSelectLabel={input.label}
                   key={input.name}
+                  // inputName={input.value}
                   inputName={input.name}
                   // isMulti={input.isMulti}
                   inputType={input.type}

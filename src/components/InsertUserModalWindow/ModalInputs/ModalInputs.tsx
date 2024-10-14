@@ -117,6 +117,9 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
   const { value, onBlur, onChange, name } = formikProps(
     inputType === 'input' ? inputName : ''
   );
+  // console.log("name :- ",name);
+  // console.log("value :- ",value);
+  // console.log("inputName :- ",inputName);
 
   // Mapping labels
   const renderLabel = (labelText: string) => (

@@ -1,11 +1,23 @@
 export interface ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE {
   ThirdPartyCompanyAllData: IThirdPartyCompanyAllData[];
+  SelectedThirdPartyCompanyData: ISelectedThirdPartyCompanyData;
 }
-
+export interface ISelectedThirdPartyCompanyData{
+  id: string;
+  created: string;
+  name: string;
+  logo: string | null;
+  date_format: string;
+  active: boolean;
+  tpc: boolean;
+  tpc_token: string;
+  tpc_wh: string;
+  autoscan_email: string;
+}
 export interface IThirdPartyCompanyAllData {
   id: string;
   name: string;
-  logo: string;
+  logo: string | null;
   date_format: string;
   active: boolean;
   tpc: boolean;

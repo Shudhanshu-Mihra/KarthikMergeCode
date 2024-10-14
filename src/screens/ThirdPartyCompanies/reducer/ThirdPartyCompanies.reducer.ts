@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE } from '../types/ThirdPartyCompanies.type';
+import { ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE } from '../type/ThirdPartyCompanies.type';
 
 // Initial state with an empty array for receiptInvoiceData
 export const THIRD_PARTY_COMPANY_DATA_INITIAL_STATE: ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE = {
   ThirdPartyCompanyAllData: [{
     id: "",
     name: "",
-    logo: "",
+    logo: "" ,
     date_format: "",
     active: true,
     tpc: true,
@@ -19,7 +19,7 @@ export const THIRD_PARTY_COMPANY_DATA_INITIAL_STATE: ITHIRD_PARTY_COMPANY_DATA_I
       country: "",
       description: "",
       symbol: ""
-    }, // <-- Missing comma was here
+    },
     members: [],
     receipts: [],
     suppliersAccounts: [],
@@ -30,7 +30,21 @@ export const THIRD_PARTY_COMPANY_DATA_INITIAL_STATE: ITHIRD_PARTY_COMPANY_DATA_I
     expense: [],
     customerNEWaccount: [],
     suppliersAccAccounts: []
-  }]
+    }],
+    SelectedThirdPartyCompanyData: {
+        
+        id: "",
+        created: "",
+        name: "",
+        logo: null,
+        date_format: "",
+        active: false,
+        tpc: false,
+        tpc_token: "",
+        tpc_wh: "",
+        autoscan_email: ""
+    
+    }
 };
 
 const initialState = THIRD_PARTY_COMPANY_DATA_INITIAL_STATE;
@@ -45,13 +59,32 @@ export const ThirdPartyCompanySlice = createSlice({
     ) => {
       state.ThirdPartyCompanyAllData = action.payload;
     },
-      selectReceipt: (
-        // state: IRIDATA_INITIAL_STATE,
-        // action: PayloadAction<number>
-      ) => {
-        // state.selectedReceiptIndex = action.payload;
-        // state.selectedReceipt = state.receiptInvoiceData.find((item, index) => index === action.payload) || null
-      },
+      // setSelectedThirdPartyCompanyData: (
+      //   state,
+      //   action: PayloadAction<ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE['SelectedThirdPartyCompanyData']>
+      // ) => {
+      //   state.SelectedThirdPartyCompanyData = action.payload;
+    // },
+    setSelectedThirdPartyCompanyData: (
+      state,
+      action: PayloadAction<ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE['SelectedThirdPartyCompanyData']>
+    ) => {
+      const { id } = action.payload;
+    
+      // Update only the matching item in ThirdPartyCompanyAllData
+      state.ThirdPartyCompanyAllData = state.ThirdPartyCompanyAllData.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item, // spread existing data
+            ...action.payload, // update with the new selected data
+          };
+        }
+        return item;
+      });
+    
+      // Optionally, you can store the selected data separately
+      state.SelectedThirdPartyCompanyData = action.payload;
+    },
       selectRecieptType: (
         // state: IRIDATA_INITIAL_STATE,
         // action: PayloadAction<string>
@@ -74,6 +107,6 @@ export const ThirdPartyCompanySlice = createSlice({
     },
   });
   
-  export const { setThirdPartyCompanyData} = ThirdPartyCompanySlice.actions;
+  export const { setThirdPartyCompanyData,setSelectedThirdPartyCompanyData} = ThirdPartyCompanySlice.actions;
   
   export const ThirdPartyCompanyDataReducer = ThirdPartyCompanySlice.reducer;
