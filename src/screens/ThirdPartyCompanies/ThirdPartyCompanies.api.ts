@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { apiServices } from 'services/api-service';
 import { removeEmptyField } from 'services/utils';
 
-import { IGetThirdPartyDataParams} from './type/ThirdPartyCompanies.type';
+import { ICreateThirdPartyCompany, IGetThirdPartyDataParams, IUpdateThirdPartyCompany} from './type/ThirdPartyCompanies.type';
 
 
 export const getThirdPartyAllData = (params?: IGetThirdPartyDataParams) => {
@@ -12,6 +12,15 @@ export const getThirdPartyAllData = (params?: IGetThirdPartyDataParams) => {
   return apiServices.fetchData(URL, params);
 };
 
+export const updateThirdPartyCompany = (payload: IUpdateThirdPartyCompany) => {
+  const URL = `company/update/${payload.id}`;
+  return apiServices.changeData(URL, payload);
+};
+
+export const createThirdPartyCompany = (payload: ICreateThirdPartyCompany) => {
+  const URL = 'company/third-party-companies';
+  return apiServices.postData(URL, payload);
+};
 export const getSelectedThirdPartyData = (id: string) => {
     const URL = `company/third-party-companies/${id}`;
     return apiServices.fetchData(URL);

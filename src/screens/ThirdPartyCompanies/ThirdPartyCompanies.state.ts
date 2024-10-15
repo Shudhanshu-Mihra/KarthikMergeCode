@@ -5,9 +5,11 @@ import { ActionMeta, SingleValue} from 'react-select';
 import { Formik, useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { IState } from "services/redux/reducer";
-import { getSelectedThirdPartyData, getThirdPartyAllData, getThirdPartyRefreshToken, getThirdPartyRevoke } from "./ThirdPartyCompanies.api";
+import { createThirdPartyCompany, getSelectedThirdPartyData, getThirdPartyAllData, getThirdPartyRefreshToken, getThirdPartyRevoke, updateThirdPartyCompany } from "./ThirdPartyCompanies.api";
 import { setSelectedThirdPartyCompanyData, setThirdPartyCompanyData } from "./reducer/ThirdPartyCompanies.reducer";
 import { ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE } from "./type/ThirdPartyCompanies.type";
+import * as Yup from 'yup';
+
 interface Company {
   id: number;
   name: string;
@@ -42,6 +44,19 @@ export const useThirdPartyCompaniesState = () => {
   const[isConformRefreshOpen, setConformRefreshOpen] = useState(false);
   const[isRevokemodalBox, RevokemodalBox] = useState(false);
   const [createSuccessCompany, setCreateSuccessCompany] = useState<boolean>(false);
+  const [isEditCompany, setIsEditCompany] = useState<boolean>(false);
+  const [companyData, setCompanyData] = useState({
+    id: "",
+    created: "",
+    name: "",
+    logo: null,
+    date_format: "",
+    active: false ,
+    tpc: false,
+    tpc_token: "",
+    tpc_wh: "",
+    autoscan_email: ""
+  });
 
   const dispatch = useDispatch();
 
@@ -64,11 +79,12 @@ export const useThirdPartyCompaniesState = () => {
   useEffect(() => {
     setState((prevState) => ({
       ...prevState, // Ensure other state properties are not overwritten
-      companyName: state.companyName || SelectedThirdPartyCompanyData?.name || '',
-      companyId: state.companyId || SelectedThirdPartyCompanyData?.id || '',
-      companyToken: state.companyToken || SelectedThirdPartyCompanyData?.tpc_token || '',
-      companyWebHook:state.companyWebHook || SelectedThirdPartyCompanyData?.tpc_wh || '',
-      companyStatus:state.companyStatus|| SelectedThirdPartyCompanyData?.active || null
+      companyName:  SelectedThirdPartyCompanyData?.name || '',
+      companyId:SelectedThirdPartyCompanyData?.id || '',
+      companyToken: SelectedThirdPartyCompanyData?.tpc_token || '',
+      companyWebHook:SelectedThirdPartyCompanyData?.tpc_wh || '',
+      companyStatus: SelectedThirdPartyCompanyData?.active || null,
+      
     }));
   }, [SelectedThirdPartyCompanyData ,ThirdPartyCompanyAllData]);
 
@@ -109,16 +125,29 @@ export const useThirdPartyCompaniesState = () => {
     newValue: IoptionActive,
     actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
-    console.log("status:", newValue.label, ":", newValue.value,)
-    // setState()
+    console.log("status:", newValue.label,)
+
+    setCompanyData((prevData) => ({
+      ...prevData, 
+      active: newValue.value
+    }));
   };
 
-  const handleEditCompany = async(companyID: string) => {
-    setIsEdit(true);
-    setIsModalOpen(true);
+  const handleEditCompany = async (companyID: string ,Company_Name:string) => {
+    setIsLoading(true)
+    // setIsEdit(true);
     const { data } = await getSelectedThirdPartyData(companyID)
-    // console.log("getSelectedThirdPartyData :-", data);
-  dispatch(setSelectedThirdPartyCompanyData(data))
+    console.log("getSelectedThirdPartyData :-", data);
+    dispatch(setSelectedThirdPartyCompanyData(data))
+    setState(prevData => ({
+      ...prevData,
+      companyName:Company_Name // Merging the new data with the previous data
+    }));
+    setIsLoading(false);
+    setIsEditCompany(true);
+    // setIsModalOpen(true);
+
+
   };
 
   const handleRemoveToken = (companyName: string) => {
@@ -140,32 +169,70 @@ export const useThirdPartyCompaniesState = () => {
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsEditCompany(false);
     // setSelectedCompanyName('');
   };
 
-  const handleSaveCompany = async () => {
-    await formik.handleSubmit();
+  const handleEditSaveCompany = async () => {
+    await formikEditCompany.handleSubmit();
     handleCloseModal();
   };
-  const formik = useFormik({
+  const handleAddSaveCompany = async () => {
+    await formikAddCompany.handleSubmit();
+    handleCloseModal();
+  };
+
+  console.log("company NAme",state.companyName);
+
+  const formikEditCompany = useFormik({
+    enableReinitialize: true, 
     initialValues: {
  
-      companyName:SelectedThirdPartyCompanyData.name || state.companyName|| '', // Initialize with the default values if necessary
-      companyWebHook: SelectedThirdPartyCompanyData.tpc_wh|| state.companyWebHook || '',
-      // name: '',
-      // value: '',
+      companyName:state?.companyName || '' , // Initialize with the default values if necessary
+      companyWebHook: '',
+      // companyStatus: companyData.active || false || null 
     },
-    onSubmit: (values) => {
-      console.log('Form Values:', values);
-      
-    setState((prevState) => ({
-      ...prevState,
-      companyName: values.companyName,  // Update state correctly with form values
-      companyWebHook: values.companyWebHook // Assuming you want to update with this field as well
-    }));
+    validationSchema: Yup.object({
+      companyName: Yup.string().required('Company name is required'),
+    }),
+    onSubmit: async (values) => {
+      console.log('Form EDIT :- ', values);
+      const payload = {
+          id:state.companyId,
+          name: values.companyName || '',
+          active: state.companyStatus || null,
+          tpc_wh: state.companyWebHook || '' 
+        }
+      const { data } =  await updateThirdPartyCompany(payload);
+      dispatch(setSelectedThirdPartyCompanyData(data))
     },
   });
-console.log(state)
+  
+  const formikAddCompany = useFormik({
+    enableReinitialize: true, 
+    initialValues: {
+ 
+      companyName: '' , // Initialize with the default values if necessary
+      companyWebHook: '',
+      // companyStatus: companyData.active || false || null 
+    },
+    validationSchema: Yup.object({
+      companyName: Yup.string().required('Company name is required'),
+      companyWebHook: Yup.string().required('Company WebHook is required'),
+    }),
+    onSubmit: (values) => {
+      console.log('Form Values:', values);
+        const payload = {
+          name: values.companyName || '',
+          active: companyData.active || null,
+          tpc_wh: values.companyWebHook || '' // Corrected the property here
+        }
+        console.log(payload);
+        createThirdPartyCompany(payload);
+      fetchThirdPartyCompaniesData();
+    },
+  });
+// console.log(companyData)
   const handleConfirmDelete = async () => {
     // setSelectedUser(user);
     // setUserNameAdmin(' ' + userName);
@@ -219,33 +286,41 @@ console.log(state)
     dispatch(setSelectedThirdPartyCompanyData(response.data))   
     setConformRefreshOpen(false);
   };
-  // const AddCompany = [
-  //   {
-  //     type: 'input',
-  //     label: 'Name',
-  //     // name: 'name',
-  //     name: 'companyName',
-  //     value: SelectedThirdPartyCompanyData.name || state.companyName
-  //   },
-  //   {
-  //       type: 'select',
-  //       label: 'Status',
-  //       // name: 'active',
-  //       name: 'companyStatus',
-  //       isDisabled:false,
-  //       options: IS_ACTIVE,
-  //     onChangeSelect: onChangeActiveValueHandler,
-  //       value:SelectedThirdPartyCompanyData.active ||state.companyStatus
-  //   },
-  //   {
-  //     type: 'input',
-  //     label: 'Webhook',
-  //     // name: 'webhook',
-  //     name: 'companyWebHook',
-  //     value:SelectedThirdPartyCompanyData.tpc_wh ||state.companyWebHook
-  //   },
+  const AddCompany = [
+    {
+      type: 'input',
+      label: 'Name',
+      // name: 'name',
+      name: 'companyName',
+      // value: SelectedThirdPartyCompanyData.name || state.companyName || 'test'
+    },
+    {
+        type: 'select',
+        label: 'Status',
+        // name: 'active',
+        name: 'companyStatus',
+        isDisabled:false,
+        options: IS_ACTIVE,
+      onChangeSelect: onChangeActiveValueHandler,
+        // value:SelectedThirdPartyCompanyData.active ||state.companyStatus || "Inactive"
+    },
+    {
+      type: 'input',
+      label: 'Webhook',
+      // name: 'webhook',
+      name: 'companyWebHook',
+      // value:SelectedThirdPartyCompanyData.tpc_wh ||state.companyWebHook || 'http://test.com'
+    },
     
-  // ];
+  ];
+  const EditCompany = [
+    {
+      type: 'input',
+      label: 'Name',
+      // name: 'name',
+      name: 'companyName',
+      // value: SelectedThirdPartyCompanyData.name || state.companyName || 'test'
+    },]
 
   const handleViewToken = (token: string) => {
     setVisibleToken(token === visibleToken ? null : token); 
@@ -255,40 +330,40 @@ console.log(state)
     navigator.clipboard.writeText(token); 
     alert("Token copied to clipboard!");
   };
-  const AddCompany = [
-    {
-      type: 'input',
-      label: 'Name',
-      name: 'companyName',
-      value: SelectedThirdPartyCompanyData.name || state.companyName,
-      onChange: formik.handleChange,
-      onBlur: formik.handleBlur, // You may want to include this if using Formik's validation
-      formikProps: formik.getFieldProps('companyName'),
-      formikMeta: formik.getFieldMeta('companyName'),
-    },
-    {
-      type: 'select',
-      label: 'Status',
-      name: 'companyStatus',
-      isDisabled: false,
-      options: IS_ACTIVE,
-      onChangeSelect: onChangeActiveValueHandler,
-        value:SelectedThirdPartyCompanyData.active ||state.companyStatus
-    ,
-      formikProps: formik.getFieldProps('companyStatus'),
-      formikMeta: formik.getFieldMeta('companyStatus'),
-    },
-    {
-      type: 'input',
-      label: 'Webhook',
-      name: 'companyWebHook',
-      value: SelectedThirdPartyCompanyData.tpc_wh || state.companyWebHook,
-      onChange: formik.handleChange,
-      onBlur: formik.handleBlur,
-      formikProps: formik.getFieldProps('companyWebHook'),
-      formikMeta: formik.getFieldMeta('companyWebHook'),
-    },
-  ];
+  // const AddCompany = [
+  //   {
+  //     type: 'input',
+  //     label: 'Name',
+  //     name: 'companyName',
+  //     value: SelectedThirdPartyCompanyData.name || state.companyName,
+  //     onChange: formik.handleChange,
+  //     onBlur: formik.handleBlur, // You may want to include this if using Formik's validation
+  //     formikProps: formik.getFieldProps('companyName'),
+  //     formikMeta: formik.getFieldMeta('companyName'),
+  //   },
+  //   {
+  //     type: 'select',
+  //     label: 'Status',
+  //     name: 'companyStatus',
+  //     isDisabled: false,
+  //     options: IS_ACTIVE,
+  //     onChangeSelect: onChangeActiveValueHandler,
+  //     value:SelectedThirdPartyCompanyData.active ||state.companyStatus
+  //   ,
+  //     formikProps: formik.getFieldProps('companyStatus'),
+  //     formikMeta: formik.getFieldMeta('companyStatus'),
+  //   },
+  //   {
+  //     type: 'input',
+  //     label: 'Webhook',
+  //     name: 'companyWebHook',
+  //     value: SelectedThirdPartyCompanyData.tpc_wh || state.companyWebHook,
+  //     onChange: formik.handleChange,
+  //     onBlur: formik.handleBlur,
+  //     formikProps: formik.getFieldProps('companyWebHook'),
+  //     formikMeta: formik.getFieldMeta('companyWebHook'),
+  //   },
+  // ];
   
   // useEffect(() => {
    
@@ -315,7 +390,7 @@ console.log(state)
     AddCompany,
     handleRevoke,
     handleCloseModal,
-    handleSaveCompany,
+    handleEditSaveCompany,
     handleRefreshToken,
     handleRemoveToken,
     handleEditCompany,
@@ -327,7 +402,7 @@ console.log(state)
     onChangeSearchValueHandler,
     handleConfirmDelete,
     isModalOpen,
-    formik,
+    formikEditCompany,
     setIsModalOpen,
     isEdit,
     selectedCompanyName,
@@ -347,6 +422,9 @@ console.log(state)
     handleCopyToken,
     handleViewToken,
     visibleToken,
-    
+    EditCompany,
+    isEditCompany,
+    formikAddCompany,
+    handleAddSaveCompany
   };
 };

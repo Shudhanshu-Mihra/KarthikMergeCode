@@ -93,8 +93,10 @@ interface IModalFormProps {
   CustomSelectLabel?: string;
   label: string;
   inputName: string;
-  formikMeta: (name: string) => FieldMetaProps<string>;
-  formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  // formikMeta: (name: string) => FieldMetaProps<string>;
+  // formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  formikMeta: (field: string) => FieldMetaProps<any>;
+  formikProps: (field: string) => FieldInputProps<any>;
   onEnterCreateItemClick: (event: React.KeyboardEvent<Element>) => void;
 }
 
@@ -125,7 +127,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
   const renderLabel = (labelText: string) => (
     <Styled.Label>{labelText}</Styled.Label>
   );
-
+  console.log( "test:= ",value , name);
   return (
     <>
       {inputType === 'input' ? (
@@ -133,6 +135,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
           {renderLabel(label)} {/* Render the label before the input */}
           <Input
             text={label}
+            // value={value}
             value={value}
             errorText={error}
             inputName={name}

@@ -48,7 +48,7 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
     isRemoveBorder,
     label,
   } = props;
-
+  console.log("Custom select value :- " , label);
   return (
     <SelectWrapper>
       {!label ? null : <SelectLabel>{label}</SelectLabel>}
@@ -62,6 +62,7 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
         options={options}
         defaultValue={defaultOption}
         value={value}
+        // value={label}
         onChange={onChangeValueHandler}
         paginate={paginate}
         name={name}

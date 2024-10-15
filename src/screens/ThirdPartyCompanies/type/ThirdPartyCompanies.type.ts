@@ -49,3 +49,15 @@ export interface IGetThirdPartyDataParams{
   search?: string;
   active_account?: string;
 }
+
+export interface ICreateThirdPartyCompany{
+  name: string,
+  active: boolean | null,
+  tpc_wh: string
+}
+export interface IUpdateThirdPartyCompany{
+  id: string,
+  name: string,
+  active: boolean| null,  
+  tpc_wh: string,
+}

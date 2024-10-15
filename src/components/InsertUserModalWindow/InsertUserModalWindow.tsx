@@ -25,8 +25,10 @@ interface InsertUserModalWindowProps
   onSaveButtonCLickHandler: (
     e?: React.FormEvent<HTMLFormElement> | undefined
   ) => void;
-  formikMeta: (name: string) => FieldMetaProps<string>;
-  formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  // formikMeta: (name: string) => FieldMetaProps<string>;
+  // formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  formikMeta: (field: string) => FieldMetaProps<any>;
+  formikProps: (field: string) => FieldInputProps<any>;
   modalFields: TInputFields;
   isEdit: boolean;
   isUserList: boolean;

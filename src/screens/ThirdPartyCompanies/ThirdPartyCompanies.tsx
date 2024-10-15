@@ -17,11 +17,12 @@
       state,
       AddCompany, 
       isModalOpen,
-      formik,
+      formikEditCompany,
+      formikAddCompany,
       handleRevoke,
       setIsEdit,
       handleCloseModal,
-      handleSaveCompany,
+      handleEditSaveCompany,
       handleRefreshToken,
       handleRemoveToken,
       handleEditCompany,
@@ -45,12 +46,13 @@
       handleCloseConfirmRevoke,
       handleCopyToken,
       handleViewToken,
-      visibleToken} = useThirdPartyCompaniesState();
-    
-    // const thirdParties = [
-    //   { name: "Company A", status: "Active", token: "abcd1234", webHook: "https://webhook.companyA.com" },
-    //   { name: "Company B", status: "Inactive", token: "efgh5678", webHook: "https://webhook.companyB.com" },
-    // ];
+      visibleToken,
+      isLoading,
+      EditCompany,
+      isEditCompany,
+      handleAddSaveCompany
+    } = useThirdPartyCompaniesState();
+
 
     useEffect(() => {
       fetchThirdPartyCompaniesData()
@@ -102,7 +104,7 @@
               {/* <div>{company.tpc_token}</div> */}
               <div>{company.tpc_wh}</div>
               <div>
-                <Styled.ActionButton onClick={() => handleEditCompany(company.id)}>
+                <Styled.ActionButton onClick={() => handleEditCompany(company.id , company.name)}>
                   <Icon type="edit" />
                 </Styled.ActionButton>
                 <Styled.ActionButton onClick={() => handleRemoveToken(company.id)}>
@@ -119,21 +121,44 @@
         {isModalOpen && (
           <ModalBox
             modalFields={AddCompany}
-            text={isEdit ? 'Edit Company' : 'Add Company'}
-            isLoading={false}
+            text={'Add Company'}
+            isLoading={isLoading}
             isDisableButton={false}
-            // onSaveButtonCLickHandler={async () => {
-            //   await onFormSubmitHandler(formik.values);
-            //   onModalWindowCancelClickButtonHandler(); 
-            //   setCreateSuccessUser(true);
-            // }}
             onCloseModalWindowHandler={handleCloseModal}
-            onSaveButtonCLickHandler={handleSaveCompany}
+            onSaveButtonCLickHandler={handleAddSaveCompany}
             onEnterCreateItemClick={()=>{}}
             isModalWindowOpen={isModalOpen}
             headerText={isEdit ? 'Edit Company' : 'Insert Company'}
-            formikMeta={formik.getFieldMeta}
-            formikProps={formik.getFieldProps}
+            formikMeta={formikAddCompany.getFieldMeta}
+            formikProps={formikAddCompany.getFieldProps}
+            onCloseDeleteModalWindowHandler={handleCloseModal}
+            onDeleteButtonClickHandler={handleConfirmDelete}
+            isDeleteModalWindowOpen={false}
+            deleteItemName={selectedCompanyName}
+            isEdit={isEdit}
+            isInvitation={false}
+            isUserList
+            categoryName="company"
+            isPAllChecked={false}
+            permissionState={[]}
+            setPAllChecked={() => {}}
+            PermissionsForAPIHandler={() => {}}
+            role={''}
+          />
+        )}
+        {isEditCompany && (
+          <ModalBox
+            modalFields={EditCompany }
+            text={'Edit Company'}
+            isLoading={isLoading}
+            isDisableButton={false}
+            onCloseModalWindowHandler={handleCloseModal}
+            onSaveButtonCLickHandler={handleEditSaveCompany}
+            onEnterCreateItemClick={()=>{}}
+            isModalWindowOpen={isEditCompany}
+            headerText={'Edit Company'}
+            formikMeta={formikEditCompany.getFieldMeta}
+            formikProps={formikEditCompany.getFieldProps}
             onCloseDeleteModalWindowHandler={handleCloseModal}
             onDeleteButtonClickHandler={handleConfirmDelete}
             isDeleteModalWindowOpen={false}
