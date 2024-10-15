@@ -47,17 +47,18 @@
       handleCloseConfirmRevoke,
       handleCopyToken,
       handleViewToken,
-
       isLoading,
       EditCompany,
       isEditCompany,
       handleAddSaveCompany,
-
-
       handleCopyWebHook,
       webhookVisibility, 
       toggleWebhookVisibility,
-      visibleToken} = useThirdPartyCompaniesState();
+      visibleToken,
+      setIsSuccessPopupOpen,
+      isSuccessPopupOpen,
+      isCreateCompany
+    } = useThirdPartyCompaniesState();
 
     useEffect(() => {
       fetchThirdPartyCompaniesData()
@@ -240,6 +241,14 @@
               categoryName={selectedCompanyName}
             />
         )}
+        {isSuccessPopupOpen && (
+        <SuccessPopup
+        positionTop="20px"
+        isShowPopup={isSuccessPopupOpen}
+        closePopupFc={()=> setIsSuccessPopupOpen(false)}
+        titleText={!isCreateCompany ? "Company is not created , Try Again":"New company was successfully"}
+        alertColor={!isCreateCompany ? "red" :undefined}
+      />)}
       </Styled.Section>
     );
   };

@@ -48,7 +48,7 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
     isRemoveBorder,
     label,
   } = props;
-  console.log("Custom select value :- " , label);
+  console.log("Custom select value :- " , value);
   return (
     <SelectWrapper>
       {!label ? null : <SelectLabel>{label}</SelectLabel>}

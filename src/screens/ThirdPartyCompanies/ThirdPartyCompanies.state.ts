@@ -45,6 +45,8 @@ export const useThirdPartyCompaniesState = () => {
   const[isRevokemodalBox, RevokemodalBox] = useState(false);
   const [createSuccessCompany, setCreateSuccessCompany] = useState<boolean>(false);
   const [isEditCompany, setIsEditCompany] = useState<boolean>(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState<boolean>(false);
+  const [isCreateCompany, setIsCreateCompany] = useState<boolean>(false);
   const [companyData, setCompanyData] = useState({
     id: "",
     created: "",
@@ -133,14 +135,14 @@ export const useThirdPartyCompaniesState = () => {
     newValue: IoptionActive,
     actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
-    console.log("status:", newValue.label,)
+    console.log("status:", newValue.value,)
 
     setCompanyData((prevData) => ({
       ...prevData, 
       active: newValue.value
     }));
   };
-
+  console.log("companyData :- ",companyData);
   const handleEditCompany = async (companyID: string ,Company_Name:string) => {
     setIsLoading(true)
     // setIsEdit(true);
@@ -195,7 +197,7 @@ export const useThirdPartyCompaniesState = () => {
     initialValues: {
  
       companyName:state?.companyName || '' , // Initialize with the default values if necessary
-      companyWebHook: '',
+      companyWebHook: state?.companyWebHook || '',
       // companyStatus: companyData.active || false || null 
     },
     validationSchema: Yup.object({
@@ -206,8 +208,8 @@ export const useThirdPartyCompaniesState = () => {
       const payload = {
           id:state.companyId,
           name: values.companyName || '',
-          active: state.companyStatus || null,
-          tpc_wh: state.companyWebHook || '' 
+          active: companyData.active|| false,
+          tpc_wh: values.companyWebHook || '' 
         }
       const { data } =  await updateThirdPartyCompany(payload);
       dispatch(setSelectedThirdPartyCompanyData(data))
@@ -218,35 +220,43 @@ export const useThirdPartyCompaniesState = () => {
     enableReinitialize: true, 
     initialValues: {
  
-      companyName: '' , // Initialize with the default values if necessary
+      companyName: '' , 
       companyWebHook: '',
-      // companyStatus: companyData.active || false || null 
+   
     },
-    validationSchema: Yup.object({
-      companyName: Yup.string().required('Company name is required'),
-      companyWebHook: Yup.string().required('Company WebHook is required'),
-    }),
-    onSubmit: (values) => {
-      console.log('Form Values:', values);
+    // validationSchema: Yup.object({
+    //   companyName: Yup.string().required('Company name is required'),
+    //   companyWebHook: Yup.string()
+    //     .matches(/^(http:\/\/|https:\/\/)[^A-Z]*$/, 'Must start with http:// or https://, and capital letters are not allowed')
+    //     .required('Company WebHook is required'),
+    // }),
+    onSubmit: async (values, { resetForm }) => {
+      try {
         const payload = {
           name: values.companyName || '',
-          active: companyData.active || null,
-          tpc_wh: values.companyWebHook || '' // Corrected the property here
+          active: companyData.active,
+          tpc_wh: values.companyWebHook || ''
         }
-        console.log(payload);
-        createThirdPartyCompany(payload);
-      fetchThirdPartyCompaniesData();
+        const response = await createThirdPartyCompany(payload);
+        if (response.status === 200) {
+          setIsSuccessPopupOpen(true);
+          setIsCreateCompany(true);
+          await fetchThirdPartyCompaniesData();
+          resetForm();
+        }
+      }
+    catch (error) {
+      setIsSuccessPopupOpen(true);
+        console.error("Error occurred while creating third-party company:", error);
+        setIsCreateCompany(false)
+    }
     },
   });
-// console.log(companyData)
-  const handleConfirmDelete = async () => {
-    // setSelectedUser(user);
-    // setUserNameAdmin(' ' + userName);
+  const handleConfirmDelete = async () => { 
     setIsDeleteModalOpen(true);
   };
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false); 
-    // setSelectedUser(null); 
   };
 
   const handleConfirmDeleteYes = async () => {
@@ -255,16 +265,12 @@ export const useThirdPartyCompaniesState = () => {
 
   const handleConfirmRevoke = async () => {
     RevokemodalBox(true);
-    // console.log("isRevokemodalBox", isRevokemodalBox);
-    // return
   };
   const handleCloseConfirmRevoke = () => {
     RevokemodalBox(false); 
-    // setSelectedUser(null); 
   };
   const handleYesConfirmRevoke = async () => {
     const response = await getThirdPartyRevoke(SelectedThirdPartyCompanyData.id||state.companyId);
-    // console.log("response :- ", response.data);
   dispatch(setSelectedThirdPartyCompanyData(response.data))
     
     RevokemodalBox(false);
@@ -277,18 +283,14 @@ export const useThirdPartyCompaniesState = () => {
       });
   };
 
-  
   const handleConfirmRefresh = async () => {
     setConformRefreshOpen(true);
   };
   const handleCloseConfirmRefresh = () => {
     setConformRefreshOpen(false); 
-    // setSelectedUser(null); 
   };
   const handleConfirmRefreshYes = async () => {
-
     const response = await getThirdPartyRefreshToken(SelectedThirdPartyCompanyData.id||state.companyId);
-    // console.log("response :- ", response.data);
     dispatch(setSelectedThirdPartyCompanyData(response.data))   
     setConformRefreshOpen(false);
   };
@@ -296,37 +298,43 @@ export const useThirdPartyCompaniesState = () => {
     {
       type: 'input',
       label: 'Name',
-      // name: 'name',
       name: 'companyName',
-      // value: SelectedThirdPartyCompanyData.name || state.companyName || 'test'
     },
     {
         type: 'select',
         label: 'Status',
-        // name: 'active',
         name: 'companyStatus',
         isDisabled:false,
-        options: IS_ACTIVE,
+      options: IS_ACTIVE,
+      selectValue:false,
       onChangeSelect: onChangeActiveValueHandler,
-        // value:SelectedThirdPartyCompanyData.active ||state.companyStatus || "Inactive"
     },
     {
       type: 'input',
       label: 'Webhook',
-      // name: 'webhook',
       name: 'companyWebHook',
-      // value:SelectedThirdPartyCompanyData.tpc_wh ||state.companyWebHook || 'http://test.com'
-    },
-    
+    }
   ];
   const EditCompany = [
     {
       type: 'input',
       label: 'Name',
-      // name: 'name',
       name: 'companyName',
-      // value: SelectedThirdPartyCompanyData.name || state.companyName || 'test'
-    },]
+    },
+    {
+      type: 'select',
+      label: 'Status',
+      name: 'companyStatus',
+      isDisabled: false,
+      selectValue:state?.status,
+      options: IS_ACTIVE,
+    onChangeSelect: onChangeActiveValueHandler,
+  },
+  {
+    type: 'input',
+    label: 'Webhook',
+    name: 'companyWebHook',
+  }]
 
   const handleViewToken = (token: string) => {
     setVisibleToken(token === visibleToken ? null : token); 
@@ -407,5 +415,8 @@ export const useThirdPartyCompaniesState = () => {
     webhookVisibility,
     toggleWebhookVisibility,
     setSelectedCompanyName,
+    isSuccessPopupOpen,
+    setIsSuccessPopupOpen,
+    isCreateCompany
   };
 };

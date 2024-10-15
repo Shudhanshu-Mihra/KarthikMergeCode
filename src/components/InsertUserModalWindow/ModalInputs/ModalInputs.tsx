@@ -116,7 +116,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
   } = props;
 
   const { touched, error } = formikMeta(inputType === 'input' ? inputName : '');
-  const { value, onBlur, onChange, name } = formikProps(
+  const { value, onBlur, onChange, name  } = formikProps(
     inputType === 'input' ? inputName : ''
   );
   // console.log("name :- ",name);
@@ -127,7 +127,7 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
   const renderLabel = (labelText: string) => (
     <Styled.Label>{labelText}</Styled.Label>
   );
-  console.log( "test:= ",value , name);
+  console.log( "test:= ",selectValue);
   return (
     <>
       {inputType === 'input' ? (
