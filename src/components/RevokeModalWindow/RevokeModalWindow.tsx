@@ -43,8 +43,8 @@ export const RevokeModalWindow: FC<IDeleteModalWindowProps> = (props) => {
         <Styled.MainContentWrapper>
           <Styled.SubTitle>
             {!account ?
-              `Are you sure you want to revoke the auth token and grant API access to ${categoryName} ?`:
-              `Are you sure you want to revoke the auth token and grant API access?`
+              `Are you sure you want to revoke the authentication token? This action will disable the current token for ${categoryName}`:
+              `Are you sure you want to revoke the authentication token? This action will disable the current token for the company.`
             }
             {/* <Styled.Highlighter>{deleteItemName}.</Styled.Highlighter> Deleting
             cannot be undone */}

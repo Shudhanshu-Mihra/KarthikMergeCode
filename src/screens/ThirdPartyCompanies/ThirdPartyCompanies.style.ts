@@ -38,6 +38,9 @@ GridRow: styled.div`
   grid-template-columns: repeat(5, 1fr);
   // padding: 2px;
   max-height: 50px;
+   overflow-wrap: break-word; /* Enable text wrapping */
+    word-wrap: break-word; /* For older browsers */
+    word-break: break-word; /* Break long words */
   border-bottom: solid 1px ${({ theme }) => theme.colors.borderWhite};
   color: #404A5F;
   div {
@@ -87,23 +90,61 @@ GridRow: styled.div`
     margin-right: 0;
   }
 `,
-WebHook:styled.div`
-  overflow-wrap: break-word; 
-  word-wrap: break-word; 
-  white-space: normal; 
-  overflow: hidden; 
-  max-width: 100%; 
-`,
-RevokeButton: styled.button`
-  margin-left:2px;
-  background: none;
-  border: 2px solid #404A5F;
-  border-radius: 2px; 
-  cursor: pointer;
-  color: #404A5F; 
-  &:hover {
-    color: ${({ theme }) => theme.colors.red};
-    border-color: ${({ theme }) => theme.colors.red};
+// WebHook:styled.div`
+//   overflow-wrap: break-word; 
+//   word-wrap: break-word; 
+//   white-space: normal; 
+//   overflow: hidden; 
+//   max-width: 100%; 
+// &:hover {
+//   opacity: 0.8;
+// }
+// svg {
+//   fill: #333;
+//   width: 16px;
+//   height: 16px;
+// }
+// `,
+// WebHookIcons : styled.div`
+// display: none;
+// align-items: center;
+
+// button {
+//   background: none;
+//   border: none;
+//   cursor: pointer;
+//   margin-right: 8px; 
+// }
+
+// button:last-child {
+//   margin-right: 0;
+// }
+// `,
+
+WebHook: styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &:hover div {
+    display: flex;
   }
 `,
+
+WebHookIcons: styled.div`
+  display: none;
+  align-items: center;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+`,
+
 };

@@ -72,9 +72,6 @@ export const useThirdPartyCompaniesState = () => {
     }));
   }, [SelectedThirdPartyCompanyData ,ThirdPartyCompanyAllData]);
 
-  // console.log("SelectedThirdPartyCompanyData:- ",SelectedThirdPartyCompanyData);
-  // console.log("ThirdPartyCompanyAllData:- ",ThirdPartyCompanyAllData);
-
   const [visibleToken, setVisibleToken] = useState<string | null>(null);
   const onModalWindowToggleHandler = () => {
     setIsModalWindowOpen(!isModalWindowOpen);
@@ -91,10 +88,21 @@ export const useThirdPartyCompaniesState = () => {
     }));
   };
 
+  const [webhookVisibility, setWebhookVisibility] = useState<boolean[]>([]);
+  useEffect(() => {
+    setWebhookVisibility(Array(ThirdPartyCompanyAllData.length).fill(false));
+  }, [ThirdPartyCompanyAllData]);
+
+  const toggleWebhookVisibility = (index: number) => {
+    setWebhookVisibility((prev) => {
+      const newVisibility = [...prev];
+      newVisibility[index] = !newVisibility[index]; 
+      return newVisibility;
+    });
+  };
+
   const onEnterInsertCompany = async () => {
-    // Handle API call or form submission logic
     setIsLoading(true);
-    // Example: Fetch or process companies data
     setTimeout(() => {
       setFilteredCompanies([
         { id: 1, name: "Company A" },
@@ -110,14 +118,12 @@ export const useThirdPartyCompaniesState = () => {
     actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
     console.log("status:", newValue.label, ":", newValue.value,)
-    // setState()
   };
 
   const handleEditCompany = async(companyID: string) => {
     setIsEdit(true);
     setIsModalOpen(true);
     const { data } = await getSelectedThirdPartyData(companyID)
-    // console.log("getSelectedThirdPartyData :-", data);
   dispatch(setSelectedThirdPartyCompanyData(data))
   };
 
@@ -127,20 +133,17 @@ export const useThirdPartyCompaniesState = () => {
   
   const handleRefreshToken = async(Id: string) => {
     const { data } = await  getSelectedThirdPartyData(Id)
-    // console.log("getSelectedThirdPartyData :-", data);
   dispatch(setSelectedThirdPartyCompanyData(data))
     handleConfirmRefresh()
   };
 
   const handleRevoke = async(id: string) => {
     const { data } = await  getSelectedThirdPartyData(id)
-    // console.log("getSelectedThirdPartyData :-", data);
   dispatch(setSelectedThirdPartyCompanyData(data))
     handleConfirmRevoke();
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    // setSelectedCompanyName('');
   };
 
   const handleSaveCompany = async () => {
@@ -149,19 +152,16 @@ export const useThirdPartyCompaniesState = () => {
   };
   const formik = useFormik({
     initialValues: {
- 
-      companyName:SelectedThirdPartyCompanyData.name || state.companyName|| '', // Initialize with the default values if necessary
+      companyName:SelectedThirdPartyCompanyData.name || state.companyName|| '', 
       companyWebHook: SelectedThirdPartyCompanyData.tpc_wh|| state.companyWebHook || '',
-      // name: '',
-      // value: '',
     },
     onSubmit: (values) => {
       console.log('Form Values:', values);
       
     setState((prevState) => ({
       ...prevState,
-      companyName: values.companyName,  // Update state correctly with form values
-      companyWebHook: values.companyWebHook // Assuming you want to update with this field as well
+      companyName: values.companyName, 
+      companyWebHook: values.companyWebHook 
     }));
     },
   });
@@ -219,41 +219,17 @@ console.log(state)
     dispatch(setSelectedThirdPartyCompanyData(response.data))   
     setConformRefreshOpen(false);
   };
-  // const AddCompany = [
-  //   {
-  //     type: 'input',
-  //     label: 'Name',
-  //     // name: 'name',
-  //     name: 'companyName',
-  //     value: SelectedThirdPartyCompanyData.name || state.companyName
-  //   },
-  //   {
-  //       type: 'select',
-  //       label: 'Status',
-  //       // name: 'active',
-  //       name: 'companyStatus',
-  //       isDisabled:false,
-  //       options: IS_ACTIVE,
-  //     onChangeSelect: onChangeActiveValueHandler,
-  //       value:SelectedThirdPartyCompanyData.active ||state.companyStatus
-  //   },
-  //   {
-  //     type: 'input',
-  //     label: 'Webhook',
-  //     // name: 'webhook',
-  //     name: 'companyWebHook',
-  //     value:SelectedThirdPartyCompanyData.tpc_wh ||state.companyWebHook
-  //   },
-    
-  // ];
-
   const handleViewToken = (token: string) => {
     setVisibleToken(token === visibleToken ? null : token); 
   };
-
+ 
   const handleCopyToken = (token: string) => {
     navigator.clipboard.writeText(token); 
     alert("Token copied to clipboard!");
+  };
+  const handleCopyWebHook = (webHook: string) => {
+    navigator.clipboard.writeText(webHook); 
+    alert("webHook copied to clipboard!");
   };
   const AddCompany = [
     {
@@ -347,6 +323,9 @@ console.log(state)
     handleCopyToken,
     handleViewToken,
     visibleToken,
-    
+    handleCopyWebHook,
+    webhookVisibility,
+    toggleWebhookVisibility,
+    setSelectedCompanyName,
   };
 };
