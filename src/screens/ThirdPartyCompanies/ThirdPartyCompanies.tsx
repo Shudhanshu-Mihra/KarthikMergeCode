@@ -35,6 +35,7 @@
       handleConfirmRefreshYes,
       isEdit,
       selectedCompanyName,
+      setSelectedCompanyName,
       setIsModalOpen,
       fetchThirdPartyCompaniesData,
       ThirdPartyCompanyAllData,
@@ -46,21 +47,23 @@
       handleCloseConfirmRevoke,
       handleCopyToken,
       handleViewToken,
-      visibleToken,
+
       isLoading,
       EditCompany,
       isEditCompany,
-      handleAddSaveCompany
-    } = useThirdPartyCompaniesState();
+      handleAddSaveCompany,
 
+
+      handleCopyWebHook,
+      webhookVisibility, 
+      toggleWebhookVisibility,
+      visibleToken} = useThirdPartyCompaniesState();
 
     useEffect(() => {
       fetchThirdPartyCompaniesData()
     },[])
     return (
       <Styled.Section>
-        <h1>Third-Party Companies</h1>
-        <br />
         <Styled.HeaderActions>
           <ReUseSearch
             searchValue={''}
@@ -70,6 +73,7 @@
             displayText="Add a Company"
             buttonType="actionButton"
             themedButton="primary"
+            widthType="primary"
             onClick={() => {
               setIsEdit(false);
               setIsModalOpen(true);
@@ -88,32 +92,53 @@
 
           {ThirdPartyCompanyAllData.map((company, index) => (
             <Styled.GridRow key={index}>
-              <div>{company.name}</div>
-              <div>{company.active}</div>
+              <div>{company.name}
+              </div>
+              <div>{company.active ? 'Active' : 'Inactive' }</div>
               <Styled.TokenField>
             <span>{visibleToken === company.tpc_token ? company.tpc_token : "******"}</span>
             <Styled.TokenIcons>
             <Styled.ActionButton onClick={() => handleViewToken(company.tpc_token)}>
                 <Icon type="View" />
               </Styled.ActionButton>
-              <Styled.ActionButton onClick={() => handleCopyToken(company.tpc_token)}>
+              <Styled.ActionButton onClick={() => handleCopyWebHook(company.tpc_token)}>
                 <Icon type="Copy" />
               </Styled.ActionButton>
             </Styled.TokenIcons>
             </Styled.TokenField>
-              {/* <div>{company.tpc_token}</div> */}
-              <div>{company.tpc_wh}</div>
+
+            <Styled.WebHook>
+              {/* {company.tpc_wh.length > 25 ? `${company.tpc_wh.substring(0, 25)}...` : company.tpc_wh} */}
+              {webhookVisibility[index]
+                ? company.tpc_wh
+                : (company.tpc_wh.length > 25 ? `${company.tpc_wh.substring(0, 25)}...` : company.tpc_wh)}
+              <Styled.WebHookIcons>
+              <Styled.ActionButton onClick={() => handleCopyToken(company.tpc_wh)}>
+              <Icon type="Copy"  />
+              </Styled.ActionButton>
+              {company.tpc_wh.length > 25 && (
+                  <Styled.ActionButton onClick={() => toggleWebhookVisibility(index)}>
+                    <Icon type="View" />
+                  </Styled.ActionButton>
+                )}
+              </Styled.WebHookIcons>
+            </Styled.WebHook>
               <div>
                 <Styled.ActionButton onClick={() => handleEditCompany(company.id , company.name)}>
                   <Icon type="edit" />
                 </Styled.ActionButton>
-                <Styled.ActionButton onClick={() => handleRemoveToken(company.id)}>
-                  <Icon type="remove" />
-                </Styled.ActionButton>
                 <Styled.ActionButton onClick={() => handleRefreshToken(company.id)}>
                   <Icon type="Reassign" />
                 </Styled.ActionButton>
-                <button onClick={() => handleRevoke(company.id)}>Revoke</button>
+                {/* {!company.tpc_token.startsWith("Revoked") && (
+                <Styled.ActionButton onClick={() => handleRevoke(company.id)}>
+                  <Icon type="remove" />
+                </Styled.ActionButton>
+              )} */}
+              <Styled.ActionButton onClick={() => {setSelectedCompanyName(company.name); handleRevoke(company.id); }}>
+                  <Icon type="remove" />
+                </Styled.ActionButton>
+              {/* <Styled.RevokeButton onClick={() => handleRevoke(company.id)}>Revoke</Styled.RevokeButton> */}
               </div>
             </Styled.GridRow>
           ))}
@@ -181,7 +206,7 @@
             isDeleteModalWindowOpen={isDeleteModalOpen}
             deleteItemName={'current Company'}
           isLoading={false}  
-          categoryName="user"  
+          categoryName={''}  
         />
       )}
         {isConformRefreshOpen && (
@@ -212,7 +237,7 @@
               // deleteItemName={' current Company'}  
               deleteItemName={state.companyName}  
               isLoading={false}  
-              categoryName="user"  
+              categoryName={selectedCompanyName}
             />
         )}
       </Styled.Section>

@@ -88,9 +88,6 @@ export const useThirdPartyCompaniesState = () => {
     }));
   }, [SelectedThirdPartyCompanyData ,ThirdPartyCompanyAllData]);
 
-  // console.log("SelectedThirdPartyCompanyData:- ",SelectedThirdPartyCompanyData);
-  // console.log("ThirdPartyCompanyAllData:- ",ThirdPartyCompanyAllData);
-
   const [visibleToken, setVisibleToken] = useState<string | null>(null);
   const onModalWindowToggleHandler = () => {
     setIsModalWindowOpen(!isModalWindowOpen);
@@ -107,10 +104,21 @@ export const useThirdPartyCompaniesState = () => {
     }));
   };
 
+  const [webhookVisibility, setWebhookVisibility] = useState<boolean[]>([]);
+  useEffect(() => {
+    setWebhookVisibility(Array(ThirdPartyCompanyAllData.length).fill(false));
+  }, [ThirdPartyCompanyAllData]);
+
+  const toggleWebhookVisibility = (index: number) => {
+    setWebhookVisibility((prev) => {
+      const newVisibility = [...prev];
+      newVisibility[index] = !newVisibility[index]; 
+      return newVisibility;
+    });
+  };
+
   const onEnterInsertCompany = async () => {
-    // Handle API call or form submission logic
     setIsLoading(true);
-    // Example: Fetch or process companies data
     setTimeout(() => {
       setFilteredCompanies([
         { id: 1, name: "Company A" },
@@ -156,14 +164,12 @@ export const useThirdPartyCompaniesState = () => {
   
   const handleRefreshToken = async(Id: string) => {
     const { data } = await  getSelectedThirdPartyData(Id)
-    // console.log("getSelectedThirdPartyData :-", data);
   dispatch(setSelectedThirdPartyCompanyData(data))
     handleConfirmRefresh()
   };
 
   const handleRevoke = async(id: string) => {
     const { data } = await  getSelectedThirdPartyData(id)
-    // console.log("getSelectedThirdPartyData :-", data);
   dispatch(setSelectedThirdPartyCompanyData(data))
     handleConfirmRevoke();
   };
@@ -325,45 +331,16 @@ export const useThirdPartyCompaniesState = () => {
   const handleViewToken = (token: string) => {
     setVisibleToken(token === visibleToken ? null : token); 
   };
-
+ 
   const handleCopyToken = (token: string) => {
     navigator.clipboard.writeText(token); 
     alert("Token copied to clipboard!");
   };
-  // const AddCompany = [
-  //   {
-  //     type: 'input',
-  //     label: 'Name',
-  //     name: 'companyName',
-  //     value: SelectedThirdPartyCompanyData.name || state.companyName,
-  //     onChange: formik.handleChange,
-  //     onBlur: formik.handleBlur, // You may want to include this if using Formik's validation
-  //     formikProps: formik.getFieldProps('companyName'),
-  //     formikMeta: formik.getFieldMeta('companyName'),
-  //   },
-  //   {
-  //     type: 'select',
-  //     label: 'Status',
-  //     name: 'companyStatus',
-  //     isDisabled: false,
-  //     options: IS_ACTIVE,
-  //     onChangeSelect: onChangeActiveValueHandler,
-  //     value:SelectedThirdPartyCompanyData.active ||state.companyStatus
-  //   ,
-  //     formikProps: formik.getFieldProps('companyStatus'),
-  //     formikMeta: formik.getFieldMeta('companyStatus'),
-  //   },
-  //   {
-  //     type: 'input',
-  //     label: 'Webhook',
-  //     name: 'companyWebHook',
-  //     value: SelectedThirdPartyCompanyData.tpc_wh || state.companyWebHook,
-  //     onChange: formik.handleChange,
-  //     onBlur: formik.handleBlur,
-  //     formikProps: formik.getFieldProps('companyWebHook'),
-  //     formikMeta: formik.getFieldMeta('companyWebHook'),
-  //   },
-  // ];
+  const handleCopyWebHook = (webHook: string) => {
+    navigator.clipboard.writeText(webHook); 
+    alert("webHook copied to clipboard!");
+  };
+
   
   // useEffect(() => {
    
@@ -425,6 +402,10 @@ export const useThirdPartyCompaniesState = () => {
     EditCompany,
     isEditCompany,
     formikAddCompany,
-    handleAddSaveCompany
+    handleAddSaveCompany,
+    handleCopyWebHook,
+    webhookVisibility,
+    toggleWebhookVisibility,
+    setSelectedCompanyName,
   };
 };
