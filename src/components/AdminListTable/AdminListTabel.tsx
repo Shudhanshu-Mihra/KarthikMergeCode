@@ -137,7 +137,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
       )}
       {isSuccessPopupOpen && (
         <SuccessPopup
-        positionTop="20px"
+        positionTop="-20"
         isShowPopup={isSuccessPopupOpen}
         closePopupFc={()=> setIsSuccessPopupOpen(false)}
         titleText={!isDeleteUser ? "User deletion failed":"User was successfully deleted"}
