@@ -10,6 +10,7 @@
   import { DeleteModalWindow } from "components/DeleteModalWindow";
   import { ConformRefreshWindow } from "components/ConformRefresh/ConformRefreshWindow";
   import { RevokeModalWindow } from "components/RevokeModalWindow";
+import { theme } from "styles/theme";
 
   export const ThirdPartyCompanies: FC = () => {
 
@@ -57,7 +58,8 @@
       visibleToken,
       setIsSuccessPopupOpen,
       isSuccessPopupOpen,
-      isCreateCompany
+      isCreateCompany,
+      copied
     } = useThirdPartyCompaniesState();
 
     useEffect(() => {
@@ -99,12 +101,13 @@
               <Styled.TokenField>
             <span>{visibleToken === company.tpc_token ? company.tpc_token : "******"}</span>
             <Styled.TokenIcons>
-            <Styled.ActionButton onClick={() => handleViewToken(company.tpc_token)}>
+            <Styled.ActionButtonNew onClick={() => handleViewToken(company.tpc_token)}>
                 <Icon type="View" />
-              </Styled.ActionButton>
-              <Styled.ActionButton onClick={() => handleCopyWebHook(company.tpc_token)}>
-                <Icon type="Copy" />
-              </Styled.ActionButton>
+              </Styled.ActionButtonNew>
+              <Styled.ActionButtonNew onClick={() => handleCopyWebHook(company.tpc_token)}>
+                <Icon type="Copy"/>
+              </Styled.ActionButtonNew>
+              {copied && <Styled.Copied><div>copied!</div></Styled.Copied>}
             </Styled.TokenIcons>
             </Styled.TokenField>
 
@@ -114,13 +117,16 @@
                 ? company.tpc_wh
                 : (company.tpc_wh.length > 25 ? `${company.tpc_wh.substring(0, 25)}...` : company.tpc_wh)}
               <Styled.WebHookIcons>
-              <Styled.ActionButton onClick={() => handleCopyToken(company.tpc_wh)}>
+              <Styled.ActionButtonNew onClick={() => handleCopyToken(company.tpc_wh)}>
               <Icon type="Copy"  />
-              </Styled.ActionButton>
+              </Styled.ActionButtonNew>
+              
+              {copied && <Styled.Copied><div>copied!</div></Styled.Copied>}
+              
               {company.tpc_wh.length > 25 && (
-                  <Styled.ActionButton onClick={() => toggleWebhookVisibility(index)}>
+                  <Styled.ActionButtonNew onClick={() => toggleWebhookVisibility(index)}>
                     <Icon type="View" />
-                  </Styled.ActionButton>
+                  </Styled.ActionButtonNew>
                 )}
               </Styled.WebHookIcons>
             </Styled.WebHook>
@@ -136,9 +142,9 @@
                   <Icon type="remove" />
                 </Styled.ActionButton>
               )} */}
-              <Styled.ActionButton onClick={() => {setSelectedCompanyName(company.name); handleRevoke(company.id); }}>
-                  <Icon type="remove" />
-                </Styled.ActionButton>
+              <Styled.ActionButtonClose onClick={() => {setSelectedCompanyName(company.name); handleRevoke(company.id); }}>
+                  <Icon type="Revoke"/>
+                </Styled.ActionButtonClose>
               {/* <Styled.RevokeButton onClick={() => handleRevoke(company.id)}>Revoke</Styled.RevokeButton> */}
               </div>
             </Styled.GridRow>
@@ -243,7 +249,7 @@
         )}
         {isSuccessPopupOpen && (
         <SuccessPopup
-        positionTop="20px"
+        positionTop="45"
         isShowPopup={isSuccessPopupOpen}
         closePopupFc={()=> setIsSuccessPopupOpen(false)}
         titleText={!isCreateCompany ? "Company is not created , Try Again":"New company was successfully"}

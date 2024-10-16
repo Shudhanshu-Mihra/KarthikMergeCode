@@ -101,14 +101,6 @@ export const UsersList: FC = () => {
     if (!countUsers) return;
     onChangePagesAmount(Number(itemsPerPage.value), countUsers);
   }, [countUsers, itemsPerPage]);
-  
-  // useEffect(() => {
-  //   debouncedValue &&
-  //     onGetAllCompanyMembersHandler({
-  //       search: debouncedValue,
-  //     });
-  // }, [debouncedValue, active]);
-  
   const [createSuccessUser, setCreateSuccessUser] = useState<boolean>(false);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
 
@@ -152,22 +144,9 @@ export const UsersList: FC = () => {
     (currentPage - 1) * itemsPerPageNumber,
     currentPage * itemsPerPageNumber 
   );
-  // const isPaginationPanel = adminUserData
-  //   ?(searchValue && adminUserData?.length) ||
-  //     (!searchValue && members?.length)
-  //   : (searchValue && searchedCompanies?.length) ||
-  //     (!searchValue && companies?.length);
-
-  // const numberVal = Number(itemsPerPage.value);
-  // const paginatedUsers = filteredUsers.slice(
-  //   0,  numberVal
-  // );
-  // const isPaginationPanel = filteredUsers?.length;
-  // const isPaginationPanel = adminUserData?.length;
   const isPaginationPanel = countUsers>0;
 
   return (
-    //create user
     <Styled.Section>
       <ModalBox
         modalFields={ adminInviteFormArr.slice(0, 4)}
@@ -202,7 +181,7 @@ export const UsersList: FC = () => {
         role={role?.value || null}
       />
       <SuccessPopup
-        positionTop="0"
+        positionTop="-20"
         isShowPopup={createSuccessUser}
         closePopupFc={() => {setCreateSuccessUser(false)}}
         titleText="User created successfully"

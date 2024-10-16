@@ -29,13 +29,12 @@ webHook:string;
 }
 // const initialState = THIRD_PARTY_COMPANIES_INITIAL_STATE;
 export const useThirdPartyCompaniesState = () => {
-// const [state, setState] = useState<IcreateCompany>(initialState);
+  const [copied, setCopied] = useState(false);
+  const [copyMessage, setCopyMessage] = useState<string | null>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalWindowOpen, setIsModalWindowOpen] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [countCompanies, setCountCompanies] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>('');
@@ -151,7 +150,7 @@ export const useThirdPartyCompaniesState = () => {
     dispatch(setSelectedThirdPartyCompanyData(data))
     setState(prevData => ({
       ...prevData,
-      companyName:Company_Name // Merging the new data with the previous data
+      companyName:Company_Name 
     }));
     setIsLoading(false);
     setIsEditCompany(true);
@@ -285,6 +284,7 @@ export const useThirdPartyCompaniesState = () => {
 
   const handleConfirmRefresh = async () => {
     setConformRefreshOpen(true);
+    //call popup 
   };
   const handleCloseConfirmRefresh = () => {
     setConformRefreshOpen(false); 
@@ -342,11 +342,13 @@ export const useThirdPartyCompaniesState = () => {
  
   const handleCopyToken = (token: string) => {
     navigator.clipboard.writeText(token); 
-    alert("Token copied to clipboard!");
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1000);
   };
   const handleCopyWebHook = (webHook: string) => {
     navigator.clipboard.writeText(webHook); 
-    alert("webHook copied to clipboard!");
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1000);
   };
 
   
@@ -368,8 +370,8 @@ export const useThirdPartyCompaniesState = () => {
     isModalWindowOpen,
     searchValue,
     filteredCompanies,
-    itemsPerPage,
-    currentPage,
+    // itemsPerPage,
+    // currentPage,
     countCompanies,
     createSuccessCompany,
     AddCompany,
@@ -417,6 +419,7 @@ export const useThirdPartyCompaniesState = () => {
     setSelectedCompanyName,
     isSuccessPopupOpen,
     setIsSuccessPopupOpen,
-    isCreateCompany
+    isCreateCompany,
+    copied
   };
 };

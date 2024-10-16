@@ -68,6 +68,7 @@ import { ReactComponent as Reassign } from 'assets/icons/re-assign.svg';
 import { ReactComponent as Delete } from 'assets/icons/delete.svg';
 import { ReactComponent as View } from 'assets/icons/view-eye.svg';
 import { ReactComponent as Copy } from 'assets/icons/copy.svg';
+import { ReactComponent as Revoke } from 'assets/icons/revoke.svg';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -132,7 +133,8 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   Reassign,
   Delete,
   View,
-  Copy
+  Copy,
+  Revoke
 
 };
 
