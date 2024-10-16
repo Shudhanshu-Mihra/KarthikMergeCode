@@ -9,6 +9,7 @@ import { createThirdPartyCompany, getSelectedThirdPartyData, getThirdPartyAllDat
 import { setSelectedThirdPartyCompanyData, setThirdPartyCompanyData } from "./reducer/ThirdPartyCompanies.reducer";
 import { ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE } from "./type/ThirdPartyCompanies.type";
 import * as Yup from 'yup';
+import { selectOptions } from "@testing-library/user-event/dist/types/setup/directApi";
 
 interface Company {
   id: number;
@@ -59,6 +60,9 @@ export const useThirdPartyCompaniesState = () => {
     tpc_wh: "",
     autoscan_email: ""
   });
+  const [isChangeActiveValueHandlerAddCompany, setIsChangeActiveValueHandlerAddCompany] = useState<boolean>(true);
+
+  // ChangeActiveValueHandlerAddCompany
 
   const dispatch = useDispatch();
 
@@ -131,7 +135,15 @@ export const useThirdPartyCompaniesState = () => {
     }, 1000);
   };
 
-  const onChangeActiveValueHandler = (
+  const onChangeActiveValueHandlerAddCompany = (
+    newValue: IoptionActive,
+    actionMeta: ActionMeta<IoptionActive> | unknown
+  ) => {
+    console.log("status:", newValue.value,)
+
+    setIsChangeActiveValueHandlerAddCompany(newValue.value);
+  };
+  const onChangeActiveValueHandlerEditCompany = (
     newValue: IoptionActive,
     actionMeta: ActionMeta<IoptionActive> | unknown
   ) => {
@@ -142,6 +154,7 @@ export const useThirdPartyCompaniesState = () => {
       active: newValue.value
     }));
   };
+  
   console.log("companyData :- ",companyData);
   const handleEditCompany = async (companyID: string ,Company_Name:string) => {
     setIsLoading(true)
@@ -153,6 +166,7 @@ export const useThirdPartyCompaniesState = () => {
       ...prevData,
       companyName:Company_Name // Merging the new data with the previous data
     }));
+    setCompanyData(data)
     setIsLoading(false);
     setIsEditCompany(true);
     // setIsModalOpen(true);
@@ -294,6 +308,10 @@ export const useThirdPartyCompaniesState = () => {
     dispatch(setSelectedThirdPartyCompanyData(response.data))   
     setConformRefreshOpen(false);
   };
+  const selectedStatusOfThirdPartyAddCompany = isChangeActiveValueHandlerAddCompany
+  ? { label: "Active", value: true }
+    : { label: "Inactive", value: false }; 
+  
   const AddCompany = [
     {
       type: 'input',
@@ -306,8 +324,10 @@ export const useThirdPartyCompaniesState = () => {
         name: 'companyStatus',
         isDisabled:false,
       options: IS_ACTIVE,
-      selectValue:false,
-      onChangeSelect: onChangeActiveValueHandler,
+      // value: IS_ACTIVE[0],
+      value: selectedStatusOfThirdPartyAddCompany,
+      // selectOptions:IS_ACTIVE[0],
+      onChangeSelect: onChangeActiveValueHandlerAddCompany,
     },
     {
       type: 'input',
@@ -315,6 +335,10 @@ export const useThirdPartyCompaniesState = () => {
       name: 'companyWebHook',
     }
   ];
+ 
+  const selectedStatusOfThirdPartyCompany = companyData.active
+  ? { label: "Active", value: true }
+    : { label: "Inactive", value: false }; 
   const EditCompany = [
     {
       type: 'input',
@@ -326,9 +350,10 @@ export const useThirdPartyCompaniesState = () => {
       label: 'Status',
       name: 'companyStatus',
       isDisabled: false,
-      selectValue:state?.status,
+      selectValue: state?.status,
+      value:selectedStatusOfThirdPartyCompany ,
       options: IS_ACTIVE,
-    onChangeSelect: onChangeActiveValueHandler,
+    onChangeSelect: onChangeActiveValueHandlerEditCompany,
   },
   {
     type: 'input',
@@ -379,7 +404,6 @@ export const useThirdPartyCompaniesState = () => {
     handleRefreshToken,
     handleRemoveToken,
     handleEditCompany,
-    onChangeActiveValueHandler,
     onEnterInsertCompany,
     setIsEdit,
     setCreateSuccessCompany,

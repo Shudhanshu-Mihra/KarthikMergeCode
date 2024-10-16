@@ -98,7 +98,7 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
   //   console.log(permission);
 
   // };
-  // console.log("fields:-  ",fields);
+  console.log("fields:-  ",fields[1]);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
   // const openSecondModal = () => {

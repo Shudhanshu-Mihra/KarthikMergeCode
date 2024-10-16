@@ -26,7 +26,6 @@
       handleRefreshToken,
       handleRemoveToken,
       handleEditCompany,
-      onChangeActiveValueHandler, 
       handleCloseDeleteModal,
       handleConfirmDelete,
       setConformRefreshOpen,
