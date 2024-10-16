@@ -17,6 +17,7 @@ export const ADMIN_LINKS = [
   // { title: 'MANAGE', route: ROUTES.manage, tabs: MASTER_TABS, iconName: 'manageIcon' },
   { title: 'DATA', route: ROUTES.pendingriData, iconName: 'salesIcon' },
   {title:'USERS',route: ROUTES.usersList, iconName: 'invitesIcon'},
+  {title:'COMPANIES', route:ROUTES.thirdPartyCompanies, iconName:'expReportIcon'}
   //  { title: 'USERS', route: ROUTES.settings, iconName: 'settingsIcon', isLast: true },
   // { title: 'HELP & SUPPORT', route: ROUTES.support, isLast: true },
 ];
@@ -43,7 +44,10 @@ export const SUPPORT_CENTER_ROUTE = 'https://support.google.com/';
 //new
 export const getAdminLinks = (userRole: string) => {
   if (userRole === 'support-admin') {
-    return ADMIN_LINKS.filter(link => link.title !== 'USERS');
+    return ADMIN_LINKS.filter(link => link.title !== 'USERS' && link.title !== 'COMPANIES');
+  }
+  else if(userRole !== 'superadmin'){
+    return ADMIN_LINKS.filter(link => link.title !== 'COMPANIES');
   }
   return ADMIN_LINKS;
 };

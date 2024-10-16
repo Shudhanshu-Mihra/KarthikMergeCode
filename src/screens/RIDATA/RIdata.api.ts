@@ -5,12 +5,6 @@ import { removeEmptyField } from 'services/utils';
 
 import { IFlagPayload, IGetReceiptsInvoiceParams, IImageView, IPostEmail  } from './types/RIdata.type';
 
-// import { CONFIG } from 'constants/config';
-
-// interface IReceiptsIds {
-//   receipts: string[];
-//   active_account?: string;
-// }
 
 export const getReceipts = (params?: IGetReceiptsInvoiceParams) => {
   const URL = '/admin/uploads';

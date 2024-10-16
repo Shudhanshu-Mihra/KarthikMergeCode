@@ -15,8 +15,10 @@ interface IUserListModalBoxProps
     e?: React.FormEvent<HTMLFormElement> | undefined
   ) => void;
   // onSaveButtonCLickHandler: void;
-  formikMeta: (name: string) => FieldMetaProps<string>;
-  formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  // formikMeta: (name: string) => FieldMetaProps<string>;
+  // formikProps: (nameOrOptions: string) => FieldInputProps<string>;
+  formikMeta: (field: string) => FieldMetaProps<any>;
+  formikProps: (field: string) => FieldInputProps<any>;
   // modalFields: TInputFields;
   modalFields: any[];
   isEdit: boolean;
@@ -46,7 +48,6 @@ export const ModalBox: FC<IUserListModalBoxProps> = (props) => {
     isInvitation,
     categoryName,
     // isAllChecked,
-    onCheckedAllItemsHandler,
 
     isPAllChecked,
     permissionState,

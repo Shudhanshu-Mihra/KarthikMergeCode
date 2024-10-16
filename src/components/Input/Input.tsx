@@ -25,7 +25,7 @@ interface InputProps {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>
   ) => void;
   onKeyDown?: (event: React.KeyboardEvent) => void;
-  value: string|number | undefined;
+  value: string | number | undefined;
   isInputDate?: boolean;
   selectedDate?: Date | null;
   inputType?: string;

@@ -68,6 +68,11 @@ import { ReactComponent as privecy } from 'assets/icons/privecy.svg';
 import { ReactComponent as resetIcon } from 'assets/icons/reset.svg';
 import { ReactComponent as Inflow } from '../../assets/icons/green-inflow.svg';
 import { ReactComponent as Outflow } from 'assets/icons/outflow-red.svg';
+import { ReactComponent as Reassign } from 'assets/icons/re-assign.svg';
+import { ReactComponent as Delete } from 'assets/icons/delete.svg';
+import { ReactComponent as View } from 'assets/icons/view-eye.svg';
+import { ReactComponent as Copy } from 'assets/icons/copy.svg';
+import { ReactComponent as Revoke } from 'assets/icons/revoke.svg';
 import { ReactComponent as Image } from 'assets/icons/image.svg';
 import { ReactComponent as FlagIcon } from 'assets/icons/Flag.svg';
 import { useToggle } from 'hooks/useToggle';
@@ -132,6 +137,11 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   loderIcon,
   Inflow,
   Outflow,
+  Reassign,
+  Delete,
+  View,
+  Copy,
+  Revoke,
   Image,
   downloadIcon,
   RotateIcon,

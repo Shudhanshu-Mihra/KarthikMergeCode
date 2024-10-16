@@ -6,12 +6,12 @@ import { Button } from '../Button/Button';
 import {
 
   DeleteModalWindowContentStyles as Styled,
-} from './DeleteModalWindow.styles';
+} from './DeleteThirdPartyModalWindow.styles';
 import { COLORS } from '../../styles/theme';
 import { modalContentStyles, overlay } from '../../constants/modal-window.constants';
 import { Input } from '../Input';
 
-export const DeleteModalWindow: FC<IDeleteModalWindowProps> = (props) => {
+export const DeleteThirdPartyModalWindow: FC<IDeleteModalWindowProps> = (props) => {
   const {
     isDeleteModalWindowOpen,
     deleteItemName,
@@ -39,15 +39,15 @@ export const DeleteModalWindow: FC<IDeleteModalWindowProps> = (props) => {
       style={DeleteModalWindowStyles}
     >
       <Styled.ContentWrapper data-testid="modal-window">
-        <Styled.Title>Confirm Removing Auth Token</Styled.Title>
+        <Styled.Title>Confirm delete</Styled.Title>
         <Styled.MainContentWrapper>
           <Styled.SubTitle>
             {!account ?
-              `Are you sure to remove the selected company ${categoryName} auth token and API access? ` :
-              `Are you sure to remove the auth token and API access?`
+              `Sure you want to delete the selected records ${categoryName}` :
+              `Sure you want to delete account?`
             }
-            {/* <Styled.Highlighter>{deleteItemName}.</Styled.Highlighter> Deleting
-            cannot be undone */}
+            <Styled.Highlighter>{deleteItemName}.</Styled.Highlighter> Deleting
+            cannot be undone
           </Styled.SubTitle>
           {account &&
             <>

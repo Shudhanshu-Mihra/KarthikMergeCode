@@ -43,6 +43,8 @@ import {
 import { RIdataReducer, RIDATA_INITIAL_STATE } from 'screens/RIDATA/reducer/RIdata.reducer';
 import { IRIDATA_INITIAL_STATE } from 'screens/RIDATA/types/RIdata.type';
 import { ISETTINGS_INITIAL_STATE } from 'screens/Settings/types/settings.types';
+import { ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE } from 'screens/ThirdPartyCompanies/type/ThirdPartyCompanies.type';
+import { ThirdPartyCompanyDataReducer } from 'screens/ThirdPartyCompanies/reducer/ThirdPartyCompanies.reducer';
 // import { IINVITES_INITIAL_STATE } from 'screens/Invites/types/invites.types';
 // import {
 //   InvitesReducer,
@@ -92,6 +94,7 @@ export interface IState {
   // invoices: IINVOICE_INITIAL_STATE;
   // reports: IREPORT_INITIAL_STATE;
   RIdata: IRIDATA_INITIAL_STATE;
+  ThirdPartyCompanyData: ITHIRD_PARTY_COMPANY_DATA_INITIAL_STATE;
   
 }
 
@@ -107,7 +110,8 @@ const combineReducer = combineReducers<IState>({
   // invites: InvitesReducer,
   // invoices: salesInvoicesReducer,
   // reports: expenseReportReducer,
-  RIdata: RIdataReducer
+  RIdata: RIdataReducer,
+  ThirdPartyCompanyData: ThirdPartyCompanyDataReducer
 });
 
 export type combineReducerType = ReturnType<typeof combineReducer>;
