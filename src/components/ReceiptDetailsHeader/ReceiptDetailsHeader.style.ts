@@ -18,7 +18,7 @@ export const ReceiptDetailsHeaderStyles = {
   BoxWrapper: styled.div`
     display: flex;
     justify-content: space-between;
-    width: 125px;
+    width: max-content;
   `,
   RightButtonBox: styled.div`
     display: flex;

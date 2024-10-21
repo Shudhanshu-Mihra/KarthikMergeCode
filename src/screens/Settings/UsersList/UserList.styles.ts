@@ -1,15 +1,27 @@
 import { styled } from 'styles/theme';
 
 export const UserListStyles = {
+  // Section: styled.section`
+  //   width: 100%;
+  //   height: 100%;
+  //   background: ${({ theme }) => theme.colors.white};
+  //   display: flex;
+  //   padding : 0px;
+  //   flex-direction: column;
+  //   justify-content: flex-start;
+  //   position: relative;
+  // `,
   Section: styled.section`
-    width: 100%;
-    height: 100%;
-    background: ${({ theme }) => theme.colors.white};
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: relative;
-  `,
+  display: flex;
+  flex-direction: column;
+  background: ${({ theme }) => theme.colors.white};
+  justify-content: flex-start; /* Ensures content starts from the top */
+  align-items: stretch; /* Ensures content doesn't add space */
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+`,
   TableWrapper: styled.div`
     width: 100%;
   `,

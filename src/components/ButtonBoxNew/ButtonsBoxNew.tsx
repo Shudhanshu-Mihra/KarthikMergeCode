@@ -51,7 +51,7 @@ export const ButtonsBoxNew: FC<IButtonBoxProps> = ({ onRejectButtonClickHandler,
 			</Button> */}
 			{/* <Button onClick={handleRejectButtonClick} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}> */}
 			<Button onClick={rejected} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'accepted' && isLoading} isDisabled={selectedButton === 'accepted' && isLoading}>
-				{"Reject"}
+				{"Save and reject"}
 			</Button>
 		</Styled.ButtonsWrapper>
 	);

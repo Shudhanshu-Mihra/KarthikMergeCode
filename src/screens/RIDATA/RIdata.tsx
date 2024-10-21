@@ -32,7 +32,7 @@ export const RIdata = () => {
   useEffect(() => {
     const params = {
 		...RIdataParams,
-		// take: 100,
+		// take: 1500,
     };
     // onFetchReceiptsHandler(RIdataParams);
     onFetchReceiptsHandler(params);

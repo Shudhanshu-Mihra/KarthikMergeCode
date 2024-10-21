@@ -49,7 +49,7 @@ export const ButtonsBox: FC<IButtonBoxProps> = ({ reviewed, onCancelButtonClickH
 				{"Review & Save"}
 			</Button> */}
 			<Button onClick={reviewed} themedButton={selectedButton === "save" ? "roundedRed" : "roundedWhite"} width="rounded" isLoading={selectedButton === 'save' && isLoading} isDisabled={selectedButton === 'save' && isLoading}>
-				{"Review & Save"}
+				{"Save and ready for review"} 
 			</Button>
 			
 			<Button onClick={(event:any) => handleButtonClick("cancel", onCancelButtonClickHandler, event)} themedButton={selectedButton === "cancel" ? "roundedRed" : "roundedWhite"} width="rounded" isDisabled={isLoading}>
