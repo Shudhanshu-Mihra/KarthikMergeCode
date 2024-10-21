@@ -143,7 +143,8 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
             onChangeValue={onChange}
             touched={touched}
             isNoMargin
-            isRemoveBorder
+            // isRemoveBorder
+            isRemoveBoxShadow ={true}
             onKeyDown={onEnterCreateItemClick}
           />
         </Styled.InputWrapper>
@@ -155,7 +156,8 @@ export const ModalInputs: FC<IModalFormProps> = (props) => {
             options={options}
             isFullWidth
             isMulti={isMulti}
-            isRemoveBorder
+           // isRemoveBorder
+           isRemoveBoxShadow ={true}
             value={selectValue}
             label={CustomSelectLabel}
           />

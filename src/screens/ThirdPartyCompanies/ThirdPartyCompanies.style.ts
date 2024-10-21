@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ThirdPartyCompaniesStyles = {
   Section: styled.section`
     padding: 30px;
-    background-color: #f9f9f9;
+     background: ${({ theme }) => theme.colors.white};
   `,
 
   HeaderActions: styled.div`

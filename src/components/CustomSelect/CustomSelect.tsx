@@ -29,6 +29,7 @@ interface ICustomSelectProps {
   isFullWidth?: boolean;
   isRemoveBorder?: boolean;
   label?: string;
+  isRemoveBoxShadow?: boolean;
 }
 
 export const CustomSelect: FC<ICustomSelectProps> = (props) => {
@@ -47,14 +48,16 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
     isFullWidth,
     isRemoveBorder,
     label,
+    isRemoveBoxShadow
   } = props;
-  console.log("Custom select value :- " , value);
+
   return (
     <SelectWrapper>
       {!label ? null : <SelectLabel>{label}</SelectLabel>}
       <StyledReactSelect
         isRemoveBorder={isRemoveBorder}
         height={height}
+        isRemoveBoxShadow={isRemoveBoxShadow}
         width={width}
         marginBottom={marginBottom}
         components={{ DropdownIndicator }}
@@ -62,7 +65,6 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
         options={options}
         defaultValue={defaultOption}
         value={value}
-        // value={label}
         onChange={onChangeValueHandler}
         paginate={paginate}
         name={name}
