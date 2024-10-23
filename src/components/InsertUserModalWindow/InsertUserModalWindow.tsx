@@ -166,7 +166,7 @@ export const InsertUserModalWindow: FC<InsertUserModalWindowProps> = (
               isNoPadding
               // isDisableButton={isDisableButton}
             />
-             <Styled.CloseIconWrapper>
+            <Styled.CloseIconWrapper>
           <Close width={20} onClick={onCloseModalWindowHandler} />
           </Styled.CloseIconWrapper>
           </Styled.Form>

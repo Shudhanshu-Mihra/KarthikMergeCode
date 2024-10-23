@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useUserListState } from 'screens/Settings/UsersList/UserList.state';
 import { deleteAdminUser } from 'screens/Settings/settings.api';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { EDIT_USER_INITIAL_STATE, USERS_LIST_INITIAL_STATE } from 'screens/Settings/UsersList/userList.constants';
 import { ActionMeta } from 'react-select';
 import { IAdminUserEdit, } from 'screens/Settings/UsersList/types/userList.types';
+import { USER_ROLES } from 'constants/strings';
 type SingleValue<Option> = Option | null;
 export const useAdminListTable = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ export const useAdminListTable = () => {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedUserEdit, setSelectedUserEdit] = useState<string>('');
   const [userNameAdmin, setUserNameAdmin] = useState<string | undefined>('');
+  const [userFilterOptions, setUserFilterOptions] = useState<IOption[]>([]);
+  const [isReassignModalOpen, setisReassignModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
@@ -49,11 +52,57 @@ export const useAdminListTable = () => {
     adminInviteFormArr
   } = useUserListState();
 
-  const handleReassignClick = (id: string, name: string) => {
-    setReAssignData(id);
-    setreAssignUserName(name);
-    navigate(ROUTES.reassignData);
-  };
+  const {  adminUserData }=useUserListState();
+  const allUserSelect : IOption[]= [{ value: 'all', label: `All` }];
+const handleReassignClick = (id: string, name: string) => {
+  setReAssignData(id);
+  setreAssignUserName(name);
+  setisReassignModalOpen(true);
+  const options: IOption[] = [
+    { value: 'all', label: `All` },
+    ...adminUserData
+      .filter(user => user.id !== id) 
+      .map(user => ({
+        value: user.id,
+        label: user.name,
+      })),
+  ];
+  setUserFilterOptions(options);
+  
+};
+
+// const handleUserSelection = (selectedOption: IOption) => {
+//   // if (selectedOption.value === 'all') {
+//   //   // Select all users except the current one
+//   //   const allSelectedUsers = adminUserData.filter(user => user.id !== reAssignData);
+    
+//   //   // Do something with all selected users (e.g., reassign)
+//   //   console.log('Reassigning to all users:', allSelectedUsers);
+    
+//   //   // Example: Call your reassign function here with all users
+//   //   reassignToUsers(allSelectedUsers);
+//   // } 
+//   // else {
+//   //   // Handle the specific user selection case
+//   //   console.log('Reassigning to user ID:', selectedOption.value);
+    
+//   //   // Example: Call your reassign function with a specific user
+//   //   reassignToUser(selectedOption.value);
+//   // }
+// };
+
+// Example function to reassign to all users
+const reassignToUsers = (users: typeof adminUserData) => {
+  // Your logic to handle reassigning tasks to all users
+  console.log('Reassigning to:', users.map(user => user.name));
+};
+
+// Example function to reassign to a specific user
+const reassignToUser = (userId: string) => {
+  // Your logic to handle reassigning tasks to a specific user
+  console.log('Reassigning to user with ID:', userId);
+};
+
 
   const handleDeleteClick = (user: string, userName: string) => {
     setSelectedUser(user);
@@ -102,10 +151,12 @@ export const useAdminListTable = () => {
     setAdminEmail(email);
     setAminActive(active);
   };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);  
     setSelectedUser(null); 
     setIsEdit(false);  
+    setisReassignModalOpen(false);
   };
   const onChangeStateFieldHandler = (
     optionName: keyof typeof USERS_LIST_INITIAL_STATE,
@@ -120,6 +171,36 @@ export const useAdminListTable = () => {
     newValue: IOption,
     actionMeta: ActionMeta<IOption> | unknown
   ) => onChangeStateFieldHandler('role', newValue);
+
+  // const handleSelectOption = (selectedOptionValue: { label: string, value: string }[]) => {
+  //   console.log("selectedOptionValue :", selectedOptionValue);
+  //   if(selectedOptionValue[0].value === 'all' ){
+  //       setCheckAll(true);
+  //       onCheckedAllItemsHandler();
+        
+  //   }else{
+  //     console.log("selectedOptionValue ELSE :", selectedOptionValue);
+  //   }
+
+  // };
+  // interface State {
+  //   selectedUsers: IOption[];
+  //   // selectedData: string[];
+  // }
+  // const [checkAll, setCheckAll] = useState(false);
+  // const [states, setStates] = useState<State>({
+  //   selectedUsers: [],
+  // });
+  // const onCheckedAllItemsHandler = useCallback(() => {
+  //   setStates((prevState) => ({
+  //     ...prevState,
+  //     selectedData: !checkAll ? userFilterOptions?.map((option) => option.id) : [],
+  //     selectedUsers: !checkAll ? userFilterOptions : [], 
+  //   }));
+  //   setCheckAll((prev) => !prev); 
+    
+  // }, [checkAll, userFilterOptions]);
+  // console.log("selectedUser: ",selectedUser)
 
   return {
     handleReassignClick,
@@ -161,5 +242,10 @@ export const useAdminListTable = () => {
     initialState,
     onChangeStateFieldHandler,
     onChangeRoleValueHandler,
+    isReassignModalOpen,
+    userFilterOptions,
+    // handleUserSelection,
+    allUserSelect,
+    // handleSelectOption
   };
 };

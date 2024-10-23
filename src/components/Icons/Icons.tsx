@@ -69,6 +69,8 @@ import { ReactComponent as Delete } from 'assets/icons/delete.svg';
 import { ReactComponent as View } from 'assets/icons/view-eye.svg';
 import { ReactComponent as Copy } from 'assets/icons/copy.svg';
 import { ReactComponent as Revoke } from 'assets/icons/revoke.svg';
+import { ReactComponent as ActiveUser } from 'assets/icons/active-user.svg';
+import { ReactComponent as InActiveUsers } from 'assets/icons/inactive-user.svg';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -134,8 +136,9 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   Delete,
   View,
   Copy,
-  Revoke
-
+  Revoke,
+  ActiveUser,
+  InActiveUsers
 };
 
 export const Icon = (props: {

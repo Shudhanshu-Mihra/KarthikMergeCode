@@ -180,7 +180,6 @@ export const useDashboardState = () => {
     actionMeta: ActionMeta<unknown>
 ) => {
     const selectedUserValue = newValue.value;
-    console.log("ROLE OF CURRENT USER: ", role);
     setState((prevState) => ({
         ...prevState,
         userValue: {

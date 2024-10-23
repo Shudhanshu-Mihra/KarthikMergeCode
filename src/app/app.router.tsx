@@ -41,7 +41,7 @@ import { getUserExist } from '../screens/Dashboard/dashboard.api';
 import { IState } from '../services/redux/reducer';
 import { RIdata } from 'screens/RIDATA/RIdata';
 import { RIdetails } from 'screens/RIdetails';
-import { ReAssignData } from 'screens/ReAssignData/ReAssignData'; 
+// import { ReAssignData } from 'screens/ReAssignData/ReAssignData'; 
 import { ThirdPartyCompanies } from 'screens/ThirdPartyCompanies/ThirdPartyCompanies';
 // import { ReceiptDetails } from 'components/ReceiptDetails/ReceiptDetails';
 // import { ExpenseReport } from 'screens/ExpenseReport';
@@ -121,7 +121,6 @@ export const AppRouter: FC = () => {
             
             {/* </Route> */}
             <Route path={ROUTES.ridetails} element={<RIdetails />} />
-            <Route path={ROUTES.reassignData} element={<ReAssignData />} />
             <Route path={ROUTES.thirdPartyCompanies} element={<ThirdPartyCompanies />} />
             {/* <Route path={ROUTES.ridetails} element={<ReceiptDetails />} /> */}
             <Route
