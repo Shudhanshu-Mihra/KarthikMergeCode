@@ -1,17 +1,18 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   ActionMeta,
   SingleValue,
   OnChangeValue,
   MultiValue,
+  components,
 } from 'react-select';
 
 import { DropdownIndicator } from './DropdownIndicator';
-import { StyledReactSelect, SelectWrapper, SelectLabel } from './CustomSelect.style';
-
+import { StyledReactSelect, SelectWrapper, SelectLabel } from './CustomSelectWithCheckbox.style';
 import { IOption, IsMulti } from './types';
+import { CheckboxItem } from '../Checkbox';
 
-interface ICustomSelectProps {
+interface ICustomSelectWithCheckboxProps {
   name?: string;
   onChangeValueHandler?: (
     newValue: OnChangeValue<IOption, IsMulti> | unknown,
@@ -21,7 +22,7 @@ interface ICustomSelectProps {
   value?: SingleValue<IOption> | MultiValue<IOption>;
   height?: string;
   width?: string;
-  defaultOption?: IOption;
+  defaultOption?: IOption[];
   options?: IOption[];
   paginate?: boolean;
   isDisabled?: boolean;
@@ -30,11 +31,25 @@ interface ICustomSelectProps {
   isRemoveBorder?: boolean;
   label?: string;
   isRemoveBoxShadow?: boolean;
-  isClearable?:boolean;
-  defaultValue?:IOption[] | IOption;
+  isSelected?:boolean;
+  defaultValue?:IOption[];
+  // data?:[] | undefined;
 }
+const CustomOption = (props: any) => {
+  const { data, isSelected } = props;
+  return (
+    <components.Option {...props}>
+      <CheckboxItem
+        name={data.label}
+        isChecked={isSelected}
+        labelText={data.label}
+        onChange={() => props.selectOption(data)}
+      />
+    </components.Option>
+  );
+};
 
-export const CustomSelect: FC<ICustomSelectProps> = (props) => {
+export const CustomSelectWithCheckbox: FC<ICustomSelectWithCheckboxProps> = (props) => {
   const {
     onChangeValueHandler,
     defaultOption,
@@ -51,9 +66,8 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
     isRemoveBorder,
     label,
     isRemoveBoxShadow,
-    isClearable
   } = props;
-  console.log("Custom select value :- " , value);
+
   return (
     <SelectWrapper>
       {!label ? null : <SelectLabel>{label}</SelectLabel>}
@@ -63,20 +77,19 @@ export const CustomSelect: FC<ICustomSelectProps> = (props) => {
         isRemoveBoxShadow={isRemoveBoxShadow}
         width={width}
         marginBottom={marginBottom}
-        components={{ DropdownIndicator }}
+        components={{ DropdownIndicator, Option: CustomOption }} 
         classNamePrefix="Select"
         options={options}
         defaultValue={defaultOption}
         value={value}
-        // value={label}
         onChange={onChangeValueHandler}
         paginate={paginate}
         name={name}
         menuPlacement="auto"
         isDisabled={isDisabled}
-        placeholder={isDisabled && 'Nothing for select'}
+        placeholder={isDisabled && 'Nothing to select'}
         isMulti={isMulti}
-        isClearable={isClearable}
+        isClearable={false}
         isFullWidth={isFullWidth}
       />
     </SelectWrapper>

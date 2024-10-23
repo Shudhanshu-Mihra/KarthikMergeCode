@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { TableButton } from 'components/TableButton/TableButton';
 import { Icon } from 'components/Icons/Icons';
 import { Navigate, useNavigate } from 'react-router-dom'; 
@@ -16,6 +16,8 @@ import { ModalBox } from 'screens/Settings/UsersList/ModalBox';
 import { IAdminUserEdit } from 'screens/Settings/UsersList/types/userList.types';
 import { ROUTES } from 'constants/routes';
 import { useAdminListTable } from './AdminList.state';
+import { ReassignModalWindow } from 'components/ReassignModalWindow';
+import { useToggle } from 'hooks/useToggle';
 const TABLE_COLUMN_NAMES = [
   { id: 'id', name: 'ID' },
   { id: 'name', name: 'Name' },
@@ -82,9 +84,96 @@ export const AdminListTabel: FC<UsersTableProps> = ({
     onChangeStateFieldHandler,
     isModalOpen,
     isEdit,
-    handleReassignClick
+    handleReassignClick,
+    isReassignModalOpen,
+    // ReassignArr,
+    reAssignUserName,
+    userFilterOptions,
+    
   } = useAdminListTable();
   const navigate = useNavigate(); 
+
+  // const [checkAll, setCheckAll] = useState(false);
+  // const [selectedUsers, setSelectedUsers] = useState([]);
+  // const [state, setState] = useState({
+  //   selectedUsers:[], selectedData:[]
+  // });
+  // console.log("userFilterOptions :", userFilterOptions);
+
+  // const onCheckedAllItemsHandler = useCallback(() => {
+  //   // setSelectedUsers((prevState) => ({
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     selectedData : !checkAll ? userFilterOptions?.map((option) => option.id) : [],
+  //   }));
+  // }, [checkAll, selectedUsers]);
+  
+  interface State {
+    selectedUsers: string[] | [] | any;
+    // selectedData: string[];
+  }
+  const [checkAll, setCheckAll] = useState(false);
+  const [state, setState] = useState<State>({
+    selectedUsers: [],
+  });
+  const onCheckedAllItemsHandler = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      selectedUsers: !checkAll ? userFilterOptions?.map((option) => option.value) : [],
+      // selectedUsers: !checkAll ? userFilterOptions : [], 
+    }));
+    setCheckAll((prev) => !prev); 
+    
+  }, [checkAll, userFilterOptions]);
+
+  const [ismultiLocal, setIsmultiLocal] = useState(true);
+
+  // const handleSelectOption = (selectedOptionValue: { label: string, value: string }[]) => {
+  //   console.log("selectedOptionValue :", selectedOptionValue);
+
+  //   // Check if the array is not empty before accessing its first element
+  //   if (selectedOptionValue.length > 0) {
+  //       if (selectedOptionValue[0].value === 'all' || selectedOptionValue[0].label === 'All') {
+  //           setCheckAll(true);
+  //           setIsmultiLocal(false);
+  //           onCheckedAllItemsHandler();
+  //       } else {
+  //           console.log("selectedOptionValue ELSE :", selectedOptionValue);
+  //           setIsmultiLocal(true);
+  //       }
+  //   } else {
+  //       console.log("No options selected");
+  //       // Handle the case where no options are selected
+  //       setCheckAll(false);
+  //   }
+  // }
+//#####################################################################
+  const handleSelectOption = (selectedOptionValue: { label: string, value: string }[]) => {
+    console.log("selectedOptionValue :", selectedOptionValue);
+
+    // Check if "All" is selected, and handle the checkAll state accordingly
+    if (selectedOptionValue.length > 0) {
+        const isAllSelected = selectedOptionValue.some(
+            (option) => option.value === 'all' || option.label === 'All'
+        );
+        if (isAllSelected) {
+            setCheckAll(true);
+            setIsmultiLocal(false);
+            onCheckedAllItemsHandler(); 
+        } else {
+            setCheckAll(false); 
+            setIsmultiLocal(true);
+        }
+    } else {
+        console.log("No options selected");
+        setCheckAll(false); 
+        setIsmultiLocal(true);
+    }
+}; 
+console.log("user options: ", userFilterOptions);
+  // console.log("selectedData:", selectedData);
+  console.log("selectedUser: ",state?.selectedUsers);
+
   return (
     <>
     <Styled.Container>
@@ -116,7 +205,7 @@ export const AdminListTabel: FC<UsersTableProps> = ({
                 <Icon type="remove" />
               </Styled.ActionButton>
               <Styled.ActionButton onClick={() => handleReassignClick(user.id, user.name)}>
-                <Icon type="Reassign" />
+                <Icon type="ActiveUser" />
               </Styled.ActionButton>
             </Styled.ActionWrapper>
              
@@ -175,6 +264,29 @@ export const AdminListTabel: FC<UsersTableProps> = ({
           PermissionsForAPIHandler={PermissionsForAPIHandler}
           role={selectedUser|| null}
         />
+      )}
+      {isReassignModalOpen && (
+        <ReassignModalWindow
+        isOpen={isReassignModalOpen} 
+        inactiveUser={reAssignUserName} 
+        modalTitle="Reassign Task"
+        modalDescription="Please reassign the task to another user."
+        confirmText="Save"
+        cancelText="Cancel"
+        isLoading={false}  
+        onConfirmClick={() => {}}
+        onSaveClick = {()=>{}}
+        onCancelClick={handleCloseModal}
+        showInput={false}  
+        options = {userFilterOptions}
+        isMulti={ismultiLocal}
+        onChangeSelectHandler={handleSelectOption}
+        // isDisabled={isDisabled}
+        isClearable={true}
+        // selectValue 
+        // CustomSelectLabel
+        
+      />
       )}
     </>
   );

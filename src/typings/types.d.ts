@@ -723,6 +723,36 @@ interface integrationCompanyArr {
   name: string;
   imageUrl: string;
 }
+export interface IReassignModalWindowProps {
+  isOpen: boolean;
+  modalTitle: string;
+  modalDescription: string;
+  confirmText?: string;
+  cancelText?: string;
+  isLoading?: boolean;
+  onSaveClick: (inputValue: string) => void;
+  onConfirmClick: () => void;  // Add onConfirmClick function
+  onCancelClick: () => void;   // Add onCancelClick function
+  options?: IOption[] | undefined;
+  showInput?: boolean;
+   isMulti?: boolean;
+    onChangeSelectHandler?:
+    | ((newValue: any, actionMeta: unknown) => void)
+    | undefined;
+  CustomSelectLabel?: string;
+    selectValue?: IOption;
+    inactiveUser?:string;
+    isDisabled?:boolean;
+    isClearable?:boolean;
+    defaultValue?:IOption[];
+}
+export interface IOptionWithCheckbox {
+  label: string;
+  isChecked: boolean; // controls checkbox state
+  labelText: string;
+  onChangeCheckbox: (checked: boolean) => void; // handle checkbox state change
+}
+
 export {
   IActionMenuContentProps,
   IBindSocialAccountFormProps,
@@ -759,4 +789,6 @@ export {
   IPaginationPanel,
   IOption,
   TReceiptKeys,
+  IReassignModalWindowProps,
+  IReassignModalWindowProps
 };

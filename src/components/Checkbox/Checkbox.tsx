@@ -10,6 +10,7 @@ export interface CheckboxProps {
 	name?: string;
 	labelText?: string;
 	isChecked: boolean;
+	// allChecked?:boolean;
 }
 
 export const CheckboxItem = (props: CheckboxProps) => {
@@ -19,7 +20,7 @@ export const CheckboxItem = (props: CheckboxProps) => {
 		<Checkbox.Label>
 			<CheckboxContainer>
 				<Checkbox.HiddenCheckbox type="checkbox" id={name} name={name} onChange={onChange} checked={isChecked} />
-				<Checkbox.StyledCheckbox isChecked={isChecked} id={name} /* onChange={onChange} */ >
+				<Checkbox.StyledCheckbox isChecked={isChecked} id={name}>
 					{!!isChecked && <Icon type="checkmark" />}
 				</Checkbox.StyledCheckbox>
 			</CheckboxContainer>

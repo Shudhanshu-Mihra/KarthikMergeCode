@@ -76,6 +76,8 @@ import { ReactComponent as Revoke } from 'assets/icons/revoke.svg';
 import { ReactComponent as Image } from 'assets/icons/image.svg';
 import { ReactComponent as FlagIcon } from 'assets/icons/Flag.svg';
 import { useToggle } from 'hooks/useToggle';
+import { ReactComponent as ActiveUser } from 'assets/icons/active-user.svg';
+import { ReactComponent as InActiveUsers } from 'assets/icons/inactive-user.svg';
 const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   profileIcon,
   googleIcon,
@@ -147,7 +149,9 @@ const ICONS: Record<string, FunctionComponent<SVGProps<SVGSVGElement>>> = {
   RotateIcon,
   ZoomOutIcon,
   ZoomInIcon,
-  FlagIcon
+  FlagIcon,
+  ActiveUser,
+  InActiveUsers
 };
 
 export const Icon = (props: {
